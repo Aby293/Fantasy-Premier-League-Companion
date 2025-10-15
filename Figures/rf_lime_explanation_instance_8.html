@@ -37089,25 +37089,25 @@
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map </script></head><body>
-        <div class="lime top_div" id="top_div6PVX88YL2WKB68B"></div>
+        <div class="lime top_div" id="top_divXKZAD8TCHFRXLQH"></div>
         
         <script>
-        var top_div = d3.select('#top_div6PVX88YL2WKB68B').classed('lime top_div', true);
+        var top_div = d3.select('#top_divXKZAD8TCHFRXLQH').classed('lime top_div', true);
         
         
                     var pp_div = top_div.append('div')
                                         .classed('lime predicted_value', true);
                     var pp_svg = pp_div.append('svg').style('width', '100%');
-                    var pp = new lime.PredictedValue(pp_svg, 48.11220932006836, 0.0066193342208862305, 65.90423583984375);
+                    var pp = new lime.PredictedValue(pp_svg, 13.315, 2.21, 15.235);
                     
         var exp_div;
             var exp = new lime.Explanation(["negative", "positive"]);
         
             exp_div = top_div.append('div').classed('lime explanation', true);
-            exp.show([["0.00 < minutes <= 90.00", 29.48114020120479], ["total_points > 41.00", -7.238391295880307], ["GW_points > 2.00", 2.829311856158044], ["ict_index > 2.50", 1.2291481868105123], ["form > 0.23", 0.6343323714699939], ["position_MID <= 0.00", 0.174793086699116]], 1, exp_div);
+            exp.show([["0.00 < minutes <= 87.00", 2.932841320278355], ["0.00 < is_upcoming_home <= 1.00", 1.0663310371445647], ["total_points > 37.00", 0.6929220564392758], ["1.00 < upcoming_fixture_difficulty <= 2.00", 0.39059824872277976], ["ict_index > 2.20", 0.24982671050391334], ["1.00 < fixture_difficulty <= 2.00", 0.17990885866760079]], 1, exp_div);
             
         var raw_div = top_div.append('div');
-            exp.show_raw_tabular([["minutes", "90.00", 29.48114020120479], ["total_points", "48.00", -7.238391295880307], ["GW_points", "15.00", 2.829311856158044], ["ict_index", "9.10", 1.2291481868105123], ["form", "0.42", 0.6343323714699939], ["position_MID", "0.00", 0.174793086699116]], 1, raw_div);
+            exp.show_raw_tabular([["minutes", "66.00", 2.932841320278355], ["is_upcoming_home", "1.00", 1.0663310371445647], ["total_points", "57.00", 0.6929220564392758], ["upcoming_fixture_difficulty", "2.00", 0.39059824872277976], ["ict_index", "5.70", 0.24982671050391334], ["fixture_difficulty", "2.00", 0.17990885866760079]], 1, raw_div);
         
         </script>
         </body></html>
