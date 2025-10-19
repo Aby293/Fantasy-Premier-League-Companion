@@ -1,0 +1,1901 @@
+season_x,GW,fixture,team_1_name,team_2_name
+2016-17,1,1,Swansea,Burnley
+2016-17,1,2,West Brom,Crystal Palace
+2016-17,1,3,Spurs,Everton
+2016-17,1,4,Leicester,Hull
+2016-17,1,5,Sunderland,Man City
+2016-17,1,6,Stoke,Middlesbrough
+2016-17,1,7,Southampton,Watford
+2016-17,1,8,Liverpool,Arsenal
+2016-17,1,9,Man Utd,Bournemouth
+2016-17,1,10,Chelsea,West Ham
+2016-17,2,11,Man Utd,Southampton
+2016-17,2,12,Burnley,Liverpool
+2016-17,2,13,Leicester,Arsenal
+2016-17,2,14,Man City,Stoke
+2016-17,2,15,Swansea,Hull
+2016-17,2,16,Spurs,Crystal Palace
+2016-17,2,17,Chelsea,Watford
+2016-17,2,18,West Brom,Everton
+2016-17,2,19,Sunderland,Middlesbrough
+2016-17,2,20,Bournemouth,West Ham
+2016-17,3,21,Chelsea,Burnley
+2016-17,3,22,Crystal Palace,Bournemouth
+2016-17,3,23,Stoke,Everton
+2016-17,3,24,Hull,Man Utd
+2016-17,3,25,Swansea,Leicester
+2016-17,3,26,Sunderland,Southampton
+2016-17,3,27,Spurs,Liverpool
+2016-17,3,28,Watford,Arsenal
+2016-17,3,29,Man City,West Ham
+2016-17,3,30,West Brom,Middlesbrough
+2016-17,4,31,Southampton,Arsenal
+2016-17,4,32,West Brom,Bournemouth
+2016-17,4,33,Burnley,Hull
+2016-17,4,34,Leicester,Liverpool
+2016-17,4,35,Man City,Man Utd
+2016-17,4,36,Crystal Palace,Middlesbrough
+2016-17,4,37,Stoke,Spurs
+2016-17,4,38,Watford,West Ham
+2016-17,4,39,Chelsea,Swansea
+2016-17,4,40,Sunderland,Everton
+2016-17,5,41,Chelsea,Liverpool
+2016-17,5,42,Middlesbrough,Everton
+2016-17,5,43,Hull,Arsenal
+2016-17,5,44,Leicester,Burnley
+2016-17,5,45,Man City,Bournemouth
+2016-17,5,46,West Brom,West Ham
+2016-17,5,47,Stoke,Crystal Palace
+2016-17,5,48,Swansea,Southampton
+2016-17,5,49,Sunderland,Spurs
+2016-17,5,50,Man Utd,Watford
+2016-17,6,51,Chelsea,Arsenal
+2016-17,6,52,Bournemouth,Everton
+2016-17,6,53,Hull,Liverpool
+2016-17,6,54,Leicester,Man Utd
+2016-17,6,55,Spurs,Middlesbrough
+2016-17,6,56,Stoke,West Brom
+2016-17,6,57,Sunderland,Crystal Palace
+2016-17,6,58,Man City,Swansea
+2016-17,6,59,Southampton,West Ham
+2016-17,6,60,Burnley,Watford
+2016-17,7,61,Burnley,Arsenal
+2016-17,7,62,Crystal Palace,Everton
+2016-17,7,63,Chelsea,Hull
+2016-17,7,64,Leicester,Southampton
+2016-17,7,65,Stoke,Man Utd
+2016-17,7,66,Sunderland,West Brom
+2016-17,7,67,Swansea,Liverpool
+2016-17,7,68,Man City,Spurs
+2016-17,7,69,Bournemouth,Watford
+2016-17,7,70,Middlesbrough,West Ham
+2016-17,8,71,Swansea,Arsenal
+2016-17,8,72,Hull,Bournemouth
+2016-17,8,73,Chelsea,Leicester
+2016-17,8,74,Crystal Palace,West Ham
+2016-17,8,75,Man Utd,Liverpool
+2016-17,8,76,Man City,Everton
+2016-17,8,77,Middlesbrough,Watford
+2016-17,8,78,Burnley,Southampton
+2016-17,8,79,Sunderland,Stoke
+2016-17,8,80,West Brom,Spurs
+2016-17,9,81,Middlesbrough,Arsenal
+2016-17,9,82,Spurs,Bournemouth
+2016-17,9,83,Burnley,Everton
+2016-17,9,84,Chelsea,Man Utd
+2016-17,9,85,Stoke,Hull
+2016-17,9,86,Leicester,Crystal Palace
+2016-17,9,87,West Brom,Liverpool
+2016-17,9,88,Man City,Southampton
+2016-17,9,89,Swansea,Watford
+2016-17,9,90,Sunderland,West Ham
+2016-17,10,91,Crystal Palace,Liverpool
+2016-17,10,92,Everton,West Ham
+2016-17,10,93,Burnley,Man Utd
+2016-17,10,94,Bournemouth,Middlesbrough
+2016-17,10,95,Chelsea,Southampton
+2016-17,10,96,Stoke,Swansea
+2016-17,10,97,Sunderland,Arsenal
+2016-17,10,98,Leicester,Spurs
+2016-17,10,99,Hull,Watford
+2016-17,10,100,Man City,West Brom
+2016-17,11,101,Spurs,Arsenal
+2016-17,11,102,Sunderland,Bournemouth
+2016-17,11,103,Crystal Palace,Burnley
+2016-17,11,104,Chelsea,Everton
+2016-17,11,105,Hull,Southampton
+2016-17,11,106,West Brom,Leicester
+2016-17,11,107,Liverpool,Watford
+2016-17,11,108,Man City,Middlesbrough
+2016-17,11,109,Man Utd,Swansea
+2016-17,11,110,Stoke,West Ham
+2016-17,12,111,Man City,Crystal Palace
+2016-17,12,112,Swansea,Everton
+2016-17,12,113,Man Utd,Arsenal
+2016-17,12,114,Chelsea,Middlesbrough
+2016-17,12,115,Southampton,Liverpool
+2016-17,12,116,Stoke,Bournemouth
+2016-17,12,117,Sunderland,Hull
+2016-17,12,118,Spurs,West Ham
+2016-17,12,119,Leicester,Watford
+2016-17,12,120,West Brom,Burnley
+2016-17,13,121,Bournemouth,Arsenal
+2016-17,13,122,Man City,Burnley
+2016-17,13,123,Chelsea,Spurs
+2016-17,13,124,West Brom,Hull
+2016-17,13,125,Leicester,Middlesbrough
+2016-17,13,126,Sunderland,Liverpool
+2016-17,13,127,Man Utd,West Ham
+2016-17,13,128,Southampton,Everton
+2016-17,13,129,Crystal Palace,Swansea
+2016-17,13,130,Stoke,Watford
+2016-17,14,131,Bournemouth,Liverpool
+2016-17,14,132,Crystal Palace,Southampton
+2016-17,14,133,Man Utd,Everton
+2016-17,14,134,Man City,Chelsea
+2016-17,14,135,Hull,Middlesbrough
+2016-17,14,136,Stoke,Burnley
+2016-17,14,137,Sunderland,Leicester
+2016-17,14,138,Spurs,Swansea
+2016-17,14,139,West Brom,Watford
+2016-17,14,140,Arsenal,West Ham
+2016-17,15,141,Stoke,Arsenal
+2016-17,15,142,Burnley,Bournemouth
+2016-17,15,143,Chelsea,West Brom
+2016-17,15,144,Crystal Palace,Hull
+2016-17,15,145,Man City,Leicester
+2016-17,15,146,Liverpool,West Ham
+2016-17,15,147,Sunderland,Swansea
+2016-17,15,148,Watford,Everton
+2016-17,15,149,Spurs,Man Utd
+2016-17,15,150,Southampton,Middlesbrough
+2016-17,16,151,Leicester,Bournemouth
+2016-17,16,152,Sunderland,Chelsea
+2016-17,16,153,West Brom,Swansea
+2016-17,16,154,Burnley,West Ham
+2016-17,16,155,Man Utd,Crystal Palace
+2016-17,16,156,Arsenal,Everton
+2016-17,16,157,Man City,Watford
+2016-17,16,158,Liverpool,Middlesbrough
+2016-17,16,159,Stoke,Southampton
+2016-17,16,160,Spurs,Hull
+2016-17,17,161,Southampton,Bournemouth
+2016-17,17,162,Chelsea,Crystal Palace
+2016-17,17,163,Liverpool,Everton
+2016-17,17,164,Man City,Arsenal
+2016-17,17,165,Swansea,Middlesbrough
+2016-17,17,166,Stoke,Leicester
+2016-17,17,167,Sunderland,Watford
+2016-17,17,168,Spurs,Burnley
+2016-17,17,169,West Brom,Man Utd
+2016-17,17,170,Hull,West Ham
+2016-17,18,171,West Brom,Arsenal
+2016-17,18,172,Burnley,Middlesbrough
+2016-17,18,173,Chelsea,Bournemouth
+2016-17,18,174,Man City,Hull
+2016-17,18,175,Leicester,Everton
+2016-17,18,176,Stoke,Liverpool
+2016-17,18,177,Sunderland,Man Utd
+2016-17,18,178,Spurs,Southampton
+2016-17,18,179,Swansea,West Ham
+2016-17,18,180,Watford,Crystal Palace
+2016-17,19,181,Crystal Palace,Arsenal
+2016-17,19,182,Sunderland,Burnley
+2016-17,19,183,Stoke,Chelsea
+2016-17,19,184,Hull,Everton
+2016-17,19,185,Leicester,West Ham
+2016-17,19,186,Man City,Liverpool
+2016-17,19,187,Man Utd,Middlesbrough
+2016-17,19,188,West Brom,Southampton
+2016-17,19,189,Swansea,Bournemouth
+2016-17,19,190,Spurs,Watford
+2016-17,20,191,Bournemouth,Arsenal
+2016-17,20,192,Swansea,Crystal Palace
+2016-17,20,193,Southampton,Everton
+2016-17,20,194,Man City,Burnley
+2016-17,20,195,Leicester,Middlesbrough
+2016-17,20,196,Stoke,Watford
+2016-17,20,197,Sunderland,Liverpool
+2016-17,20,198,Chelsea,Spurs
+2016-17,20,199,West Brom,Hull
+2016-17,20,200,Man Utd,West Ham
+2016-17,21,201,Burnley,Southampton
+2016-17,21,202,Man City,Everton
+2016-17,21,203,Hull,Bournemouth
+2016-17,21,204,Chelsea,Leicester
+2016-17,21,205,Man Utd,Liverpool
+2016-17,21,206,Sunderland,Stoke
+2016-17,21,207,Swansea,Arsenal
+2016-17,21,208,West Brom,Spurs
+2016-17,21,209,Middlesbrough,Watford
+2016-17,21,210,Crystal Palace,West Ham
+2016-17,22,211,Burnley,Arsenal
+2016-17,22,212,Bournemouth,Watford
+2016-17,22,213,Chelsea,Hull
+2016-17,22,214,Crystal Palace,Everton
+2016-17,22,215,Swansea,Liverpool
+2016-17,22,216,Man City,Spurs
+2016-17,22,217,Middlesbrough,West Ham
+2016-17,22,218,Leicester,Southampton
+2016-17,22,219,Stoke,Man Utd
+2016-17,22,220,Sunderland,West Brom
+2016-17,23,221,Watford,Arsenal
+2016-17,23,222,Bournemouth,Crystal Palace
+2016-17,23,223,Leicester,Burnley
+2016-17,23,224,West Brom,Middlesbrough
+2016-17,23,225,Sunderland,Spurs
+2016-17,23,226,Swansea,Southampton
+2016-17,23,227,Man City,West Ham
+2016-17,23,228,Chelsea,Liverpool
+2016-17,23,229,Hull,Man Utd
+2016-17,23,230,Stoke,Everton
+2016-17,24,231,Chelsea,Arsenal
+2016-17,24,232,Sunderland,Crystal Palace
+2016-17,24,233,Bournemouth,Everton
+2016-17,24,234,Hull,Liverpool
+2016-17,24,235,Leicester,Man Utd
+2016-17,24,236,Man City,Swansea
+2016-17,24,237,Southampton,West Ham
+2016-17,24,238,Spurs,Middlesbrough
+2016-17,24,239,Burnley,Watford
+2016-17,24,240,Stoke,West Brom
+2016-17,25,241,Hull,Arsenal
+2016-17,25,242,Man City,Bournemouth
+2016-17,25,243,Chelsea,Burnley
+2016-17,25,244,Spurs,Liverpool
+2016-17,25,245,Man Utd,Watford
+2016-17,25,246,Middlesbrough,Everton
+2016-17,25,247,Stoke,Crystal Palace
+2016-17,25,248,Sunderland,Southampton
+2016-17,25,249,Leicester,Swansea
+2016-17,25,250,West Brom,West Ham
+2016-17,26,251,Chelsea,Swansea
+2016-17,26,252,Middlesbrough,Crystal Palace
+2016-17,26,253,Sunderland,Everton
+2016-17,26,254,Burnley,Hull
+2016-17,26,255,Leicester,Liverpool
+2016-17,26,258,Stoke,Spurs
+2016-17,26,259,Watford,West Ham
+2016-17,26,260,West Brom,Bournemouth
+2016-17,27,261,Leicester,Hull
+2016-17,27,262,Liverpool,Arsenal
+2016-17,27,263,Man Utd,Bournemouth
+2016-17,27,264,Stoke,Middlesbrough
+2016-17,27,265,Sunderland,Man City
+2016-17,27,266,Burnley,Swansea
+2016-17,27,267,Spurs,Everton
+2016-17,27,268,Southampton,Watford
+2016-17,27,269,West Brom,Crystal Palace
+2016-17,27,270,Chelsea,West Ham
+2016-17,27,277,Stoke,Man City
+2016-17,28,272,Bournemouth,West Ham
+2016-17,28,275,West Brom,Everton
+2016-17,28,276,Hull,Swansea
+2016-17,28,280,Burnley,Liverpool
+2016-17,29,281,Swansea,Bournemouth
+2016-17,29,282,Watford,Crystal Palace
+2016-17,29,283,Hull,Everton
+2016-17,29,284,Man City,Liverpool
+2016-17,29,285,Man Utd,Middlesbrough
+2016-17,29,286,Stoke,Chelsea
+2016-17,29,287,Sunderland,Burnley
+2016-17,29,288,Spurs,Southampton
+2016-17,29,289,West Brom,Arsenal
+2016-17,29,290,Leicester,West Ham
+2016-17,30,291,Man City,Arsenal
+2016-17,30,292,Spurs,Burnley
+2016-17,30,293,Chelsea,Crystal Palace
+2016-17,30,294,Hull,West Ham
+2016-17,30,295,Stoke,Leicester
+2016-17,30,296,Liverpool,Everton
+2016-17,30,297,West Brom,Man Utd
+2016-17,30,298,Southampton,Bournemouth
+2016-17,30,299,Swansea,Middlesbrough
+2016-17,30,300,Sunderland,Watford
+2016-17,31,301,Arsenal,West Ham
+2016-17,31,302,Stoke,Burnley
+2016-17,31,303,Hull,Middlesbrough
+2016-17,31,304,Sunderland,Leicester
+2016-17,31,305,Man Utd,Everton
+2016-17,31,306,Spurs,Swansea
+2016-17,31,307,West Brom,Watford
+2016-17,31,308,Man City,Chelsea
+2016-17,31,309,Bournemouth,Liverpool
+2016-17,31,310,Southampton,Crystal Palace
+2016-17,32,311,Chelsea,Bournemouth
+2016-17,32,312,Crystal Palace,Arsenal
+2016-17,32,313,Leicester,Everton
+2016-17,32,314,Man City,Hull
+2016-17,32,315,Burnley,Middlesbrough
+2016-17,32,316,Stoke,Liverpool
+2016-17,32,317,Sunderland,Man Utd
+2016-17,32,318,Spurs,Watford
+2016-17,32,319,West Brom,Southampton
+2016-17,32,320,Swansea,West Ham
+2016-17,33,321,Leicester,Crystal Palace
+2016-17,33,322,Burnley,Everton
+2016-17,33,323,Chelsea,Man Utd
+2016-17,33,324,Middlesbrough,Arsenal
+2016-17,33,325,Man City,Southampton
+2016-17,33,326,Stoke,Hull
+2016-17,33,327,Sunderland,West Ham
+2016-17,33,328,Spurs,Bournemouth
+2016-17,33,329,Swansea,Watford
+2016-17,33,330,West Brom,Liverpool
+2016-17,34,256,Man City,Man Utd
+2016-17,34,271,Leicester,Arsenal
+2016-17,34,274,Spurs,Crystal Palace
+2016-17,34,278,Sunderland,Middlesbrough
+2016-17,34,332,Bournemouth,Middlesbrough
+2016-17,34,333,Burnley,Man Utd
+2016-17,34,334,Chelsea,Southampton
+2016-17,34,335,Hull,Watford
+2016-17,34,337,Liverpool,Crystal Palace
+2016-17,34,339,Stoke,Swansea
+2016-17,34,340,Everton,West Ham
+2016-17,35,341,Burnley,Crystal Palace
+2016-17,35,342,Chelsea,Everton
+2016-17,35,343,Man Utd,Swansea
+2016-17,35,344,Man City,Middlesbrough
+2016-17,35,345,Hull,Southampton
+2016-17,35,346,Stoke,West Ham
+2016-17,35,347,Sunderland,Bournemouth
+2016-17,35,348,Spurs,Arsenal
+2016-17,35,349,Liverpool,Watford
+2016-17,35,350,West Brom,Leicester
+2016-17,36,257,Southampton,Arsenal
+2016-17,36,351,Man Utd,Arsenal
+2016-17,36,352,Stoke,Bournemouth
+2016-17,36,353,West Brom,Burnley
+2016-17,36,354,Chelsea,Middlesbrough
+2016-17,36,355,Sunderland,Hull
+2016-17,36,356,Leicester,Watford
+2016-17,36,357,Southampton,Liverpool
+2016-17,36,358,Man City,Crystal Palace
+2016-17,36,359,Swansea,Everton
+2016-17,36,360,Spurs,West Ham
+2016-17,37,273,Chelsea,Watford
+2016-17,37,279,Man Utd,Southampton
+2016-17,37,331,Sunderland,Arsenal
+2016-17,37,336,Leicester,Spurs
+2016-17,37,338,West Brom,Man City
+2016-17,37,361,Burnley,Bournemouth
+2016-17,37,362,Hull,Crystal Palace
+2016-17,37,363,Watford,Everton
+2016-17,37,364,Leicester,Man City
+2016-17,37,365,Southampton,Middlesbrough
+2016-17,37,366,Stoke,Arsenal
+2016-17,37,367,Sunderland,Swansea
+2016-17,37,368,Spurs,Man Utd
+2016-17,37,369,Chelsea,West Brom
+2016-17,37,370,Liverpool,West Ham
+2016-17,38,371,Arsenal,Everton
+2016-17,38,372,Burnley,West Ham
+2016-17,38,373,Sunderland,Chelsea
+2016-17,38,374,Spurs,Hull
+2016-17,38,375,Leicester,Bournemouth
+2016-17,38,376,Liverpool,Middlesbrough
+2016-17,38,377,Man Utd,Crystal Palace
+2016-17,38,378,Stoke,Southampton
+2016-17,38,379,West Brom,Swansea
+2016-17,38,380,Man City,Watford
+2017-18,1,1,Leicester,Arsenal
+2017-18,1,2,Man City,Brighton
+2017-18,1,3,Burnley,Chelsea
+2017-18,1,4,Crystal Palace,Huddersfield
+2017-18,1,5,Stoke,Everton
+2017-18,1,6,Swansea,Southampton
+2017-18,1,7,Liverpool,Watford
+2017-18,1,8,West Brom,Bournemouth
+2017-18,1,9,Man Utd,West Ham
+2017-18,1,10,Spurs,Newcastle
+2017-18,2,11,Bournemouth,Watford
+2017-18,2,12,West Brom,Burnley
+2017-18,2,13,Leicester,Brighton
+2017-18,2,14,Crystal Palace,Liverpool
+2017-18,2,15,Southampton,West Ham
+2017-18,2,16,Stoke,Arsenal
+2017-18,2,17,Man Utd,Swansea
+2017-18,2,18,Newcastle,Huddersfield
+2017-18,2,19,Spurs,Chelsea
+2017-18,2,20,Man City,Everton
+2017-18,3,21,Man City,Bournemouth
+2017-18,3,22,Chelsea,Everton
+2017-18,3,23,Crystal Palace,Swansea
+2017-18,3,24,Southampton,Huddersfield
+2017-18,3,25,Leicester,Man Utd
+2017-18,3,26,Newcastle,West Ham
+2017-18,3,27,Brighton,Watford
+2017-18,3,28,Liverpool,Arsenal
+2017-18,3,29,Spurs,Burnley
+2017-18,3,30,Stoke,West Brom
+2017-18,4,31,Bournemouth,Arsenal
+2017-18,4,32,West Brom,Brighton
+2017-18,4,33,Spurs,Everton
+2017-18,4,34,Leicester,Chelsea
+2017-18,4,35,Man City,Liverpool
+2017-18,4,36,Southampton,Watford
+2017-18,4,37,Stoke,Man Utd
+2017-18,4,38,Burnley,Crystal Palace
+2017-18,4,39,Newcastle,Swansea
+2017-18,4,40,Huddersfield,West Ham
+2017-18,5,41,Brighton,Bournemouth
+2017-18,5,42,Crystal Palace,Southampton
+2017-18,5,43,Leicester,Huddersfield
+2017-18,5,44,Burnley,Liverpool
+2017-18,5,45,Stoke,Newcastle
+2017-18,5,46,Spurs,Swansea
+2017-18,5,47,Man City,Watford
+2017-18,5,48,West Brom,West Ham
+2017-18,5,49,Chelsea,Arsenal
+2017-18,5,50,Man Utd,Everton
+2017-18,6,51,Burnley,Huddersfield
+2017-18,6,52,Bournemouth,Everton
+2017-18,6,53,Leicester,Liverpool
+2017-18,6,54,Man City,Crystal Palace
+2017-18,6,55,Man Utd,Southampton
+2017-18,6,56,Stoke,Chelsea
+2017-18,6,57,Swansea,Watford
+2017-18,6,58,Spurs,West Ham
+2017-18,6,59,Newcastle,Brighton
+2017-18,6,60,West Brom,Arsenal
+2017-18,7,61,Leicester,Bournemouth
+2017-18,7,62,Man City,Chelsea
+2017-18,7,63,Spurs,Huddersfield
+2017-18,7,64,Crystal Palace,Man Utd
+2017-18,7,65,Stoke,Southampton
+2017-18,7,66,West Brom,Watford
+2017-18,7,67,Swansea,West Ham
+2017-18,7,68,Brighton,Arsenal
+2017-18,7,69,Burnley,Everton
+2017-18,7,70,Newcastle,Liverpool
+2017-18,8,71,Brighton,Everton
+2017-18,8,72,Burnley,West Ham
+2017-18,8,73,Crystal Palace,Chelsea
+2017-18,8,74,West Brom,Leicester
+2017-18,8,75,Man Utd,Liverpool
+2017-18,8,76,Stoke,Man City
+2017-18,8,77,Newcastle,Southampton
+2017-18,8,78,Swansea,Huddersfield
+2017-18,8,79,Spurs,Bournemouth
+2017-18,8,80,Watford,Arsenal
+2017-18,9,81,Chelsea,Watford
+2017-18,9,82,Arsenal,Everton
+2017-18,9,83,Man Utd,Huddersfield
+2017-18,9,84,Man City,Burnley
+2017-18,9,85,Newcastle,Crystal Palace
+2017-18,9,86,West Brom,Southampton
+2017-18,9,87,Stoke,Bournemouth
+2017-18,9,88,Leicester,Swansea
+2017-18,9,89,Spurs,Liverpool
+2017-18,9,90,Brighton,West Ham
+2017-18,10,91,Swansea,Arsenal
+2017-18,10,92,Chelsea,Bournemouth
+2017-18,10,93,Brighton,Southampton
+2017-18,10,94,Newcastle,Burnley
+2017-18,10,95,Crystal Palace,West Ham
+2017-18,10,96,Leicester,Everton
+2017-18,10,97,Liverpool,Huddersfield
+2017-18,10,98,Spurs,Man Utd
+2017-18,10,99,Stoke,Watford
+2017-18,10,100,West Brom,Man City
+2017-18,11,101,Man Utd,Chelsea
+2017-18,11,102,Watford,Everton
+2017-18,11,103,West Brom,Huddersfield
+2017-18,11,104,Newcastle,Bournemouth
+2017-18,11,105,Burnley,Southampton
+2017-18,11,106,Stoke,Leicester
+2017-18,11,107,Brighton,Swansea
+2017-18,11,108,Spurs,Crystal Palace
+2017-18,11,109,Liverpool,West Ham
+2017-18,11,110,Man City,Arsenal
+2017-18,12,111,Spurs,Arsenal
+2017-18,12,112,Bournemouth,Huddersfield
+2017-18,12,113,Stoke,Brighton
+2017-18,12,114,Burnley,Swansea
+2017-18,12,115,Crystal Palace,Everton
+2017-18,12,116,Man City,Leicester
+2017-18,12,117,Southampton,Liverpool
+2017-18,12,118,Newcastle,Man Utd
+2017-18,12,119,Watford,West Ham
+2017-18,12,120,West Brom,Chelsea
+2017-18,13,121,Stoke,Crystal Palace
+2017-18,13,122,Man City,Huddersfield
+2017-18,13,123,Chelsea,Liverpool
+2017-18,13,124,Brighton,Man Utd
+2017-18,13,125,Newcastle,Watford
+2017-18,13,126,Southampton,Everton
+2017-18,13,127,Swansea,Bournemouth
+2017-18,13,128,West Brom,Spurs
+2017-18,13,129,Leicester,West Ham
+2017-18,13,130,Burnley,Arsenal
+2017-18,14,131,Brighton,Crystal Palace
+2017-18,14,132,Leicester,Spurs
+2017-18,14,133,Man Utd,Watford
+2017-18,14,134,West Brom,Newcastle
+2017-18,14,135,Arsenal,Huddersfield
+2017-18,14,136,Burnley,Bournemouth
+2017-18,14,137,Chelsea,Swansea
+2017-18,14,138,Everton,West Ham
+2017-18,14,139,Man City,Southampton
+2017-18,14,140,Stoke,Liverpool
+2017-18,15,141,Man Utd,Arsenal
+2017-18,15,142,Southampton,Bournemouth
+2017-18,15,143,Brighton,Liverpool
+2017-18,15,144,Newcastle,Chelsea
+2017-18,15,145,Huddersfield,Everton
+2017-18,15,146,Leicester,Burnley
+2017-18,15,147,Man City,West Ham
+2017-18,15,148,Stoke,Swansea
+2017-18,15,149,Spurs,Watford
+2017-18,15,150,West Brom,Crystal Palace
+2017-18,16,151,Burnley,Watford
+2017-18,16,152,Crystal Palace,Bournemouth
+2017-18,16,153,Brighton,Huddersfield
+2017-18,16,154,Liverpool,Everton
+2017-18,16,155,Man City,Man Utd
+2017-18,16,156,Leicester,Newcastle
+2017-18,16,157,West Brom,Swansea
+2017-18,16,158,Stoke,Spurs
+2017-18,16,159,Chelsea,West Ham
+2017-18,16,160,Southampton,Arsenal
+2017-18,17,161,Stoke,Burnley
+2017-18,17,162,Crystal Palace,Watford
+2017-18,17,163,Chelsea,Huddersfield
+2017-18,17,164,Man Utd,Bournemouth
+2017-18,17,165,Man City,Swansea
+2017-18,17,166,West Brom,Liverpool
+2017-18,17,167,Newcastle,Everton
+2017-18,17,168,Leicester,Southampton
+2017-18,17,169,Spurs,Brighton
+2017-18,17,170,Arsenal,West Ham
+2017-18,18,171,Newcastle,Arsenal
+2017-18,18,172,Liverpool,Bournemouth
+2017-18,18,173,Burnley,Brighton
+2017-18,18,174,Chelsea,Southampton
+2017-18,18,175,Swansea,Everton
+2017-18,18,176,Leicester,Crystal Palace
+2017-18,18,177,Man City,Spurs
+2017-18,18,178,Stoke,West Ham
+2017-18,18,179,Watford,Huddersfield
+2017-18,18,180,West Brom,Man Utd
+2017-18,19,181,Liverpool,Arsenal
+2017-18,19,182,Brighton,Watford
+2017-18,19,183,Spurs,Burnley
+2017-18,19,184,Chelsea,Everton
+2017-18,19,185,Leicester,Man Utd
+2017-18,19,186,Man City,Bournemouth
+2017-18,19,187,Southampton,Huddersfield
+2017-18,19,188,Stoke,West Brom
+2017-18,19,189,Swansea,Crystal Palace
+2017-18,19,190,Newcastle,West Ham
+2017-18,20,191,Bournemouth,West Ham
+2017-18,20,192,Brighton,Chelsea
+2017-18,20,193,Crystal Palace,Arsenal
+2017-18,20,194,Stoke,Huddersfield
+2017-18,20,195,Swansea,Liverpool
+2017-18,20,196,Burnley,Man Utd
+2017-18,20,197,Man City,Newcastle
+2017-18,20,198,Spurs,Southampton
+2017-18,20,199,Leicester,Watford
+2017-18,20,200,West Brom,Everton
+2017-18,21,201,Bournemouth,Everton
+2017-18,21,202,Stoke,Chelsea
+2017-18,21,203,Man City,Crystal Palace
+2017-18,21,204,Burnley,Huddersfield
+2017-18,21,205,Leicester,Liverpool
+2017-18,21,206,Man Utd,Southampton
+2017-18,21,207,Newcastle,Brighton
+2017-18,21,209,Swansea,Watford
+2017-18,21,210,West Brom,Arsenal
+2017-18,22,208,Spurs,West Ham
+2017-18,22,211,Chelsea,Arsenal
+2017-18,22,212,Brighton,Bournemouth
+2017-18,22,213,Burnley,Liverpool
+2017-18,22,214,Man Utd,Everton
+2017-18,22,215,Leicester,Huddersfield
+2017-18,22,216,Man City,Watford
+2017-18,22,217,Southampton,Crystal Palace
+2017-18,22,218,Stoke,Newcastle
+2017-18,22,219,Spurs,Swansea
+2017-18,22,220,West Brom,West Ham
+2017-18,23,221,Arsenal,Bournemouth
+2017-18,23,222,Leicester,Chelsea
+2017-18,23,223,Burnley,Crystal Palace
+2017-18,23,224,Huddersfield,West Ham
+2017-18,23,225,Man City,Liverpool
+2017-18,23,226,Stoke,Man Utd
+2017-18,23,227,Newcastle,Swansea
+2017-18,23,228,Spurs,Everton
+2017-18,23,229,Southampton,Watford
+2017-18,23,230,West Brom,Brighton
+2017-18,24,231,Crystal Palace,Arsenal
+2017-18,24,232,Brighton,Chelsea
+2017-18,24,233,Burnley,Man Utd
+2017-18,24,234,West Brom,Everton
+2017-18,24,235,Leicester,Watford
+2017-18,24,236,Man City,Newcastle
+2017-18,24,237,Spurs,Southampton
+2017-18,24,238,Stoke,Huddersfield
+2017-18,24,239,Swansea,Liverpool
+2017-18,24,240,Bournemouth,West Ham
+2017-18,25,241,Liverpool,Huddersfield
+2017-18,25,242,Swansea,Arsenal
+2017-18,25,243,Crystal Palace,West Ham
+2017-18,25,244,Chelsea,Bournemouth
+2017-18,25,245,Leicester,Everton
+2017-18,25,246,West Brom,Man City
+2017-18,25,247,Newcastle,Burnley
+2017-18,25,248,Brighton,Southampton
+2017-18,25,249,Stoke,Watford
+2017-18,25,250,Spurs,Man Utd
+2017-18,26,251,Everton,Arsenal
+2017-18,26,252,Stoke,Bournemouth
+2017-18,26,253,Brighton,West Ham
+2017-18,26,254,Man City,Burnley
+2017-18,26,255,Newcastle,Crystal Palace
+2017-18,26,256,Leicester,Swansea
+2017-18,26,257,Spurs,Liverpool
+2017-18,26,258,Man Utd,Huddersfield
+2017-18,26,259,Chelsea,Watford
+2017-18,26,260,West Brom,Southampton
+2017-18,27,261,West Brom,Chelsea
+2017-18,27,262,Everton,Crystal Palace
+2017-18,27,263,Bournemouth,Huddersfield
+2017-18,27,264,Leicester,Man City
+2017-18,27,265,Newcastle,Man Utd
+2017-18,27,266,Southampton,Liverpool
+2017-18,27,267,Stoke,Brighton
+2017-18,27,268,Swansea,Burnley
+2017-18,27,269,Spurs,Arsenal
+2017-18,27,270,Watford,West Ham
+2017-18,28,271,Man City,Arsenal
+2017-18,28,272,Newcastle,Bournemouth
+2017-18,28,273,Brighton,Swansea
+2017-18,28,274,Southampton,Burnley
+2017-18,28,275,Spurs,Crystal Palace
+2017-18,28,276,Stoke,Leicester
+2017-18,28,277,Liverpool,West Ham
+2017-18,28,278,Man Utd,Chelsea
+2017-18,28,279,Everton,Watford
+2017-18,28,280,West Brom,Huddersfield
+2017-18,29,281,Brighton,Arsenal
+2017-18,29,282,Everton,Burnley
+2017-18,29,283,Man Utd,Crystal Palace
+2017-18,29,284,Leicester,Bournemouth
+2017-18,29,285,Newcastle,Liverpool
+2017-18,29,286,Man City,Chelsea
+2017-18,29,287,Stoke,Southampton
+2017-18,29,288,Swansea,West Ham
+2017-18,29,289,Spurs,Huddersfield
+2017-18,29,290,West Brom,Watford
+2017-18,30,291,Watford,Arsenal
+2017-18,30,292,Spurs,Bournemouth
+2017-18,30,293,Chelsea,Crystal Palace
+2017-18,30,294,Brighton,Everton
+2017-18,30,295,Swansea,Huddersfield
+2017-18,30,296,Man Utd,Liverpool
+2017-18,30,297,Newcastle,Southampton
+2017-18,30,298,Stoke,Man City
+2017-18,30,299,West Brom,Leicester
+2017-18,30,300,Burnley,West Ham
+2017-18,31,301,West Brom,Bournemouth
+2017-18,31,303,Crystal Palace,Huddersfield
+2017-18,31,305,Liverpool,Watford
+2017-18,31,307,Stoke,Everton
+2017-18,32,311,Stoke,Arsenal
+2017-18,32,312,Leicester,Brighton
+2017-18,32,313,Spurs,Chelsea
+2017-18,32,314,Liverpool,Crystal Palace
+2017-18,32,315,Man City,Everton
+2017-18,32,316,Man Utd,Swansea
+2017-18,32,317,Newcastle,Huddersfield
+2017-18,32,318,Watford,Bournemouth
+2017-18,32,319,West Brom,Burnley
+2017-18,32,320,Southampton,West Ham
+2017-18,33,321,Southampton,Arsenal
+2017-18,33,322,Crystal Palace,Bournemouth
+2017-18,33,323,Brighton,Huddersfield
+2017-18,33,324,Chelsea,West Ham
+2017-18,33,325,Everton,Liverpool
+2017-18,33,326,Leicester,Newcastle
+2017-18,33,327,Man City,Man Utd
+2017-18,33,328,Stoke,Spurs
+2017-18,33,329,Watford,Burnley
+2017-18,33,330,West Brom,Swansea
+2017-18,34,302,Chelsea,Burnley
+2017-18,34,331,Leicester,Burnley
+2017-18,34,332,Brighton,Crystal Palace
+2017-18,34,333,Watford,Huddersfield
+2017-18,34,334,Liverpool,Bournemouth
+2017-18,34,335,West Brom,Man Utd
+2017-18,34,336,Newcastle,Arsenal
+2017-18,34,337,Chelsea,Southampton
+2017-18,34,338,Swansea,Everton
+2017-18,34,339,Spurs,Man City
+2017-18,34,340,Stoke,West Ham
+2017-18,34,342,Man Utd,Bournemouth
+2017-18,34,343,Spurs,Brighton
+2017-18,34,346,Leicester,Southampton
+2017-18,35,341,Arsenal,West Ham
+2017-18,35,345,Newcastle,Everton
+2017-18,35,347,Man City,Swansea
+2017-18,35,348,Stoke,Burnley
+2017-18,35,349,Watford,Crystal Palace
+2017-18,35,350,West Brom,Liverpool
+2017-18,36,351,Brighton,Burnley
+2017-18,36,352,Leicester,Crystal Palace
+2017-18,36,353,Everton,Huddersfield
+2017-18,36,354,Stoke,Liverpool
+2017-18,36,355,Man Utd,Arsenal
+2017-18,36,356,West Brom,Newcastle
+2017-18,36,357,Southampton,Bournemouth
+2017-18,36,358,Chelsea,Swansea
+2017-18,36,359,Spurs,Watford
+2017-18,36,360,Man City,West Ham
+2017-18,37,304,Leicester,Arsenal
+2017-18,37,306,Man City,Brighton
+2017-18,37,308,Swansea,Southampton
+2017-18,37,309,Spurs,Newcastle
+2017-18,37,310,Man Utd,West Ham
+2017-18,37,344,Chelsea,Huddersfield
+2017-18,37,361,Arsenal,Burnley
+2017-18,37,362,Swansea,Bournemouth
+2017-18,37,363,Brighton,Man Utd
+2017-18,37,364,Chelsea,Liverpool
+2017-18,37,365,Southampton,Everton
+2017-18,37,366,Leicester,West Ham
+2017-18,37,367,Man City,Huddersfield
+2017-18,37,368,Stoke,Crystal Palace
+2017-18,37,369,Newcastle,Watford
+2017-18,37,370,West Brom,Spurs
+2017-18,38,371,Bournemouth,Burnley
+2017-18,38,372,West Brom,Crystal Palace
+2017-18,38,373,Arsenal,Huddersfield
+2017-18,38,374,Brighton,Liverpool
+2017-18,38,375,Man Utd,Watford
+2017-18,38,376,Newcastle,Chelsea
+2017-18,38,377,Man City,Southampton
+2017-18,38,378,Stoke,Swansea
+2017-18,38,379,Leicester,Spurs
+2017-18,38,380,Everton,West Ham
+2020-21,1,1,Crystal Palace,Southampton
+2020-21,1,2,Arsenal,Fulham
+2020-21,1,3,Liverpool,Leeds
+2020-21,1,4,Spurs,Everton
+2020-21,1,5,West Brom,Leicester
+2020-21,1,6,Newcastle,West Ham
+2020-21,1,7,Chelsea,Brighton
+2020-21,1,8,Wolves,Sheffield Utd
+2020-21,2,9,Arsenal,West Ham
+2020-21,2,10,Aston Villa,Sheffield Utd
+2020-21,2,11,Chelsea,Liverpool
+2020-21,2,12,West Brom,Everton
+2020-21,2,13,Leeds,Fulham
+2020-21,2,14,Burnley,Leicester
+2020-21,2,15,Crystal Palace,Man Utd
+2020-21,2,16,Newcastle,Brighton
+2020-21,2,17,Spurs,Southampton
+2020-21,2,18,Man City,Wolves
+2020-21,3,19,Man Utd,Brighton
+2020-21,3,20,Burnley,Southampton
+2020-21,3,21,Crystal Palace,Everton
+2020-21,3,22,Aston Villa,Fulham
+2020-21,3,23,Arsenal,Liverpool
+2020-21,3,24,Man City,Leicester
+2020-21,3,25,Leeds,Sheffield Utd
+2020-21,3,26,Spurs,Newcastle
+2020-21,3,27,Chelsea,West Brom
+2020-21,3,28,Wolves,West Ham
+2020-21,4,29,Arsenal,Sheffield Utd
+2020-21,4,30,Aston Villa,Liverpool
+2020-21,4,31,Crystal Palace,Chelsea
+2020-21,4,32,Everton,Brighton
+2020-21,4,33,Man City,Leeds
+2020-21,4,34,Leicester,West Ham
+2020-21,4,35,Spurs,Man Utd
+2020-21,4,36,Burnley,Newcastle
+2020-21,4,37,Southampton,West Brom
+2020-21,4,38,Wolves,Fulham
+2020-21,5,39,Chelsea,Southampton
+2020-21,5,40,Crystal Palace,Brighton
+2020-21,5,41,Liverpool,Everton
+2020-21,5,42,Leeds,Wolves
+2020-21,5,43,Aston Villa,Leicester
+2020-21,5,44,Arsenal,Man City
+2020-21,5,45,Newcastle,Man Utd
+2020-21,5,46,Fulham,Sheffield Utd
+2020-21,5,47,Spurs,West Ham
+2020-21,5,48,Burnley,West Brom
+2020-21,6,49,Arsenal,Leicester
+2020-21,6,50,Aston Villa,Leeds
+2020-21,6,51,West Brom,Brighton
+2020-21,6,52,Spurs,Burnley
+2020-21,6,53,Fulham,Crystal Palace
+2020-21,6,54,Liverpool,Sheffield Utd
+2020-21,6,55,Chelsea,Man Utd
+2020-21,6,56,Everton,Southampton
+2020-21,6,57,Man City,West Ham
+2020-21,6,58,Wolves,Newcastle
+2020-21,7,59,Aston Villa,Southampton
+2020-21,7,60,Chelsea,Burnley
+2020-21,7,61,West Brom,Fulham
+2020-21,7,62,Leeds,Leicester
+2020-21,7,63,Liverpool,West Ham
+2020-21,7,64,Arsenal,Man Utd
+2020-21,7,65,Everton,Newcastle
+2020-21,7,66,Sheffield Utd,Man City
+2020-21,7,67,Spurs,Brighton
+2020-21,7,68,Wolves,Crystal Palace
+2020-21,8,69,Aston Villa,Arsenal
+2020-21,8,70,Burnley,Brighton
+2020-21,8,71,Chelsea,Sheffield Utd
+2020-21,8,72,Leeds,Crystal Palace
+2020-21,8,73,Everton,Man Utd
+2020-21,8,74,Wolves,Leicester
+2020-21,8,75,Liverpool,Man City
+2020-21,8,76,Newcastle,Southampton
+2020-21,8,77,Spurs,West Brom
+2020-21,8,78,Fulham,West Ham
+2020-21,9,79,Aston Villa,Brighton
+2020-21,9,80,Burnley,Crystal Palace
+2020-21,9,81,Everton,Fulham
+2020-21,9,82,Arsenal,Leeds
+2020-21,9,83,Liverpool,Leicester
+2020-21,9,84,West Brom,Man Utd
+2020-21,9,85,Chelsea,Newcastle
+2020-21,9,86,Sheffield Utd,West Ham
+2020-21,9,87,Spurs,Man City
+2020-21,9,88,Wolves,Southampton
+2020-21,10,89,Arsenal,Wolves
+2020-21,10,90,Liverpool,Brighton
+2020-21,10,91,Chelsea,Spurs
+2020-21,10,92,Newcastle,Crystal Palace
+2020-21,10,93,Everton,Leeds
+2020-21,10,94,Fulham,Leicester
+2020-21,10,95,Burnley,Man City
+2020-21,10,96,Man Utd,Southampton
+2020-21,10,97,West Brom,Sheffield Utd
+2020-21,10,98,Aston Villa,West Ham
+2020-21,11,100,Brighton,Southampton
+2020-21,11,101,Everton,Burnley
+2020-21,11,102,Chelsea,Leeds
+2020-21,11,103,Liverpool,Wolves
+2020-21,11,104,Fulham,Man City
+2020-21,11,105,Leicester,Sheffield Utd
+2020-21,11,106,Spurs,Arsenal
+2020-21,11,107,Crystal Palace,West Brom
+2020-21,11,108,Man Utd,West Ham
+2020-21,12,109,Arsenal,Burnley
+2020-21,12,110,Spurs,Crystal Palace
+2020-21,12,111,Chelsea,Everton
+2020-21,12,112,Liverpool,Fulham
+2020-21,12,113,Leeds,West Ham
+2020-21,12,114,Leicester,Brighton
+2020-21,12,115,Man Utd,Man City
+2020-21,12,116,Newcastle,West Brom
+2020-21,12,117,Sheffield Utd,Southampton
+2020-21,12,118,Aston Villa,Wolves
+2020-21,13,119,Arsenal,Southampton
+2020-21,13,120,Aston Villa,Burnley
+2020-21,13,121,Fulham,Brighton
+2020-21,13,122,Leeds,Newcastle
+2020-21,13,123,Everton,Leicester
+2020-21,13,124,Sheffield Utd,Man Utd
+2020-21,13,125,Crystal Palace,West Ham
+2020-21,13,126,Chelsea,Wolves
+2020-21,13,127,Spurs,Liverpool
+2020-21,13,128,West Brom,Man City
+2020-21,14,129,Sheffield Utd,Brighton
+2020-21,14,130,Wolves,Burnley
+2020-21,14,131,Chelsea,West Ham
+2020-21,14,132,Liverpool,Crystal Palace
+2020-21,14,133,Everton,Arsenal
+2020-21,14,134,Leeds,Man Utd
+2020-21,14,135,Fulham,Newcastle
+2020-21,14,136,Man City,Southampton
+2020-21,14,137,Spurs,Leicester
+2020-21,14,138,Aston Villa,West Brom
+2020-21,15,139,Chelsea,Arsenal
+2020-21,15,140,Aston Villa,Crystal Palace
+2020-21,15,141,Fulham,Southampton
+2020-21,15,142,Leeds,Burnley
+2020-21,15,143,Leicester,Man Utd
+2020-21,15,144,Liverpool,West Brom
+2020-21,15,145,Newcastle,Man City
+2020-21,15,146,Everton,Sheffield Utd
+2020-21,15,147,Brighton,West Ham
+2020-21,15,148,Spurs,Wolves
+2020-21,16,149,Arsenal,Brighton
+2020-21,16,150,Burnley,Sheffield Utd
+2020-21,16,151,Chelsea,Aston Villa
+2020-21,16,152,Leicester,Crystal Palace
+2020-21,16,154,Wolves,Man Utd
+2020-21,16,155,Liverpool,Newcastle
+2020-21,16,156,West Ham,Southampton
+2020-21,16,158,Leeds,West Brom
+2020-21,17,159,Wolves,Brighton
+2020-21,17,161,Chelsea,Man City
+2020-21,17,162,Crystal Palace,Sheffield Utd
+2020-21,17,163,Everton,West Ham
+2020-21,17,164,Aston Villa,Man Utd
+2020-21,17,165,Leicester,Newcastle
+2020-21,17,166,Liverpool,Southampton
+2020-21,17,167,Spurs,Leeds
+2020-21,17,168,Arsenal,West Brom
+2020-21,18,157,Spurs,Fulham
+2020-21,18,169,Arsenal,Crystal Palace
+2020-21,18,174,Newcastle,Sheffield Utd
+2020-21,18,176,Everton,Wolves
+2020-21,18,178,Brighton,Man City
+2020-21,18,379,Burnley,Man Utd
+2020-21,19,99,Aston Villa,Newcastle
+2020-21,19,171,Fulham,Man Utd
+2020-21,19,173,Chelsea,Leicester
+2020-21,19,175,West Brom,West Ham
+2020-21,19,177,Liverpool,Burnley
+2020-21,19,179,Arsenal,Newcastle
+2020-21,19,181,Chelsea,Fulham
+2020-21,19,182,Leeds,Brighton
+2020-21,19,183,Leicester,Southampton
+2020-21,19,184,Liverpool,Man Utd
+2020-21,19,185,Crystal Palace,Man City
+2020-21,19,186,Spurs,Sheffield Utd
+2020-21,19,187,Burnley,West Ham
+2020-21,19,188,Wolves,West Brom
+2020-21,19,380,Aston Villa,Man City
+2020-21,20,189,Fulham,Brighton
+2020-21,20,190,Aston Villa,Burnley
+2020-21,20,191,Everton,Leicester
+2020-21,20,192,Sheffield Utd,Man Utd
+2020-21,20,193,West Brom,Man City
+2020-21,20,194,Chelsea,Wolves
+2020-21,20,195,Crystal Palace,West Ham
+2020-21,20,196,Leeds,Newcastle
+2020-21,20,197,Arsenal,Southampton
+2020-21,20,198,Spurs,Liverpool
+2020-21,21,199,Arsenal,Man Utd
+2020-21,21,200,Spurs,Brighton
+2020-21,21,201,Chelsea,Burnley
+2020-21,21,202,Wolves,Crystal Palace
+2020-21,21,203,Everton,Newcastle
+2020-21,21,204,Leeds,Leicester
+2020-21,21,205,Sheffield Utd,Man City
+2020-21,21,206,Aston Villa,Southampton
+2020-21,21,207,Fulham,West Brom
+2020-21,21,208,Liverpool,West Ham
+2020-21,22,209,Aston Villa,West Ham
+2020-21,22,210,Burnley,Man City
+2020-21,22,211,Fulham,Leicester
+2020-21,22,212,Everton,Leeds
+2020-21,22,213,Man Utd,Southampton
+2020-21,22,214,West Brom,Sheffield Utd
+2020-21,22,215,Arsenal,Wolves
+2020-21,22,216,Liverpool,Brighton
+2020-21,22,217,Crystal Palace,Newcastle
+2020-21,22,218,Chelsea,Spurs
+2020-21,23,219,Aston Villa,Arsenal
+2020-21,23,220,Burnley,Brighton
+2020-21,23,221,Fulham,West Ham
+2020-21,23,222,Leeds,Crystal Palace
+2020-21,23,223,Liverpool,Man City
+2020-21,23,224,Everton,Man Utd
+2020-21,23,225,Newcastle,Southampton
+2020-21,23,226,Chelsea,Sheffield Utd
+2020-21,23,227,Spurs,West Brom
+2020-21,23,228,Wolves,Leicester
+2020-21,24,153,Everton,Man City
+2020-21,24,160,Fulham,Burnley
+2020-21,24,229,Arsenal,Leeds
+2020-21,24,230,Aston Villa,Brighton
+2020-21,24,231,Chelsea,Newcastle
+2020-21,24,232,Burnley,Crystal Palace
+2020-21,24,233,Everton,Fulham
+2020-21,24,234,Liverpool,Leicester
+2020-21,24,235,Spurs,Man City
+2020-21,24,236,Wolves,Southampton
+2020-21,24,237,West Brom,Man Utd
+2020-21,24,238,Sheffield Utd,West Ham
+2020-21,25,172,Leeds,Southampton
+2020-21,25,239,Arsenal,Man City
+2020-21,25,240,Aston Villa,Leicester
+2020-21,25,241,Crystal Palace,Brighton
+2020-21,25,242,Burnley,West Brom
+2020-21,25,243,Fulham,Sheffield Utd
+2020-21,25,244,Liverpool,Everton
+2020-21,25,245,Newcastle,Man Utd
+2020-21,25,246,Chelsea,Southampton
+2020-21,25,247,Spurs,West Ham
+2020-21,25,248,Wolves,Leeds
+2020-21,26,249,Chelsea,Man Utd
+2020-21,26,250,Fulham,Crystal Palace
+2020-21,26,251,Everton,Southampton
+2020-21,26,252,Aston Villa,Leeds
+2020-21,26,253,Arsenal,Leicester
+2020-21,26,254,Man City,West Ham
+2020-21,26,255,Wolves,Newcastle
+2020-21,26,256,Liverpool,Sheffield Utd
+2020-21,26,257,Spurs,Burnley
+2020-21,26,258,West Brom,Brighton
+2020-21,26,280,Leicester,Burnley
+2020-21,26,281,Crystal Palace,Man Utd
+2020-21,26,283,Chelsea,Liverpool
+2020-21,26,284,Wolves,Man City
+2020-21,26,285,Aston Villa,Sheffield Utd
+2020-21,26,287,Everton,West Brom
+2020-21,26,321,Spurs,Fulham
+2020-21,27,259,Aston Villa,Wolves
+2020-21,27,260,Brighton,Leicester
+2020-21,27,261,Arsenal,Burnley
+2020-21,27,262,Everton,Chelsea
+2020-21,27,263,Fulham,Liverpool
+2020-21,27,264,Man City,Man Utd
+2020-21,27,265,Southampton,Sheffield Utd
+2020-21,27,266,Crystal Palace,Spurs
+2020-21,27,267,West Brom,Newcastle
+2020-21,27,268,West Ham,Leeds
+2020-21,27,325,Southampton,Man City
+2020-21,28,269,Spurs,Arsenal
+2020-21,28,270,Crystal Palace,West Brom
+2020-21,28,271,Everton,Burnley
+2020-21,28,272,Man City,Fulham
+2020-21,28,273,Chelsea,Leeds
+2020-21,28,274,Sheffield Utd,Leicester
+2020-21,28,275,West Ham,Man Utd
+2020-21,28,276,Aston Villa,Newcastle
+2020-21,28,277,Southampton,Brighton
+2020-21,28,278,Liverpool,Wolves
+2020-21,29,170,Spurs,Aston Villa
+2020-21,29,279,Brighton,Newcastle
+2020-21,29,282,Leeds,Fulham
+2020-21,29,288,West Ham,Arsenal
+2020-21,30,289,Arsenal,Liverpool
+2020-21,30,290,Aston Villa,Fulham
+2020-21,30,291,Chelsea,West Brom
+2020-21,30,292,Crystal Palace,Everton
+2020-21,30,293,Sheffield Utd,Leeds
+2020-21,30,294,Man City,Leicester
+2020-21,30,295,Brighton,Man Utd
+2020-21,30,296,Spurs,Newcastle
+2020-21,30,297,Southampton,Burnley
+2020-21,30,298,West Ham,Wolves
+2020-21,31,299,Brighton,Everton
+2020-21,31,300,Newcastle,Burnley
+2020-21,31,301,Crystal Palace,Chelsea
+2020-21,31,302,Fulham,Wolves
+2020-21,31,303,Aston Villa,Liverpool
+2020-21,31,304,Man City,Leeds
+2020-21,31,305,Sheffield Utd,Arsenal
+2020-21,31,306,Spurs,Man Utd
+2020-21,31,307,Southampton,West Brom
+2020-21,31,308,West Ham,Leicester
+2020-21,32,286,Southampton,Spurs
+2020-21,32,309,Arsenal,Fulham
+2020-21,32,310,Aston Villa,Man City
+2020-21,32,311,Brighton,Chelsea
+2020-21,32,312,Spurs,Everton
+2020-21,32,313,Leeds,Liverpool
+2020-21,32,314,Leicester,West Brom
+2020-21,32,315,Man Utd,Burnley
+2020-21,32,316,West Ham,Newcastle
+2020-21,32,318,Sheffield Utd,Wolves
+2020-21,33,319,Arsenal,Everton
+2020-21,33,320,Aston Villa,West Brom
+2020-21,33,322,Leeds,Man Utd
+2020-21,33,323,Crystal Palace,Leicester
+2020-21,33,324,Liverpool,Newcastle
+2020-21,33,326,Sheffield Utd,Brighton
+2020-21,33,327,West Ham,Chelsea
+2020-21,33,328,Wolves,Burnley
+2020-21,34,329,Brighton,Leeds
+2020-21,34,330,West Ham,Burnley
+2020-21,34,331,Chelsea,Fulham
+2020-21,34,332,Crystal Palace,Man City
+2020-21,34,333,Aston Villa,Everton
+2020-21,34,335,Arsenal,Newcastle
+2020-21,34,336,Southampton,Leicester
+2020-21,34,337,Sheffield Utd,Spurs
+2020-21,34,338,West Brom,Wolves
+2020-21,35,180,Aston Villa,Everton
+2020-21,35,317,Southampton,Crystal Palace
+2020-21,35,334,Man Utd,Liverpool
+2020-21,35,339,Arsenal,West Brom
+2020-21,35,340,Aston Villa,Man Utd
+2020-21,35,341,Fulham,Burnley
+2020-21,35,342,Spurs,Leeds
+2020-21,35,343,Leicester,Newcastle
+2020-21,35,344,Southampton,Liverpool
+2020-21,35,345,Man City,Chelsea
+2020-21,35,346,Crystal Palace,Sheffield Utd
+2020-21,35,347,West Ham,Everton
+2020-21,35,348,Brighton,Wolves
+2020-21,35,352,Leicester,Man Utd
+2020-21,35,354,Arsenal,Chelsea
+2020-21,36,349,West Ham,Brighton
+2020-21,36,350,Leeds,Burnley
+2020-21,36,351,Sheffield Utd,Everton
+2020-21,36,353,West Brom,Liverpool
+2020-21,36,355,Crystal Palace,Aston Villa
+2020-21,36,356,Man City,Newcastle
+2020-21,36,357,Southampton,Fulham
+2020-21,36,358,Spurs,Wolves
+2020-21,37,359,Brighton,Man City
+2020-21,37,360,Liverpool,Burnley
+2020-21,37,361,Chelsea,Leicester
+2020-21,37,362,Crystal Palace,Arsenal
+2020-21,37,363,Everton,Wolves
+2020-21,37,364,Man Utd,Fulham
+2020-21,37,365,Sheffield Utd,Newcastle
+2020-21,37,366,Southampton,Leeds
+2020-21,37,367,Spurs,Aston Villa
+2020-21,37,368,West Ham,West Brom
+2020-21,38,369,Brighton,Arsenal
+2020-21,38,370,Aston Villa,Chelsea
+2020-21,38,371,Fulham,Newcastle
+2020-21,38,372,Leeds,West Brom
+2020-21,38,373,Spurs,Leicester
+2020-21,38,374,Crystal Palace,Liverpool
+2020-21,38,375,Man City,Everton
+2020-21,38,376,Sheffield Utd,Burnley
+2020-21,38,377,Southampton,West Ham
+2020-21,38,378,Man Utd,Wolves
+2021-22,1,1,Brentford,Arsenal
+2021-22,1,2,Burnley,Brighton
+2021-22,1,3,Chelsea,Crystal Palace
+2021-22,1,4,Everton,Southampton
+2021-22,1,5,Leicester,Wolves
+2021-22,1,6,Leeds,Man Utd
+2021-22,1,7,Norwich,Liverpool
+2021-22,1,8,Watford,Aston Villa
+2021-22,1,9,West Ham,Newcastle
+2021-22,1,10,Spurs,Man City
+2021-22,2,11,Newcastle,Aston Villa
+2021-22,2,12,Brighton,Watford
+2021-22,2,13,Brentford,Crystal Palace
+2021-22,2,14,Leeds,Everton
+2021-22,2,15,Burnley,Liverpool
+2021-22,2,16,Man City,Norwich
+2021-22,2,17,Spurs,Wolves
+2021-22,2,18,Arsenal,Chelsea
+2021-22,2,19,Southampton,Man Utd
+2021-22,2,20,Leicester,West Ham
+2021-22,3,21,Brentford,Aston Villa
+2021-22,3,22,Brighton,Everton
+2021-22,3,23,Chelsea,Liverpool
+2021-22,3,24,Arsenal,Man City
+2021-22,3,25,Newcastle,Southampton
+2021-22,3,26,Leicester,Norwich
+2021-22,3,27,Spurs,Watford
+2021-22,3,28,West Ham,Crystal Palace
+2021-22,3,29,Burnley,Leeds
+2021-22,3,30,Wolves,Man Utd
+2021-22,4,31,Arsenal,Norwich
+2021-22,4,32,Brentford,Brighton
+2021-22,4,33,Chelsea,Aston Villa
+2021-22,4,34,Spurs,Crystal Palace
+2021-22,4,35,Burnley,Everton
+2021-22,4,36,Leeds,Liverpool
+2021-22,4,37,Leicester,Man City
+2021-22,4,38,Newcastle,Man Utd
+2021-22,4,39,West Ham,Southampton
+2021-22,4,40,Wolves,Watford
+2021-22,5,41,Everton,Aston Villa
+2021-22,5,42,Leicester,Brighton
+2021-22,5,43,Burnley,Arsenal
+2021-22,5,44,Crystal Palace,Liverpool
+2021-22,5,45,Man City,Southampton
+2021-22,5,46,Leeds,Newcastle
+2021-22,5,47,Norwich,Watford
+2021-22,5,48,Spurs,Chelsea
+2021-22,5,49,West Ham,Man Utd
+2021-22,5,50,Brentford,Wolves
+2021-22,6,51,Spurs,Arsenal
+2021-22,6,52,Brentford,Liverpool
+2021-22,6,53,Chelsea,Man City
+2021-22,6,54,Brighton,Crystal Palace
+2021-22,6,55,Norwich,Everton
+2021-22,6,56,Leeds,West Ham
+2021-22,6,57,Burnley,Leicester
+2021-22,6,58,Aston Villa,Man Utd
+2021-22,6,59,Wolves,Southampton
+2021-22,6,60,Newcastle,Watford
+2021-22,7,61,Arsenal,Brighton
+2021-22,7,62,Burnley,Norwich
+2021-22,7,63,Chelsea,Southampton
+2021-22,7,64,Leicester,Crystal Palace
+2021-22,7,65,Leeds,Watford
+2021-22,7,66,Man City,Liverpool
+2021-22,7,67,Everton,Man Utd
+2021-22,7,68,Spurs,Aston Villa
+2021-22,7,69,Brentford,West Ham
+2021-22,7,70,Wolves,Newcastle
+2021-22,8,71,Arsenal,Crystal Palace
+2021-22,8,72,Wolves,Aston Villa
+2021-22,8,73,Brentford,Chelsea
+2021-22,8,74,West Ham,Everton
+2021-22,8,75,Leicester,Man Utd
+2021-22,8,76,Burnley,Man City
+2021-22,8,77,Spurs,Newcastle
+2021-22,8,78,Norwich,Brighton
+2021-22,8,79,Leeds,Southampton
+2021-22,8,80,Liverpool,Watford
+2021-22,9,81,Arsenal,Aston Villa
+2021-22,9,82,Brentford,Leicester
+2021-22,9,83,Man City,Brighton
+2021-22,9,84,Chelsea,Norwich
+2021-22,9,85,Newcastle,Crystal Palace
+2021-22,9,86,Everton,Watford
+2021-22,9,87,Leeds,Wolves
+2021-22,9,88,Liverpool,Man Utd
+2021-22,9,89,Burnley,Southampton
+2021-22,9,90,Spurs,West Ham
+2021-22,10,91,West Ham,Aston Villa
+2021-22,10,92,Burnley,Brentford
+2021-22,10,93,Arsenal,Leicester
+2021-22,10,94,Brighton,Liverpool
+2021-22,10,95,Man City,Crystal Palace
+2021-22,10,96,Chelsea,Newcastle
+2021-22,10,97,Leeds,Norwich
+2021-22,10,98,Spurs,Man Utd
+2021-22,10,99,Southampton,Watford
+2021-22,10,100,Wolves,Everton
+2021-22,11,101,Arsenal,Watford
+2021-22,11,102,Brentford,Norwich
+2021-22,11,103,Brighton,Newcastle
+2021-22,11,104,Burnley,Chelsea
+2021-22,11,105,Wolves,Crystal Palace
+2021-22,11,106,Spurs,Everton
+2021-22,11,107,Leicester,Leeds
+2021-22,11,108,Man City,Man Utd
+2021-22,11,109,Southampton,Aston Villa
+2021-22,11,110,West Ham,Liverpool
+2021-22,12,111,Brighton,Aston Villa
+2021-22,12,112,Burnley,Crystal Palace
+2021-22,12,113,Leicester,Chelsea
+2021-22,12,114,Arsenal,Liverpool
+2021-22,12,115,Man City,Everton
+2021-22,12,116,Brentford,Newcastle
+2021-22,12,117,Norwich,Southampton
+2021-22,12,118,Spurs,Leeds
+2021-22,12,119,Watford,Man Utd
+2021-22,12,120,West Ham,Wolves
+2021-22,13,121,Arsenal,Newcastle
+2021-22,13,122,Brentford,Everton
+2021-22,13,123,Leeds,Brighton
+2021-22,13,125,Chelsea,Man Utd
+2021-22,13,126,Crystal Palace,Aston Villa
+2021-22,13,127,Leicester,Watford
+2021-22,13,128,Liverpool,Southampton
+2021-22,13,129,Man City,West Ham
+2021-22,13,130,Norwich,Wolves
+2021-22,14,131,Man City,Aston Villa
+2021-22,14,132,Everton,Liverpool
+2021-22,14,133,Leeds,Crystal Palace
+2021-22,14,134,Arsenal,Man Utd
+2021-22,14,135,Chelsea,Watford
+2021-22,14,136,West Ham,Brighton
+2021-22,14,137,Burnley,Wolves
+2021-22,14,138,Norwich,Newcastle
+2021-22,14,139,Leicester,Southampton
+2021-22,14,140,Spurs,Brentford
+2021-22,15,141,Leicester,Aston Villa
+2021-22,15,142,Arsenal,Everton
+2021-22,15,143,Brentford,Leeds
+2021-22,15,144,Crystal Palace,Man Utd
+2021-22,15,145,Burnley,Newcastle
+2021-22,15,146,Brighton,Southampton
+2021-22,15,147,Spurs,Norwich
+2021-22,15,148,Man City,Watford
+2021-22,15,149,Chelsea,West Ham
+2021-22,15,150,Wolves,Liverpool
+2021-22,16,151,Arsenal,Southampton
+2021-22,16,152,Brentford,Watford
+2021-22,16,154,Burnley,West Ham
+2021-22,16,155,Chelsea,Leeds
+2021-22,16,156,Everton,Crystal Palace
+2021-22,16,157,Leicester,Newcastle
+2021-22,16,158,Liverpool,Aston Villa
+2021-22,16,159,Man City,Wolves
+2021-22,16,160,Norwich,Man Utd
+2021-22,17,161,Arsenal,West Ham
+2021-22,17,163,Wolves,Brighton
+2021-22,17,165,Crystal Palace,Southampton
+2021-22,17,167,Norwich,Aston Villa
+2021-22,17,168,Chelsea,Everton
+2021-22,17,169,Newcastle,Liverpool
+2021-22,17,170,Leeds,Man City
+2021-22,18,173,Arsenal,Leeds
+2021-22,18,175,Man City,Newcastle
+2021-22,18,177,Spurs,Liverpool
+2021-22,18,180,Chelsea,Wolves
+2021-22,19,181,Chelsea,Aston Villa
+2021-22,19,182,Brentford,Brighton
+2021-22,19,185,Leicester,Man City
+2021-22,19,186,Newcastle,Man Utd
+2021-22,19,187,Arsenal,Norwich
+2021-22,19,188,Spurs,Crystal Palace
+2021-22,19,189,West Ham,Southampton
+2021-22,20,192,Brentford,Man City
+2021-22,20,193,Chelsea,Brighton
+2021-22,20,194,Norwich,Crystal Palace
+2021-22,20,197,Leicester,Liverpool
+2021-22,20,198,Burnley,Man Utd
+2021-22,20,199,Spurs,Southampton
+2021-22,20,200,West Ham,Watford
+2021-22,21,176,Southampton,Brentford
+2021-22,21,179,West Ham,Norwich
+2021-22,21,201,Arsenal,Man City
+2021-22,21,202,Aston Villa,Brentford
+2021-22,21,203,Chelsea,Liverpool
+2021-22,21,204,West Ham,Crystal Palace
+2021-22,21,205,Everton,Brighton
+2021-22,21,206,Burnley,Leeds
+2021-22,21,208,Man Utd,Wolves
+2021-22,21,210,Spurs,Watford
+2021-22,22,162,Man Utd,Brentford
+2021-22,22,166,Leicester,Spurs
+2021-22,22,211,Aston Villa,Man Utd
+2021-22,22,212,Crystal Palace,Brighton
+2021-22,22,214,Liverpool,Brentford
+2021-22,22,215,Chelsea,Man City
+2021-22,22,216,Newcastle,Watford
+2021-22,22,217,Everton,Norwich
+2021-22,22,219,West Ham,Leeds
+2021-22,22,220,Southampton,Wolves
+2021-22,22,232,Chelsea,Brighton
+2021-22,23,164,Burnley,Watford
+2021-22,23,221,Burnley,Arsenal
+2021-22,23,222,Brentford,Wolves
+2021-22,23,223,Spurs,Chelsea
+2021-22,23,224,Crystal Palace,Liverpool
+2021-22,23,225,Everton,Aston Villa
+2021-22,23,226,Leeds,Newcastle
+2021-22,23,227,Leicester,Brighton
+2021-22,23,228,West Ham,Man Utd
+2021-22,23,229,Man City,Southampton
+2021-22,23,230,Norwich,Watford
+2021-22,24,231,Leeds,Aston Villa
+2021-22,24,233,Burnley,Man Utd
+2021-22,24,234,Norwich,Crystal Palace
+2021-22,24,235,West Ham,Watford
+2021-22,24,236,Arsenal,Wolves
+2021-22,24,237,Leicester,Liverpool
+2021-22,24,238,Brentford,Man City
+2021-22,24,239,Newcastle,Everton
+2021-22,24,240,Spurs,Southampton
+2021-22,25,174,Brighton,Man Utd
+2021-22,25,241,Brentford,Crystal Palace
+2021-22,25,242,Burnley,Liverpool
+2021-22,25,244,Leeds,Everton
+2021-22,25,245,Leicester,West Ham
+2021-22,25,246,Southampton,Man Utd
+2021-22,25,247,Newcastle,Aston Villa
+2021-22,25,248,Man City,Norwich
+2021-22,25,249,Spurs,Wolves
+2021-22,25,250,Brighton,Watford
+2021-22,26,124,Burnley,Spurs
+2021-22,26,178,Crystal Palace,Watford
+2021-22,26,184,Leeds,Liverpool
+2021-22,26,191,Arsenal,Wolves
+2021-22,26,251,Brentford,Arsenal
+2021-22,26,252,Watford,Aston Villa
+2021-22,26,253,Burnley,Brighton
+2021-22,26,254,Chelsea,Crystal Palace
+2021-22,26,255,Leeds,Man Utd
+2021-22,26,256,Norwich,Liverpool
+2021-22,26,257,Spurs,Man City
+2021-22,26,258,Everton,Southampton
+2021-22,26,259,West Ham,Newcastle
+2021-22,26,260,Leicester,Wolves
+2021-22,27,213,Leicester,Burnley
+2021-22,27,262,Newcastle,Brentford
+2021-22,27,263,Aston Villa,Brighton
+2021-22,27,265,Crystal Palace,Burnley
+2021-22,27,266,Everton,Man City
+2021-22,27,267,Spurs,Leeds
+2021-22,27,268,Man Utd,Watford
+2021-22,27,269,Southampton,Norwich
+2021-22,27,270,West Ham,Wolves
+2021-22,28,190,Wolves,Watford
+2021-22,28,196,Leeds,Aston Villa
+2021-22,28,209,Newcastle,Southampton
+2021-22,28,271,Southampton,Aston Villa
+2021-22,28,272,Burnley,Chelsea
+2021-22,28,273,Leicester,Leeds
+2021-22,28,274,West Ham,Liverpool
+2021-22,28,275,Man City,Man Utd
+2021-22,28,276,Brighton,Newcastle
+2021-22,28,277,Brentford,Norwich
+2021-22,28,278,Spurs,Everton
+2021-22,28,279,Arsenal,Watford
+2021-22,28,280,Wolves,Crystal Palace
+2021-22,28,297,Chelsea,Norwich
+2021-22,29,153,Spurs,Brighton
+2021-22,29,195,Newcastle,Everton
+2021-22,29,261,Arsenal,Liverpool
+2021-22,29,281,Leicester,Arsenal
+2021-22,29,282,Brentford,Burnley
+2021-22,29,283,Brighton,Liverpool
+2021-22,29,284,Chelsea,Newcastle
+2021-22,29,285,Man City,Crystal Palace
+2021-22,29,286,Wolves,Everton
+2021-22,29,287,Leeds,Norwich
+2021-22,29,288,Spurs,Man Utd
+2021-22,29,289,Southampton,Watford
+2021-22,29,290,West Ham,Aston Villa
+2021-22,30,291,Arsenal,Aston Villa
+2021-22,30,293,Brentford,Leicester
+2021-22,30,298,Spurs,West Ham
+2021-22,30,300,Leeds,Wolves
+2021-22,31,183,Everton,Burnley
+2021-22,31,301,Brighton,Norwich
+2021-22,31,302,Man City,Burnley
+2021-22,31,303,Chelsea,Brentford
+2021-22,31,304,Arsenal,Crystal Palace
+2021-22,31,305,Southampton,Leeds
+2021-22,31,306,Liverpool,Watford
+2021-22,31,307,Leicester,Man Utd
+2021-22,31,308,Spurs,Newcastle
+2021-22,31,309,Everton,West Ham
+2021-22,31,310,Aston Villa,Wolves
+2021-22,32,311,Arsenal,Brighton
+2021-22,32,312,Spurs,Aston Villa
+2021-22,32,313,West Ham,Brentford
+2021-22,32,314,Everton,Man Utd
+2021-22,32,315,Leicester,Crystal Palace
+2021-22,32,316,Man City,Liverpool
+2021-22,32,317,Newcastle,Wolves
+2021-22,32,318,Burnley,Norwich
+2021-22,32,319,Chelsea,Southampton
+2021-22,32,320,Leeds,Watford
+2021-22,33,172,Leicester,Everton
+2021-22,33,243,Chelsea,Arsenal
+2021-22,33,292,Southampton,Burnley
+2021-22,33,294,Man Utd,Liverpool
+2021-22,33,295,Man City,Brighton
+2021-22,33,296,Crystal Palace,Newcastle
+2021-22,33,324,Man Utd,Norwich
+2021-22,33,325,Leicester,Newcastle
+2021-22,33,326,Southampton,Arsenal
+2021-22,33,327,Spurs,Brighton
+2021-22,33,328,Brentford,Watford
+2021-22,33,329,West Ham,Burnley
+2021-22,34,331,Arsenal,Man Utd
+2021-22,34,332,Spurs,Brentford
+2021-22,34,333,Southampton,Brighton
+2021-22,34,334,Burnley,Wolves
+2021-22,34,335,Chelsea,West Ham
+2021-22,34,336,Leeds,Crystal Palace
+2021-22,34,337,Leicester,Aston Villa
+2021-22,34,338,Everton,Liverpool
+2021-22,34,339,Man City,Watford
+2021-22,34,340,Newcastle,Norwich
+2021-22,34,364,Chelsea,Man Utd
+2021-22,35,341,Aston Villa,Norwich
+2021-22,35,342,Chelsea,Everton
+2021-22,35,343,Leeds,Man City
+2021-22,35,344,Man Utd,Brentford
+2021-22,35,345,Liverpool,Newcastle
+2021-22,35,346,Southampton,Crystal Palace
+2021-22,35,347,Leicester,Spurs
+2021-22,35,348,Burnley,Watford
+2021-22,35,349,Arsenal,West Ham
+2021-22,35,350,Brighton,Wolves
+2021-22,36,207,Leicester,Norwich
+2021-22,36,218,Arsenal,Spurs
+2021-22,36,299,Everton,Watford
+2021-22,36,321,Liverpool,Aston Villa
+2021-22,36,323,Chelsea,Leeds
+2021-22,36,330,Man City,Wolves
+2021-22,36,351,Arsenal,Leeds
+2021-22,36,352,Brentford,Southampton
+2021-22,36,353,Brighton,Man Utd
+2021-22,36,354,Burnley,Aston Villa
+2021-22,36,355,Chelsea,Wolves
+2021-22,36,356,Crystal Palace,Watford
+2021-22,36,357,Leicester,Everton
+2021-22,36,358,Spurs,Liverpool
+2021-22,36,359,Man City,Newcastle
+2021-22,36,360,Norwich,West Ham
+2021-22,37,171,Burnley,Aston Villa
+2021-22,37,264,Leicester,Chelsea
+2021-22,37,322,Everton,Crystal Palace
+2021-22,37,361,Crystal Palace,Aston Villa
+2021-22,37,362,Brentford,Everton
+2021-22,37,363,Brighton,Leeds
+2021-22,37,365,Newcastle,Arsenal
+2021-22,37,366,Southampton,Liverpool
+2021-22,37,367,Spurs,Burnley
+2021-22,37,368,Watford,Leicester
+2021-22,37,369,Man City,West Ham
+2021-22,37,370,Wolves,Norwich
+2021-22,38,371,Arsenal,Everton
+2021-22,38,372,Leeds,Brentford
+2021-22,38,373,West Ham,Brighton
+2021-22,38,374,Burnley,Newcastle
+2021-22,38,375,Chelsea,Watford
+2021-22,38,376,Crystal Palace,Man Utd
+2021-22,38,377,Leicester,Southampton
+2021-22,38,378,Wolves,Liverpool
+2021-22,38,379,Man City,Aston Villa
+2021-22,38,380,Spurs,Norwich
+2022-23,1,1,Arsenal,Crystal Palace
+2022-23,1,2,Aston Villa,Bournemouth
+2022-23,1,3,Everton,Chelsea
+2022-23,1,4,Fulham,Liverpool
+2022-23,1,5,Leeds,Wolves
+2022-23,1,6,Brentford,Leicester
+2022-23,1,7,Nott'm Forest,Newcastle
+2022-23,1,8,Spurs,Southampton
+2022-23,1,9,Man Utd,Brighton
+2022-23,1,10,Man City,West Ham
+2022-23,2,11,Arsenal,Leicester
+2022-23,2,12,Aston Villa,Everton
+2022-23,2,13,Man Utd,Brentford
+2022-23,2,14,Brighton,Newcastle
+2022-23,2,15,Spurs,Chelsea
+2022-23,2,16,Liverpool,Crystal Palace
+2022-23,2,17,Man City,Bournemouth
+2022-23,2,18,West Ham,Nott'm Forest
+2022-23,2,19,Leeds,Southampton
+2022-23,2,20,Fulham,Wolves
+2022-23,3,21,Arsenal,Bournemouth
+2022-23,3,22,Aston Villa,Crystal Palace
+2022-23,3,23,Everton,Nott'm Forest
+2022-23,3,24,Fulham,Brentford
+2022-23,3,25,Leeds,Chelsea
+2022-23,3,26,Leicester,Southampton
+2022-23,3,27,Man Utd,Liverpool
+2022-23,3,28,Man City,Newcastle
+2022-23,3,29,Spurs,Wolves
+2022-23,3,30,Brighton,West Ham
+2022-23,4,31,Arsenal,Fulham
+2022-23,4,32,Aston Villa,West Ham
+2022-23,4,33,Everton,Brentford
+2022-23,4,34,Brighton,Leeds
+2022-23,4,35,Leicester,Chelsea
+2022-23,4,36,Liverpool,Bournemouth
+2022-23,4,37,Man City,Crystal Palace
+2022-23,4,38,Spurs,Nott'm Forest
+2022-23,4,39,Man Utd,Southampton
+2022-23,4,40,Wolves,Newcastle
+2022-23,5,41,Aston Villa,Arsenal
+2022-23,5,42,Wolves,Bournemouth
+2022-23,5,43,Brentford,Crystal Palace
+2022-23,5,44,Brighton,Fulham
+2022-23,5,45,Everton,Leeds
+2022-23,5,46,Man Utd,Leicester
+2022-23,5,47,West Ham,Spurs
+2022-23,5,48,Liverpool,Newcastle
+2022-23,5,49,Man City,Nott'm Forest
+2022-23,5,50,Chelsea,Southampton
+2022-23,6,51,Aston Villa,Man City
+2022-23,6,52,Leeds,Brentford
+2022-23,6,53,Brighton,Leicester
+2022-23,6,54,West Ham,Chelsea
+2022-23,6,55,Everton,Liverpool
+2022-23,6,56,Arsenal,Man Utd
+2022-23,6,57,Crystal Palace,Newcastle
+2022-23,6,58,Nott'm Forest,Bournemouth
+2022-23,6,59,Fulham,Spurs
+2022-23,6,60,Wolves,Southampton
+2022-23,8,71,Aston Villa,Southampton
+2022-23,8,72,Arsenal,Brentford
+2022-23,8,75,Everton,West Ham
+2022-23,8,77,Newcastle,Bournemouth
+2022-23,8,78,Fulham,Nott'm Forest
+2022-23,8,79,Spurs,Leicester
+2022-23,8,80,Man City,Wolves
+2022-23,9,81,Arsenal,Spurs
+2022-23,9,82,Brentford,Bournemouth
+2022-23,9,83,Crystal Palace,Chelsea
+2022-23,9,84,Fulham,Newcastle
+2022-23,9,85,Aston Villa,Leeds
+2022-23,9,86,Nott'm Forest,Leicester
+2022-23,9,87,Brighton,Liverpool
+2022-23,9,88,Man Utd,Man City
+2022-23,9,89,Everton,Southampton
+2022-23,9,90,West Ham,Wolves
+2022-23,10,91,Arsenal,Liverpool
+2022-23,10,92,Leicester,Bournemouth
+2022-23,10,93,Brighton,Spurs
+2022-23,10,94,Wolves,Chelsea
+2022-23,10,95,Leeds,Crystal Palace
+2022-23,10,96,Everton,Man Utd
+2022-23,10,97,Man City,Southampton
+2022-23,10,98,Brentford,Newcastle
+2022-23,10,99,Aston Villa,Nott'm Forest
+2022-23,10,100,Fulham,West Ham
+2022-23,11,101,Aston Villa,Chelsea
+2022-23,11,102,Brighton,Brentford
+2022-23,11,103,Fulham,Bournemouth
+2022-23,11,104,Arsenal,Leeds
+2022-23,11,105,Crystal Palace,Leicester
+2022-23,11,106,Man City,Liverpool
+2022-23,11,107,Man Utd,Newcastle
+2022-23,11,108,West Ham,Southampton
+2022-23,11,109,Everton,Spurs
+2022-23,11,110,Wolves,Nott'm Forest
+2022-23,12,112,Bournemouth,Southampton
+2022-23,12,113,Brentford,Chelsea
+2022-23,12,114,Brighton,Nott'm Forest
+2022-23,12,115,Wolves,Crystal Palace
+2022-23,12,116,Aston Villa,Fulham
+2022-23,12,117,Leeds,Leicester
+2022-23,12,118,Liverpool,West Ham
+2022-23,12,119,Man Utd,Spurs
+2022-23,12,120,Everton,Newcastle
+2022-23,13,121,Aston Villa,Brentford
+2022-23,13,122,Man Utd,Chelsea
+2022-23,13,123,Everton,Crystal Palace
+2022-23,13,124,Fulham,Leeds
+2022-23,13,125,Man City,Brighton
+2022-23,13,126,Liverpool,Nott'm Forest
+2022-23,13,127,Arsenal,Southampton
+2022-23,13,128,Spurs,Newcastle
+2022-23,13,129,West Ham,Bournemouth
+2022-23,13,130,Wolves,Leicester
+2022-23,14,131,Arsenal,Nott'm Forest
+2022-23,14,132,Spurs,Bournemouth
+2022-23,14,133,Brentford,Wolves
+2022-23,14,134,Brighton,Chelsea
+2022-23,14,135,Crystal Palace,Southampton
+2022-23,14,136,Everton,Fulham
+2022-23,14,137,Man City,Leicester
+2022-23,14,138,Leeds,Liverpool
+2022-23,14,139,Man Utd,West Ham
+2022-23,14,140,Aston Villa,Newcastle
+2022-23,15,141,Aston Villa,Man Utd
+2022-23,15,142,Arsenal,Chelsea
+2022-23,15,143,Everton,Leicester
+2022-23,15,144,Leeds,Bournemouth
+2022-23,15,145,Man City,Fulham
+2022-23,15,146,Brentford,Nott'm Forest
+2022-23,15,147,Newcastle,Southampton
+2022-23,15,148,Liverpool,Spurs
+2022-23,15,149,West Ham,Crystal Palace
+2022-23,15,150,Brighton,Wolves
+2022-23,16,151,Everton,Bournemouth
+2022-23,16,152,Aston Villa,Brighton
+2022-23,16,153,Man Utd,Fulham
+2022-23,16,154,Liverpool,Southampton
+2022-23,16,155,Man City,Brentford
+2022-23,16,156,Newcastle,Chelsea
+2022-23,16,157,Crystal Palace,Nott'm Forest
+2022-23,16,158,Leeds,Spurs
+2022-23,16,159,West Ham,Leicester
+2022-23,16,160,Arsenal,Wolves
+2022-23,17,161,Arsenal,West Ham
+2022-23,17,162,Aston Villa,Liverpool
+2022-23,17,163,Spurs,Brentford
+2022-23,17,164,Chelsea,Bournemouth
+2022-23,17,165,Fulham,Crystal Palace
+2022-23,17,166,Everton,Wolves
+2022-23,17,167,Man City,Leeds
+2022-23,17,168,Leicester,Newcastle
+2022-23,17,169,Man Utd,Nott'm Forest
+2022-23,17,170,Brighton,Southampton
+2022-23,18,171,Crystal Palace,Bournemouth
+2022-23,18,172,Arsenal,Brighton
+2022-23,18,173,Fulham,Southampton
+2022-23,18,174,Liverpool,Leicester
+2022-23,18,175,Everton,Man City
+2022-23,18,176,Leeds,Newcastle
+2022-23,18,177,Nott'm Forest,Chelsea
+2022-23,18,178,Aston Villa,Spurs
+2022-23,18,179,West Ham,Brentford
+2022-23,18,180,Man Utd,Wolves
+2022-23,19,64,Fulham,Chelsea
+2022-23,19,181,Arsenal,Newcastle
+2022-23,19,182,Aston Villa,Wolves
+2022-23,19,183,Liverpool,Brentford
+2022-23,19,184,Man City,Chelsea
+2022-23,19,185,Spurs,Crystal Palace
+2022-23,19,186,Everton,Brighton
+2022-23,19,187,Leeds,West Ham
+2022-23,19,188,Fulham,Leicester
+2022-23,19,189,Man Utd,Bournemouth
+2022-23,19,190,Nott'm Forest,Southampton
+2022-23,20,63,Man Utd,Crystal Palace
+2022-23,20,68,Man City,Spurs
+2022-23,20,191,Aston Villa,Leeds
+2022-23,20,192,Brentford,Bournemouth
+2022-23,20,193,Brighton,Liverpool
+2022-23,20,194,Crystal Palace,Chelsea
+2022-23,20,195,Everton,Southampton
+2022-23,20,196,Man City,Man Utd
+2022-23,20,197,Fulham,Newcastle
+2022-23,20,198,Nott'm Forest,Leicester
+2022-23,20,199,Arsenal,Spurs
+2022-23,20,200,West Ham,Wolves
+2022-23,21,201,Arsenal,Man Utd
+2022-23,21,202,Nott'm Forest,Bournemouth
+2022-23,21,203,Crystal Palace,Newcastle
+2022-23,21,204,Fulham,Spurs
+2022-23,21,205,Leeds,Brentford
+2022-23,21,206,Brighton,Leicester
+2022-23,21,207,Liverpool,Chelsea
+2022-23,21,208,Man City,Wolves
+2022-23,21,209,Aston Villa,Southampton
+2022-23,21,210,Everton,West Ham
+2022-23,22,76,Man Utd,Leeds
+2022-23,22,211,Aston Villa,Leicester
+2022-23,22,212,Brentford,Southampton
+2022-23,22,213,Brighton,Bournemouth
+2022-23,22,214,Fulham,Chelsea
+2022-23,22,215,Everton,Arsenal
+2022-23,22,216,Man Utd,Crystal Palace
+2022-23,22,217,West Ham,Newcastle
+2022-23,22,218,Leeds,Nott'm Forest
+2022-23,22,219,Man City,Spurs
+2022-23,22,220,Liverpool,Wolves
+2022-23,23,111,Arsenal,Man City
+2022-23,23,221,Arsenal,Brentford
+2022-23,23,222,Newcastle,Bournemouth
+2022-23,23,223,Brighton,Crystal Palace
+2022-23,23,224,Fulham,Nott'm Forest
+2022-23,23,225,Man Utd,Leeds
+2022-23,23,226,Spurs,Leicester
+2022-23,23,227,Everton,Liverpool
+2022-23,23,228,Aston Villa,Man City
+2022-23,23,229,Wolves,Southampton
+2022-23,23,230,West Ham,Chelsea
+2022-23,24,231,Aston Villa,Arsenal
+2022-23,24,232,Brentford,Crystal Palace
+2022-23,24,233,Brighton,Fulham
+2022-23,24,234,Chelsea,Southampton
+2022-23,24,235,Everton,Leeds
+2022-23,24,236,Man Utd,Leicester
+2022-23,24,237,Liverpool,Newcastle
+2022-23,24,238,Man City,Nott'm Forest
+2022-23,24,239,West Ham,Spurs
+2022-23,24,240,Wolves,Bournemouth
+2022-23,25,61,Everton,Arsenal
+2022-23,25,67,Liverpool,Wolves
+2022-23,25,241,Man City,Bournemouth
+2022-23,25,242,Liverpool,Crystal Palace
+2022-23,25,243,Everton,Aston Villa
+2022-23,25,244,Fulham,Wolves
+2022-23,25,245,Leeds,Southampton
+2022-23,25,246,Arsenal,Leicester
+2022-23,25,249,Spurs,Chelsea
+2022-23,25,250,West Ham,Nott'm Forest
+2022-23,26,251,Arsenal,Bournemouth
+2022-23,26,252,Aston Villa,Crystal Palace
+2022-23,26,253,Fulham,Brentford
+2022-23,26,254,Brighton,West Ham
+2022-23,26,255,Leeds,Chelsea
+2022-23,26,256,Man Utd,Liverpool
+2022-23,26,257,Man City,Newcastle
+2022-23,26,258,Everton,Nott'm Forest
+2022-23,26,259,Leicester,Southampton
+2022-23,26,260,Spurs,Wolves
+2022-23,27,69,Brentford,Southampton
+2022-23,27,73,Brighton,Crystal Palace
+2022-23,27,261,Liverpool,Bournemouth
+2022-23,27,262,Man City,Crystal Palace
+2022-23,27,263,Everton,Brentford
+2022-23,27,264,Arsenal,Fulham
+2022-23,27,265,Brighton,Leeds
+2022-23,27,266,Leicester,Chelsea
+2022-23,27,267,Man Utd,Southampton
+2022-23,27,268,Wolves,Newcastle
+2022-23,27,269,Spurs,Nott'm Forest
+2022-23,27,270,Aston Villa,West Ham
+2022-23,28,271,Arsenal,Crystal Palace
+2022-23,28,272,Aston Villa,Bournemouth
+2022-23,28,273,Brentford,Leicester
+2022-23,28,275,Everton,Chelsea
+2022-23,28,278,Nott'm Forest,Newcastle
+2022-23,28,279,Spurs,Southampton
+2022-23,28,280,Wolves,Leeds
+2022-23,29,62,Brighton,Bournemouth
+2022-23,29,65,Nott'm Forest,Leeds
+2022-23,29,66,Aston Villa,Leicester
+2022-23,29,70,West Ham,Newcastle
+2022-23,29,74,Liverpool,Chelsea
+2022-23,29,247,Man Utd,Brentford
+2022-23,29,281,Arsenal,Leeds
+2022-23,29,282,Fulham,Bournemouth
+2022-23,29,283,Brighton,Brentford
+2022-23,29,284,Aston Villa,Chelsea
+2022-23,29,285,Crystal Palace,Leicester
+2022-23,29,286,Everton,Spurs
+2022-23,29,287,Man City,Liverpool
+2022-23,29,288,Man Utd,Newcastle
+2022-23,29,289,Wolves,Nott'm Forest
+2022-23,29,290,West Ham,Southampton
+2022-23,30,291,Aston Villa,Nott'm Forest
+2022-23,30,292,Brentford,Newcastle
+2022-23,30,293,West Ham,Fulham
+2022-23,30,294,Crystal Palace,Leeds
+2022-23,30,295,Leicester,Bournemouth
+2022-23,30,296,Arsenal,Liverpool
+2022-23,30,297,Everton,Man Utd
+2022-23,30,298,Man City,Southampton
+2022-23,30,299,Brighton,Spurs
+2022-23,30,300,Wolves,Chelsea
+2022-23,31,301,Aston Villa,Newcastle
+2022-23,31,302,Brighton,Chelsea
+2022-23,31,303,Everton,Fulham
+2022-23,31,304,Liverpool,Leeds
+2022-23,31,305,Man City,Leicester
+2022-23,31,306,Man Utd,Nott'm Forest
+2022-23,31,307,Crystal Palace,Southampton
+2022-23,31,308,Spurs,Bournemouth
+2022-23,31,309,Arsenal,West Ham
+2022-23,31,310,Brentford,Wolves
+2022-23,32,311,Arsenal,Southampton
+2022-23,32,312,West Ham,Bournemouth
+2022-23,32,313,Aston Villa,Brentford
+2022-23,32,315,Everton,Crystal Palace
+2022-23,32,316,Fulham,Leeds
+2022-23,32,317,Wolves,Leicester
+2022-23,32,318,Liverpool,Nott'm Forest
+2022-23,32,320,Spurs,Newcastle
+2022-23,33,321,Aston Villa,Fulham
+2022-23,33,322,Everton,Newcastle
+2022-23,33,323,Leicester,Leeds
+2022-23,33,324,Brighton,Nott'm Forest
+2022-23,33,325,Man Utd,Spurs
+2022-23,33,326,Liverpool,West Ham
+2022-23,33,327,Wolves,Crystal Palace
+2022-23,33,328,Brentford,Chelsea
+2022-23,33,329,Arsenal,Man City
+2022-23,33,330,Bournemouth,Southampton
+2022-23,34,274,Man Utd,Brighton
+2022-23,34,276,Liverpool,Fulham
+2022-23,34,277,Man City,West Ham
+2022-23,34,331,Arsenal,Chelsea
+2022-23,34,332,Leeds,Bournemouth
+2022-23,34,333,Brentford,Nott'm Forest
+2022-23,34,334,Brighton,Wolves
+2022-23,34,335,West Ham,Crystal Palace
+2022-23,34,336,Man City,Fulham
+2022-23,34,337,Everton,Leicester
+2022-23,34,338,Liverpool,Spurs
+2022-23,34,339,Aston Villa,Man Utd
+2022-23,34,340,Newcastle,Southampton
+2022-23,35,341,Chelsea,Bournemouth
+2022-23,35,342,Everton,Brighton
+2022-23,35,343,Fulham,Leicester
+2022-23,35,344,Liverpool,Brentford
+2022-23,35,345,Man City,Leeds
+2022-23,35,346,Arsenal,Newcastle
+2022-23,35,347,Nott'm Forest,Southampton
+2022-23,35,348,Spurs,Crystal Palace
+2022-23,35,349,Man Utd,West Ham
+2022-23,35,350,Aston Villa,Wolves
+2022-23,36,248,Brighton,Newcastle
+2022-23,36,351,Arsenal,Brighton
+2022-23,36,352,Aston Villa,Spurs
+2022-23,36,353,West Ham,Brentford
+2022-23,36,354,Nott'm Forest,Chelsea
+2022-23,36,355,Crystal Palace,Bournemouth
+2022-23,36,356,Everton,Man City
+2022-23,36,357,Leeds,Newcastle
+2022-23,36,358,Liverpool,Leicester
+2022-23,36,359,Man Utd,Wolves
+2022-23,36,360,Fulham,Southampton
+2022-23,37,314,Man City,Brighton
+2022-23,37,319,Man Utd,Chelsea
+2022-23,37,361,Man Utd,Bournemouth
+2022-23,37,362,Brighton,Southampton
+2022-23,37,363,Fulham,Crystal Palace
+2022-23,37,364,Aston Villa,Liverpool
+2022-23,37,365,Man City,Chelsea
+2022-23,37,366,Leicester,Newcastle
+2022-23,37,367,Arsenal,Nott'm Forest
+2022-23,37,368,Spurs,Brentford
+2022-23,37,369,West Ham,Leeds
+2022-23,37,370,Everton,Wolves
+2022-23,38,371,Arsenal,Wolves
+2022-23,38,372,Aston Villa,Brighton
+2022-23,38,373,Man City,Brentford
+2022-23,38,374,Newcastle,Chelsea
+2022-23,38,375,Crystal Palace,Nott'm Forest
+2022-23,38,376,Everton,Bournemouth
+2022-23,38,377,Spurs,Leeds
+2022-23,38,378,West Ham,Leicester
+2022-23,38,379,Man Utd,Fulham
+2022-23,38,380,Liverpool,Southampton
