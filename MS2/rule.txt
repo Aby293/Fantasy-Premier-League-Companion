@@ -1,9 +1,12 @@
-MATCH (p:Player)-[:PLAYS_AS]->(pos:Position {name: "DEF"})
+MATCH (p:Player)-[:PLAYS_AS]->(pos:Position)
+WITH p, collect(DISTINCT pos) AS all_positions
+WHERE size(all_positions) > 1 AND any(pos_node IN all_positions WHERE pos_node.name = "DEF")
+
 MATCH (p)-[ps:PLAYED_IN]->(f:Fixture)
 MATCH (gw:Gameweek)-[:HAS_FIXTURE]->(f)
 MATCH (s:Season)-[:HAS_GW]->(gw)
 
-WITH p, ps, f, s,
+WITH p, ps, f, s, all_positions,
     CASE 
         WHEN ps.minutes >= 60 THEN 2
         WHEN ps.minutes > 0  THEN 1
@@ -21,7 +24,7 @@ WITH p, ps, f, s,
     END AS clean_sheet_score,
     floor(ps.goals_conceded / 2) * -1 AS conceded_score
 
-WITH p, ps, f, s,
+WITH p, ps, f, s, all_positions,
     (minutes_score +
      assist_score +
      pen_miss_score +
@@ -33,10 +36,10 @@ WITH p, ps, f, s,
      ps.bonus + 
      conceded_score) AS def_score
 
-WITH p, ps, f, s, def_score,
+WITH p, ps, f, s, all_positions, def_score,
     CASE WHEN ps.total_points = def_score THEN true ELSE false END AS matches_def
 
-WITH p, count(ps) AS total_fixtures, collect({
+WITH p, all_positions, count(ps) AS total_fixtures, collect({
     def_score: def_score,
     season: s.season_name,
     fixture_number: f.fixture_number,
@@ -44,14 +47,13 @@ WITH p, count(ps) AS total_fixtures, collect({
     total_points: ps.total_points
 }) AS all_fixtures_data
 
-WITH p, total_fixtures, 
+WITH p, total_fixtures, all_positions, 
      [x IN all_fixtures_data WHERE x.matches_def = false] AS fixture_details
-
-WHERE size(fixture_details) > 0
 
 RETURN 
     p.player_name AS player,
     size(fixture_details) AS not_def_fixtures,
     total_fixtures,
+    // [pos IN all_positions | pos.name] AS assigned_positions,
     fixture_details
-ORDER BY not_def_fixtures ASC
+ORDER BY player ASC
