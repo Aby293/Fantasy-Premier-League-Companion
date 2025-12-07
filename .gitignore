@@ -144,6 +144,10 @@ ENV/
 env.bak/
 venv.bak/
 
+# Config files with credentials
+MS2/config.txt
+MS3/config.txt
+
 # Spyder project settings
 .spyderproject
 .spyproject

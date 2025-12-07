@@ -10,11 +10,9 @@ RETURN COUNT(p) AS total_players;
 MATCH (f1:Fixture {season: "2021-22"})
 MATCH (f1)-[:HAS_HOME_TEAM|HAS_AWAY_TEAM]->(t1:Team)
 WITH COLLECT(DISTINCT t1.name) AS teams_21_22
-
 MATCH (f2:Fixture {season: "2022-23"})
 MATCH (f2)-[:HAS_HOME_TEAM|HAS_AWAY_TEAM]->(t2:Team)
 WITH teams_21_22, COLLECT(DISTINCT t2.name) AS teams_22_23
-
 RETURN [team IN teams_21_22 WHERE NOT team IN teams_22_23] AS relegated_teams;
 
 
