@@ -1,0 +1,44 @@
+Model,Query,Category,Tokens (Out),Tokens (Total),Speed (TPS),Response Time (s),Response,accuracy,relevance,completeness,naturalness,correctness,Avg Quality,Timestamp
+Gemma-2-2B,Show me the total goals scored by Kevin De Bruyne for the 2022-23 season.,player_stats,24,1137,2.62,9.15,"Kevin De Bruyne scored **7** goals during the 2022-23 season. 
+",5,5,5,5,5,5.0,2025-12-09T22:00:51.210103
+Gemma-2-2B,Compare Mohamed Salah and Harry Kane in gameweek 8 season 2021-22 for total points.,player_comparison,30,1942,2.75,10.91,"Mohamed Salah scored 1 point more than Harry Kane in gameweek 8 of the 2021-22 season. 
+",5,5,5,5,5,5.0,2025-12-09T22:01:33.319606
+Gemma-2-2B,Who are the top 5 forwards by total points in the 2022-23 season?,best_players,93,578,9.65,9.63,"Here are the top 5 forwards by total points in the 2022-23 season, based on the provided data:
+
+1. **Erling Haaland (272 points)**
+2. **Harry Kane (263 points)**
+3. **Ivan Toney (182 points)**
+4. **Ollie Watkins (175 points)**
+5. **Callum Wilson (157 points)** 
+",5,5,5,5,5,5.0,2025-12-09T22:02:18.806511
+Gemma-2-2B,When do Arsenal and Man city play each other in season 2022-23?,fixture_details,32,4910,2.89,11.09,"Arsenal and Man City will play each other in the following fixture:
+
+* **Gameweek 33:** Man City vs Arsenal (Home) 
+",5,5,3,5,5,4.6,2025-12-09T22:02:57.061930
+Llama-3.2-3B,Show me the total goals scored by Kevin De Bruyne for the 2022-23 season.,player_stats,27,1026,2.81,9.62,"According to the provided context, Kevin De Bruyne scored a total of 7 goals in the 2022-23 season.",5,5,5,5,5,5.0,2025-12-09T22:03:30.291945
+Llama-3.2-3B,Compare Mohamed Salah and Harry Kane in gameweek 8 season 2021-22 for total points.,player_comparison,60,1759,6.09,9.85,"In gameweek 8 of the 2021-22 season, Mohamed Salah accumulated 192 total points, while Harry Kane accumulated 263 total points. 
+
+Mohamed Salah has 71 fewer points than Harry Kane in gameweek 8 of the 2021-22 season.",2,3,2,5,1,2.6,2025-12-09T22:04:48.435600
+Llama-3.2-3B,Who are the top 5 forwards by total points in the 2022-23 season?,best_players,89,560,7.45,11.94,"The top 5 forwards by total points in the 2022-23 season are:
+
+1. Erling Haaland (FWD) - 272 points
+2. Harry Kane (FWD) - 263 points
+3. Ivan Toney (FWD) - 182 points
+4. Ollie Watkins (FWD) - 175 points
+5. Callum Wilson (FWD) - 157 points",5,5,5,5,5,5.0,2025-12-09T22:05:15.414791
+Llama-3.2-3B,When do Arsenal and Man city play each other in season 2022-23?,fixture_details,90,4372,8.76,10.28,"In season 2022-23, Arsenal and Man City play each other in Gameweek 23 (GW23) and Gameweek 33 (GW33).
+
+- Gameweek 23: 2023-02-15 19:30:00+00:00 (Home)
+- Gameweek 33: 2023-04-26 19:00:00+00:00 (Away)",5,5,5,5,5,5.0,2025-12-09T22:05:52.280050
+Mistral-7B,Show me the total goals scored by Kevin De Bruyne for the 2022-23 season.,player_stats,31,1275,2.79,11.09," Based on the context provided, Kevin De Bruyne scored a total of 7 goals for the 2022-23 season.",5,5,5,5,5,5.0,2025-12-09T22:06:10.998001
+Mistral-7B,Compare Mohamed Salah and Harry Kane in gameweek 8 season 2021-22 for total points.,player_comparison,92,2238,7.32,12.57," Based on the context provided, Mohamed Salah scored 7 points in Gameweek 8 of the 2021-22 season, while Harry Kane scored 2 points. Therefore, Mohamed Salah outscored Harry Kane in that specific gameweek. However, it's important to note that this is just one data point and the overall performance of each player throughout the season should be considered when making comparisons.",1,4,5,5,1,3.2,2025-12-09T22:07:10.773860
+Mistral-7B,Who are the top 5 forwards by total points in the 2022-23 season?,best_players,134,675,8.54,15.69," Based on the context provided, the top 5 forwards by total points in the 2022-23 season are:
+
+1. Erling Haaland (FWD) with 272 points
+2. Harry Kane (FWD) with 263 points
+3. Ivan Toney (FWD) with 182 points
+4. Ollie Watkins (FWD) with 175 points
+5. Callum Wilson (FWD) with 157 points
+
+The context does not provide information on any forwards who have scored more points than these players.",5,5,5,5,5,5.0,2025-12-09T22:07:36.662920
+Mistral-7B,When do Arsenal and Man city play each other in season 2022-23?,fixture_details,63,5523,5.26,11.98, Arsenal and Man City play each other in Gameweek 23 of the 2022-23 season on 2023-02-15 at 19:30:00+00:00. (Fixture #329),5,5,2,5,3,4.0,2025-12-09T22:08:17.530251
