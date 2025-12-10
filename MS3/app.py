@@ -297,7 +297,7 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
     if intent == "player_or_team_performance" and player1 and not player2:
         if gw:
             return f"""
-                MATCH (:Season {{season_name:'{season}'}})-[:HAS_GW]->(g:Gameweek {{GW_number:{gw}}})-[:HAS_FIXTURE]->(f:Fixture)
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek {{GW_number:{gw}}})-[hf:HAS_FIXTURE]->(f:Fixture)
                 MATCH (p:Player {{player_name:'{player1}'}})-[pi:PLAYED_IN]->(f)
                 RETURN p.player_name AS player, pi.{stat} AS {stat}, g.GW_number AS gameweek
         
@@ -305,7 +305,7 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
         
         else:
             return f"""
-                MATCH (:Season {{season_name:'{season}'}})-[:HAS_GW]->(g)-[:HAS_FIXTURE]->(f)
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek)-[hf:HAS_FIXTURE]->(f:Fixture)
                 MATCH (p:Player {{player_name:'{player1}'}})-[pi:PLAYED_IN]->(f)
                 RETURN p.player_name AS player, SUM(pi.{stat}) AS total_{stat}, '{season}' AS season
             """
@@ -316,15 +316,15 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
     if intent == "player_or_team_performance" and team1 and not team2:
         if gw:
             return f"""
-                MATCH (:Season {{season_name:'{season}'}})-[:HAS_GW]->(g:Gameweek {{GW_number:{gw}}})-[:HAS_FIXTURE]->(f)
-                MATCH (f)-[:HAS_HOME_TEAM|HAS_AWAY_TEAM]->(t:Team {{name:'{team1}'}})
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek {{GW_number:{gw}}})-[hf:HAS_FIXTURE]->(f:Fixture)
+                MATCH (f)-[ht:HAS_HOME_TEAM|HAS_AWAY_TEAM]->(t:Team {{name:'{team1}'}})
                 MATCH (p:Player)-[pi:PLAYED_IN]->(f)
                 RETURN t.name AS team, SUM(pi.{stat}) AS total_{stat}, g.GW_number AS gameweek
             """
         else:
             return f"""
-                MATCH (:Season {{season_name:'{season}'}})-[:HAS_GW]->(:Gameweek)-[:HAS_FIXTURE]->(f)
-                MATCH (f)-[:HAS_HOME_TEAM|HAS_AWAY_TEAM]->(t:Team {{name:'{team1}'}})
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(:Gameweek)-[hf:HAS_FIXTURE]->(f:Fixture)
+                MATCH (f)-[ht:HAS_HOME_TEAM|HAS_AWAY_TEAM]->(t:Team {{name:'{team1}'}})
                 MATCH (p:Player)-[pi:PLAYED_IN]->(f)
                 RETURN t.name AS team, SUM(pi.{stat}) AS total_{stat}
             """
@@ -338,7 +338,7 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
             return f"""
            UNWIND ['{player1}', '{player2}'] AS pname
             MATCH (p:Player {{player_name: pname}})
-            OPTIONAL MATCH (p)-[pi:PLAYED_IN]->(f:Fixture)<-[:HAS_FIXTURE]-(g:Gameweek {{GW_number:{gw}}})<-[:HAS_GW]-(:Season {{season_name:'{season}'}})
+            OPTIONAL MATCH (p)-[pi:PLAYED_IN]->(f:Fixture)<-[hf:HAS_FIXTURE]-(g:Gameweek {{GW_number:{gw}}})<-[hg:HAS_GW]-(s:Season {{season_name:'{season}'}})
             RETURN 
                 p.player_name AS player, 
                 COALESCE(SUM(pi.{stat}), 0) AS total_{stat},
@@ -351,7 +351,7 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
             return f"""
                 UNWIND ['{player1}', '{player2}'] AS pname
                 MATCH (p:Player {{player_name: pname}})
-                OPTIONAL MATCH (p)-[pi:PLAYED_IN]->(:Fixture)<-[:HAS_FIXTURE]-(g:Gameweek)<-[:HAS_GW]-(:Season {{season_name:'{season}'}})
+                OPTIONAL MATCH (p)-[pi:PLAYED_IN]->(f:Fixture)<-[hf:HAS_FIXTURE]-(g:Gameweek)<-[hg:HAS_GW]-(s:Season {{season_name:'{season}'}})
                 RETURN 
                     p.player_name AS player, 
                     COALESCE(SUM(pi.{stat}), 0) AS total_{stat}
@@ -364,16 +364,16 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
     # ----------------------------------------------------------------------
     if intent == "player_or_team_performance" and team1 and team2: 
         if gw: 
-            return f""" MATCH (:Season {{season_name:'{season}'}}) -[:HAS_GW]->(g:Gameweek {{GW_number:{gw}}}) -[:HAS_FIXTURE]->(f) 
-                        MATCH (f)-[:HAS_HOME_TEAM]->(home:Team) 
-                        MATCH (f)-[:HAS_AWAY_TEAM]->(away:Team) WHERE home.name IN ['{team1}', '{team2}'] OR away.name IN ['{team1}', '{team2}'] 
+            return f""" MATCH (s:Season {{season_name:'{season}'}}) -[hg:HAS_GW]->(g:Gameweek {{GW_number:{gw}}}) -[hf:HAS_FIXTURE]->(f:Fixture) 
+                        MATCH (f)-[ht:HAS_HOME_TEAM]->(home:Team) 
+                        MATCH (f)-[at:HAS_AWAY_TEAM]->(away:Team) WHERE home.name IN ['{team1}', '{team2}'] OR away.name IN ['{team1}', '{team2}'] 
                         MATCH (p:Player)-[pi:PLAYEDIN]->(f) RETURN CASE WHEN home.name = '{team1}' OR away.name = '{team1}' 
                         THEN '{team1}' ELSE '{team2}' END 
                         AS team, SUM(pi.{stat}) AS total{stat}, g.GW_number AS gameweek """ 
         else: 
-            return f""" MATCH (:Season {{season_name:'{season}'}})-[:HAS_GW]->(g)-[:HAS_FIXTURE]->(f) 
-                        MATCH (f)-[:HAS_HOME_TEAM]->(home:Team) 
-                        MATCH (f)-[:HAS_AWAY_TEAM]->(away:Team) WHERE home.name IN ['{team1}', '{team2}'] OR away.name IN ['{team1}', '{team2}'] 
+            return f""" MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek)-[hf:HAS_FIXTURE]->(f:Fixture) 
+                        MATCH (f)-[ht:HAS_HOME_TEAM]->(home:Team) 
+                        MATCH (f)-[at:HAS_AWAY_TEAM]->(away:Team) WHERE home.name IN ['{team1}', '{team2}'] OR away.name IN ['{team1}', '{team2}'] 
                         MATCH (p:Player)-[pi:PLAYEDIN]->(f) RETURN CASE WHEN home.name = '{team1}' OR away.name = '{team1}' 
                         THEN '{team1}' ELSE '{team2}' END AS team, SUM(pi.{stat}) AS total{stat} """
     # ----------------------------------------------------------------------
@@ -381,8 +381,8 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
     # ----------------------------------------------------------------------
     if intent == "fixture_details" and team1 and gw and not team2:
         return f"""
-             MATCH (:Season {{season_name:'{season}'}})-[:HAS_GW]->(g:Gameweek {{GW_number:{gw}}})-[:HAS_FIXTURE]->(f:Fixture)-[:HAS_HOME_TEAM]->(h:Team),
-            (f)-[:HAS_AWAY_TEAM]->(a:Team)
+            MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek {{GW_number:{gw}}})-[hf:HAS_FIXTURE]->(f:Fixture)-[ht:HAS_HOME_TEAM]->(h:Team),
+            (f)-[at:HAS_AWAY_TEAM]->(a:Team)
             WHERE h.name = '{team1}' OR a.name = '{team1}'
             RETURN f.fixture_number AS fixture, f.kickoff_time, h, a
             ORDER BY f.kickoff_time ASC LIMIT 1
@@ -395,11 +395,11 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
     # ----------------------------------------------------------------------
     if intent == "fixture_details" and team1 and team2 and gw:
         return f"""
-          MATCH (:Season {{season_name:'{season}'}})
-        -[:HAS_GW]->(g:Gameweek {{GW_number:{gw}}})
-        -[:HAS_FIXTURE]->(f:Fixture)
-        MATCH (f)-[:HAS_HOME_TEAM]->(home:Team)
-        MATCH (f)-[:HAS_AWAY_TEAM]->(away:Team)
+          MATCH (s:Season {{season_name:'{season}'}})
+        -[hg:HAS_GW]->(g:Gameweek {{GW_number:{gw}}})
+        -[hf:HAS_FIXTURE]->(f:Fixture)
+        MATCH (f)-[ht:HAS_HOME_TEAM]->(home:Team)
+        MATCH (f)-[at:HAS_AWAY_TEAM]->(away:Team)
         WHERE (home.name = '{team1}' AND away.name = '{team2}')
         OR (home.name = '{team2}' AND away.name = '{team1}')
         RETURN 
@@ -414,11 +414,11 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
     
     if intent == "fixture_details" and team1 and team2 and not gw:
         return f"""
-            MATCH (:Season {{season_name:'{season}'}})
-        -[:HAS_GW]->(g)
-        -[:HAS_FIXTURE]->(f:Fixture)
-        MATCH (f)-[:HAS_HOME_TEAM]->(home:Team)
-        MATCH (f)-[:HAS_AWAY_TEAM]->(away:Team)
+        MATCH (s:Season {{season_name:'{season}'}})
+        -[hg:HAS_GW]->(g:Gameweek)
+        -[hf:HAS_FIXTURE]->(f:Fixture)
+        MATCH (f)-[ht:HAS_HOME_TEAM]->(home:Team)
+        MATCH (f)-[at:HAS_AWAY_TEAM]->(away:Team)
         WHERE (home.name = '{team1}' AND away.name = '{team2}')
         OR (home.name = '{team2}' AND away.name = '{team1}')
         RETURN 
@@ -428,16 +428,14 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
             home.name AS home_team,
             away.name AS away_team
         ORDER BY f.kickoff_time ASC
-
-
-            """
+        """
 
     # ----------------------------------------------------------------------
     # 7) BEST PLAYERS BY METRIC: Overall
     # ----------------------------------------------------------------------
     if intent == "best_players_by_metric" and not entities.get("position"):
         return f"""
-            MATCH (:Season {{season_name:'{season}'}})-[:HAS_GW]->(g)-[:HAS_FIXTURE]->(f)
+            MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek)-[hf:HAS_FIXTURE]->(f:Fixture)
             MATCH (p:Player)-[pi:PLAYED_IN]->(f)
             RETURN p.player_name AS player, SUM(pi.{stat}) AS total_{stat}
             ORDER BY total_{stat} DESC LIMIT {limit}
@@ -449,8 +447,8 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
     if intent == "best_players_by_metric" and entities.get("position"):
         position = entities["position"]
         return f"""
-            MATCH (p:Player)-[:PLAYS_AS]->(pos:Position {{name:'{position}'}})
-            MATCH (:Season {{season_name:'{season}'}})-[:HAS_GW]->(g)-[:HAS_FIXTURE]->(f)
+            MATCH (p:Player)-[pa:PLAYS_AS]->(pos:Position {{name:'{position}'}})
+            MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek)-[hf:HAS_FIXTURE]->(f:Fixture)
             MATCH (p)-[pi:PLAYED_IN]->(f)
             RETURN p.player_name AS player, SUM(pi.{stat}) AS total_{stat}, pos.name AS position
             ORDER BY total_{stat} DESC LIMIT {limit}
@@ -462,7 +460,7 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
     if intent == "best_players_by_metric" and entities.get("filter_value"):
         val = entities["filter_value"]
         return f"""
-            MATCH (:Season {{season_name:'{season}'}})-[:HAS_GW]->(g)-[:HAS_FIXTURE]->(f)
+            MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek)-[hf:HAS_FIXTURE]->(f:Fixture)
             MATCH (p:Player)-[pi:PLAYED_IN]->(f)
             WITH p, SUM(pi.{stat}) AS total_stat
             WHERE total_stat > {val}

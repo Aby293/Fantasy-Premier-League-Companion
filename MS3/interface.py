@@ -6,6 +6,186 @@ import networkx as nx
 from typing import Dict, List, Tuple
 import json
 import re
+from neo4j.graph import Node, Relationship, Path
+
+class GraphVisualizer:
+    def __init__(self):
+        self.color_map = {
+            'Player': '#FF0000', 'Team': '#0000FF', 
+            'Fixture': '#00FF00', 'Gameweek': '#FFFF00',
+            'Season': '#800080', 'Position': '#FFA500',
+            'Manager': '#FF9F43', 'Unknown': '#95A5A6'
+        }
+
+    def rewrite_query(self, query: str) -> str:
+        """Rewrites query to return Graph Objects instead of scalars"""
+        parts = re.split(r'(?i)\bRETURN\b', query, maxsplit=1)
+        if len(parts) < 2: return query 
+        
+        query_body = parts[0].strip()
+        node_vars = re.findall(r'\(\s*([a-zA-Z0-9_]+)(?::|[\s{])', query_body)
+        rel_vars = re.findall(r'\[\s*([a-zA-Z0-9_]+)(?::|[\s{])', query_body)
+        all_vars = sorted(list(set(node_vars + rel_vars)))
+        
+        if all_vars:
+            return f"{query_body} RETURN {', '.join(all_vars)}"
+        return query
+
+    def visualize(self, driver, query: str) -> go.Figure:
+        visual_query = self.rewrite_query(query)
+        
+        # Execute query using the driver to get native Neo4j objects
+        results = []
+        try:
+            with driver.session() as session:
+                result = session.run(visual_query)
+                results = [record for record in result]
+        except Exception as e:
+            # Fallback if driver access fails
+            print(f"Visualization Error: {e}")
+            return go.Figure()
+
+        G = nx.DiGraph()
+        processed_ids = set()
+        node_labels_map = {}
+        node_colors = {}
+        node_hover_text = {}
+
+        def process_node(node: Node):
+            uid = getattr(node, 'element_id', node.id)
+            if uid not in processed_ids:
+                labels = list(node.labels)
+                primary_label = labels[0] if labels else 'Unknown'
+                if 'Player' in labels: primary_label = 'Player'
+                elif 'Team' in labels: primary_label = 'Team'
+                elif 'Gameweek' in labels: primary_label = 'Gameweek'
+                elif 'Season' in labels: primary_label = 'Season'
+                elif 'Fixture' in labels: primary_label = 'Fixture'
+
+                props = dict(node)
+                # Better name extraction based on node type
+                if 'player_name' in props:
+                    name = props['player_name']
+                elif 'name' in props:
+                    name = props['name']
+                elif 'team_name' in props:
+                    name = props['team_name']
+                elif 'season_name' in props:
+                    name = props['season_name']
+                elif 'GW_number' in props:
+                    name = str(props['GW_number'])
+                elif 'fixture_number' in props:
+                    name = f"Fixture {props['fixture_number']}"
+                else:
+                    name = str(uid)
+                
+                processed_ids.add(uid)
+                node_labels_map[uid] = str(name)
+                node_colors[uid] = self.color_map.get(primary_label, '#95A5A6')
+                prop_str = "<br>".join([f"{k}: {v}" for k,v in props.items()])
+                node_hover_text[uid] = f"<b>{primary_label}</b>: {name}<br>---<br>{prop_str}"
+                G.add_node(uid)
+            return uid
+
+        def process_rel(rel: Relationship):
+            start_uid = process_node(rel.start_node)
+            end_uid = process_node(rel.end_node)
+            G.add_edge(start_uid, end_uid, label=rel.type)
+
+        for record in results:
+            for val in record.values():
+                if isinstance(val, Node): process_node(val)
+                elif isinstance(val, Relationship): process_rel(val)
+                elif isinstance(val, Path):
+                    for n in val.nodes: process_node(n)
+                    for r in val.relationships: process_rel(r)
+                elif isinstance(val, list):
+                    for item in val:
+                        if isinstance(item, Node): process_node(item)
+                        elif isinstance(item, Relationship): process_rel(item)
+
+        if len(G.nodes()) == 0:
+            fig = go.Figure()
+            fig.add_annotation(text="No graph entities found in this query scope", 
+                             xref="paper", yref="paper", x=0.5, y=0.5, showarrow=False)
+            fig.update_layout(xaxis={'visible':False}, yaxis={'visible':False}, plot_bgcolor='white')
+            return fig
+
+        pos = nx.spring_layout(G, k=0.5, iterations=50, seed=42)
+        
+        # Create edge traces with arrows
+        edge_x, edge_y = [], []
+        edge_annotations = []
+        
+        for edge in G.edges(data=True):
+            x0, y0 = pos[edge[0]]
+            x1, y1 = pos[edge[1]]
+            edge_x.extend([x0, x1, None])
+            edge_y.extend([y0, y1, None])
+            
+            # Add arrow annotation
+            edge_annotations.append(
+                dict(
+                    ax=x0, ay=y0,
+                    x=x1, y=y1,
+                    xref='x', yref='y',
+                    axref='x', ayref='y',
+                    showarrow=True,
+                    arrowhead=2,
+                    arrowsize=1.5,
+                    arrowwidth=2,
+                    arrowcolor='#888',
+                    standoff=15
+                )
+            )
+            
+            # Add edge label at midpoint
+            mid_x = (x0 + x1) / 2
+            mid_y = (y0 + y1) / 2
+            edge_label = edge[2].get('label', '')
+            
+            edge_annotations.append(
+                dict(
+                    x=mid_x, y=mid_y,
+                    xref='x', yref='y',
+                    text=edge_label,
+                    showarrow=False,
+                    font=dict(size=10, color='#555', family='Arial Black'),
+                    bgcolor='rgba(255,255,255,0.8)',
+                    borderpad=2
+                )
+            )
+
+        edge_trace = go.Scatter(x=edge_x, y=edge_y, line=dict(width=1.5, color='#888'), hoverinfo='none', mode='lines')
+
+        node_x, node_y, texts, colors, hovers = [], [], [], [], []
+        for node in G.nodes():
+            x, y = pos[node]
+            node_x.append(x)
+            node_y.append(y)
+            texts.append(node_labels_map[node])
+            colors.append(node_colors[node])
+            hovers.append(node_hover_text[node])
+
+        node_trace = go.Scatter(
+            x=node_x, y=node_y, mode='markers+text', hoverinfo='text',
+            hovertext=hovers, text=texts, textposition="top center",
+            marker=dict(color=colors, size=30, line=dict(width=2, color='white'))
+        )
+
+        return go.Figure(data=[edge_trace, node_trace], 
+                         layout=go.Layout(
+                             title='Knowledge Graph Visualization', 
+                             showlegend=False, 
+                             hovermode='closest', 
+                             margin=dict(b=20,l=5,r=5,t=40),
+                             xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                             yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                             plot_bgcolor='white', 
+                             height=600,
+                             annotations=edge_annotations
+                         ))
+    
 
 # Page configuration (must be first Streamlit command)
 st.set_page_config(
@@ -272,6 +452,7 @@ st.markdown("""
         font-family: 'Courier New', monospace;
         overflow-x: auto;
         margin: 10px 0;
+        white-space: pre;
     }
     
     .context-box {
@@ -338,16 +519,17 @@ if 'current_result' not in st.session_state:
     st.session_state.current_result = None
 
 def create_graph_visualization(cypher_query: str, cypher_result: List[Dict]) -> go.Figure:
-    """Create a graph visualization using Plotly with improved entity extraction"""
+    """Create a graph visualization using Plotly by executing a modified query to get graph structure"""
     
     G = nx.DiGraph()
     
     # Parse the Cypher result to extract nodes and relationships
-    nodes = set()
+    nodes = {}  # node_id: {label, type, properties}
     edges = []
     node_labels = {}
     node_colors = {}
     node_types = {}
+    edge_labels = {}
     
     color_map = {
         'Player': '#FF6B6B',
@@ -359,74 +541,153 @@ def create_graph_visualization(cypher_query: str, cypher_result: List[Dict]) -> 
         'Unknown': '#95A5A6'
     }
     
-    # Extract entities from results with improved logic
-    for record in cypher_result:
-        for key, value in record.items():
-            # Handle Neo4j node objects
-            if isinstance(value, dict):
-                if 'name' in value:
-                    node_id = value['name']
-                    nodes.add(node_id)
-                    node_labels[node_id] = node_id
-                    # Infer type from key name
-                    if 'player' in key.lower():
-                        node_types[node_id] = 'Player'
-                    elif 'team' in key.lower() or key in ['h', 'a', 'home', 'away']:
-                        node_types[node_id] = 'Team'
-                    elif 'fixture' in key.lower():
-                        node_types[node_id] = 'Fixture'
-                    else:
-                        node_types[node_id] = 'Unknown'
-                    node_colors[node_id] = color_map.get(node_types[node_id], '#95A5A6')
-                
-                elif 'player_name' in value:
-                    node_id = value['player_name']
-                    nodes.add(node_id)
-                    node_labels[node_id] = node_id
-                    node_types[node_id] = 'Player'
-                    node_colors[node_id] = color_map['Player']
-            
-            # Handle string values
-            elif isinstance(value, str):
-                if key in ['player', 'player_name']:
-                    nodes.add(value)
-                    node_labels[value] = value
-                    node_types[value] = 'Player'
-                    node_colors[value] = color_map['Player']
-                elif key in ['team', 'team_name', 'home_team', 'away_team']:
-                    nodes.add(value)
-                    node_labels[value] = value
-                    node_types[value] = 'Team'
-                    node_colors[value] = color_map['Team']
+    # Use the GraphVisualizer class to get proper graph data
+    try:
+        from app import graph as graph_conn
+        viz = GraphVisualizer()
+        driver_instance = graph_conn._driver
+        return viz.visualize(driver_instance, cypher_query)
+    except Exception as e:
+        # Fallback to query parsing if driver access fails
+        print(f"Could not use GraphVisualizer, falling back to query parsing: {e}")
+        pass
     
-    # If we have specific relationships, create edges
-    for record in cypher_result:
-        # Create edges for player-team relationships
-        if 'player' in record and 'team' in record:
-            player = record['player']
-            team = record['team']
-            if player in nodes and team in nodes:
-                edges.append((player, team))
+    # Parse Cypher query to extract the graph structure
+    import re
+    
+    # Extract node patterns from MATCH clauses: (variable:Label {property:value})
+    # This pattern now handles both (var:Label) and (:Label) patterns
+    node_pattern = r'\((\w*)(?::(\w+))?\s*(?:\{([^}]+)\})?\)'
+    # Extract relationship patterns: -\[(\w+)?:(\w+)\]->
+    rel_pattern = r'-\[(\w*):(\w+)\]->'
+    
+    query_nodes = {}  # variable: {label, properties, display_name}
+    query_rels = []   # [(from_var, rel_type, to_var)]
+    node_counter = 0  # For generating unique IDs for anonymous nodes
+    
+    # Find all nodes in the query
+    for match in re.finditer(node_pattern, cypher_query):
+        var = match.group(1) if match.group(1) else f"_anon_{node_counter}"
+        if not match.group(1):
+            node_counter += 1
         
-        # Create edges for home/away team relationships
-        if 'home_team' in record and 'away_team' in record:
-            home = record['home_team']
-            away = record['away_team']
-            if home in nodes and away in nodes:
-                edges.append((home, away))
+        label = match.group(2) if match.group(2) else 'Unknown'
+        props = match.group(3) if match.group(3) else ''
+        
+        # Extract property for display name
+        display_name = var
+        if props:
+            # Try to extract the property value
+            # Handle various property patterns: property:'value', property:value, property:123
+            name_match = re.search(r'(\w+)\s*:\s*[\'"]?([^\'",}]+)[\'"]?', props)
+            if name_match:
+                prop_name = name_match.group(1)
+                prop_value = name_match.group(2).strip("'\"")
+                # Use only the property value for display, not the label
+                display_name = prop_value
+            elif label:
+                display_name = label
+        elif label:
+            display_name = label
+        
+        query_nodes[var] = {
+            'label': label,
+            'display_name': display_name,
+            'variable': var
+        }
     
-    # If no specific edges, create a simple chain
-    if len(edges) == 0 and len(nodes) > 1:
-        node_list = list(nodes)
-        for i in range(len(node_list) - 1):
-            edges.append((node_list[i], node_list[i + 1]))
+    # Find all relationships in the query by parsing the pattern more carefully
+    # Handle both forward (->) and backward (<-) relationships
+    import re
     
-    # Add nodes and edges to graph
-    for node in nodes:
-        G.add_node(node)
-    for edge in edges:
-        if edge[0] in nodes and edge[1] in nodes:
-            G.add_edge(edge[0], edge[1])
+    # Find all relationship patterns with their surrounding nodes
+    # Pattern for forward: (anything)-[relationship]->(anything)
+    # Pattern for backward: (anything)<-[relationship]-(anything)
+    rel_pattern_forward = r'\(([^)]*)\)\s*-\[([^\]]*)\]->\s*\(([^)]*)\)'
+    rel_pattern_backward = r'\(([^)]*)\)\s*<-\[([^\]]*)\]-\s*\(([^)]*)\)'
+    
+    def extract_node_var(node_str):
+        """Extract variable name from node string"""
+        var_match = re.match(r'(\w+)', node_str.strip())
+        return var_match.group(1) if var_match else None
+    
+    def find_anon_node_by_label(label):
+        """Find anonymous node by label"""
+        for var, info in query_nodes.items():
+            if info['label'] == label and var.startswith('_anon_'):
+                return var
+        return None
+    
+    def resolve_node_var(node_str):
+        """Resolve node variable, handling anonymous nodes"""
+        var = extract_node_var(node_str)
+        if not var or var == '':
+            label_match = re.search(r':(\w+)', node_str)
+            if label_match:
+                var = find_anon_node_by_label(label_match.group(1))
+        return var
+    
+    # Process forward relationships (->)
+    for match in re.finditer(rel_pattern_forward, cypher_query):
+        from_node_str = match.group(1)
+        rel_str = match.group(2)
+        to_node_str = match.group(3)
+        
+        from_var = resolve_node_var(from_node_str)
+        to_var = resolve_node_var(to_node_str)
+        
+        rel_type_match = re.search(r':(\w+)', rel_str)
+        rel_type = rel_type_match.group(1) if rel_type_match else None
+        
+        if from_var and to_var and rel_type and from_var in query_nodes and to_var in query_nodes:
+            query_rels.append((from_var, rel_type, to_var))
+    
+    # Process backward relationships (<-)
+    for match in re.finditer(rel_pattern_backward, cypher_query):
+        from_node_str = match.group(1)  # This is actually the "to" node in the relationship
+        rel_str = match.group(2)
+        to_node_str = match.group(3)    # This is actually the "from" node in the relationship
+        
+        # Reverse the direction for backward arrows
+        from_var = resolve_node_var(to_node_str)
+        to_var = resolve_node_var(from_node_str)
+        
+        rel_type_match = re.search(r':(\w+)', rel_str)
+        rel_type = rel_type_match.group(1) if rel_type_match else None
+        
+        if from_var and to_var and rel_type and from_var in query_nodes and to_var in query_nodes:
+            query_rels.append((from_var, rel_type, to_var))
+    
+    # Enhance node display names with actual data from query results if available
+    if cypher_result and len(cypher_result) > 0:
+        first_result = cypher_result[0]
+        for var, info in query_nodes.items():
+            # Check if this variable appears in the result
+            if var in first_result:
+                value = first_result[var]
+                if isinstance(value, (str, int, float)):
+                    info['display_name'] = str(value)
+                elif isinstance(value, dict) and 'name' in value:
+                    info['display_name'] = value['name']
+    
+    # Now create nodes and edges based on the query structure
+    for var, info in query_nodes.items():
+        node_id = info['display_name']
+        nodes[node_id] = info
+        node_labels[node_id] = info['display_name']
+        node_types[node_id] = info['label']
+        node_colors[node_id] = color_map.get(info['label'], color_map['Unknown'])
+        G.add_node(node_id)
+    
+    # Create edges from query relationships
+    for from_var, rel_type, to_var in query_rels:
+        if from_var in query_nodes and to_var in query_nodes:
+            from_node = query_nodes[from_var]['display_name']
+            to_node = query_nodes[to_var]['display_name']
+            if from_node in nodes and to_node in nodes:
+                edges.append((from_node, to_node))
+                edge_labels[(from_node, to_node)] = rel_type
+                G.add_edge(from_node, to_node)
     
     # Handle empty graph case
     if len(G.nodes()) == 0:
@@ -450,20 +711,42 @@ def create_graph_visualization(cypher_query: str, cypher_result: List[Dict]) -> 
     # Create positions using spring layout
     pos = nx.spring_layout(G, k=2, iterations=50)
     
-    # Create edge traces
+    # Create edge traces with labels
     edge_x = []
     edge_y = []
+    edge_label_x = []
+    edge_label_y = []
+    edge_label_text = []
+    
     for edge in G.edges():
         x0, y0 = pos[edge[0]]
         x1, y1 = pos[edge[1]]
         edge_x.extend([x0, x1, None])
         edge_y.extend([y0, y1, None])
+        
+        # Add edge label at midpoint
+        mid_x = (x0 + x1) / 2
+        mid_y = (y0 + y1) / 2
+        edge_label_x.append(mid_x)
+        edge_label_y.append(mid_y)
+        edge_label_text.append(edge_labels.get(edge, ''))
     
     edge_trace = go.Scatter(
         x=edge_x, y=edge_y,
         line=dict(width=2, color='#888'),
         hoverinfo='none',
         mode='lines',
+        showlegend=False
+    )
+    
+    # Edge labels trace
+    edge_label_trace = go.Scatter(
+        x=edge_label_x, y=edge_label_y,
+        mode='text',
+        text=edge_label_text,
+        textposition='middle center',
+        textfont=dict(size=9, color='#555', family='Arial Black'),
+        hoverinfo='none',
         showlegend=False
     )
     
@@ -502,7 +785,7 @@ def create_graph_visualization(cypher_query: str, cypher_result: List[Dict]) -> 
     
     # Create figure with corrected layout
     fig = go.Figure(
-        data=[edge_trace, node_trace],
+        data=[edge_trace, edge_label_trace, node_trace],
         layout=go.Layout(
             title=dict(
                 text='Knowledge Graph Visualization',
@@ -515,7 +798,7 @@ def create_graph_visualization(cypher_query: str, cypher_result: List[Dict]) -> 
             yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
             plot_bgcolor='white',
             paper_bgcolor='white',
-            height=500
+            height=600
         )
     )
     
@@ -537,6 +820,13 @@ def process_query(query: str, model_name: str, retrieval_method: str, embedding_
     
     # Step 4: Execute Cypher Query
     cypher_result = graph.query(cypher_query)
+    
+    # Step 4.5: Generate graph visualization
+    try:
+        graph_figure = create_graph_visualization(cypher_query, cypher_result)
+    except Exception as e:
+        print(f"Could not generate visualization: {e}")
+        graph_figure = None
     
     # Step 5: Format Cypher Result
     formatted_cypher = format_query_result(intent, cypher_result, entities)
@@ -573,7 +863,7 @@ def process_query(query: str, model_name: str, retrieval_method: str, embedding_
         'query': query,
         'intent': intent,
         'entities': entities,
-        'cypher_query': cypher_query,
+        'cypher_query': '\n'.join(line.strip() for line in cypher_query.splitlines()),
         'cypher_result': cypher_result,
         'formatted_cypher': formatted_cypher,
         'embedding_context': embedding_context,
@@ -583,7 +873,8 @@ def process_query(query: str, model_name: str, retrieval_method: str, embedding_
         'model_name': model_name,
         'retrieval_method': retrieval_method,
         'embedding_model': embedding_model_name,
-        'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'graph_figure': graph_figure
     }
 
 # Header
@@ -829,41 +1120,27 @@ if st.session_state.current_result:
     
     with tab3:
         st.markdown("### 📝 Executed Cypher Query")
-        st.markdown(f"""
-        <div class="cypher-box">
-            {result['cypher_query']}
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Copy button
-        if st.button("📋 Copy Query"):
-            st.code(result['cypher_query'], language="cypher")
-            st.success("Query copied! You can now paste it into Neo4j Browser")
+        st.code(result['cypher_query'], language="cypher")
     
     with tab4:
         st.markdown("### 📊 Knowledge Graph Visualization")
         
-        if result['cypher_result']:
-            try:
-                fig = create_graph_visualization(result['cypher_query'], result['cypher_result'])
-                st.plotly_chart(fig, use_container_width=True)
-                
-                st.markdown("#### 🎨 Legend")
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    st.markdown("🔴 **Player**")
-                    st.markdown("🔵 **Team**")
-                with col2:
-                    st.markdown("🟢 **Fixture**")
-                    st.markdown("🟡 **Gameweek**")
-                with col3:
-                    st.markdown("🟣 **Season**")
-                    st.markdown("🟠 **Position**")
-            except Exception as e:
-                st.warning(f"Could not generate graph visualization: {str(e)}")
-                st.info("This may happen if the query returns scalar values instead of graph entities.")
+        if result.get('graph_figure'):
+            st.plotly_chart(result['graph_figure'], use_container_width=True)
+            
+            st.markdown("#### 🎨 Legend")
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.markdown("🔴 **Player**")
+                st.markdown("🔵 **Team**")
+            with col2:
+                st.markdown("🟢 **Fixture**")
+                st.markdown("🟡 **Gameweek**")
+            with col3:
+                st.markdown("🟣 **Season**")
+                st.markdown("🟠 **Position**")
         else:
-            st.warning("No graph data to visualize")
+            st.warning("No graph data available to visualize.")
     
     with tab5:
         st.markdown("### 🔧 Debug Information")
