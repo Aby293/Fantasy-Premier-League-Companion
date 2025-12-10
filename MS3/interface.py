@@ -5,20 +5,228 @@ import plotly.graph_objects as go
 import networkx as nx
 from typing import Dict, List, Tuple
 import json
+import re
 
-from app import (
-    graph, classifier, models, model_minilm, model_mpnet,
-    classify_fpl_intents, extract_fpl_entities, get_fpl_cypher_query,
-    format_query_result, retrieve_embedding_search, generate_qa_chain
-)
-
-# Page configuration
+# Page configuration (must be first Streamlit command)
 st.set_page_config(
     page_title="FPL Graph-RAG Assistant",
     page_icon="⚽",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Initialize app_loaded state before any imports
+if 'app_loaded' not in st.session_state:
+    st.session_state.app_loaded = False
+
+# Show loading screen during initialization
+if not st.session_state.app_loaded:
+    # Inject CSS and HTML for loading screen
+    loading_placeholder = st.empty()
+    
+    with loading_placeholder.container():
+        st.markdown("""
+        <style>
+            /* Hide Streamlit default elements */
+            #MainMenu {visibility: hidden;}
+            header {visibility: hidden;}
+            footer {visibility: hidden;}
+            
+            .block-container {
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+            
+            .main .block-container {
+                padding-top: 0 !important;
+            }
+        </style>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <style>
+            .loading-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                z-index: 9999;
+            }
+            
+            .football-loader {
+                position: relative;
+                width: 120px;
+                height: 120px;
+                margin-bottom: 40px;
+            }
+            
+            .football {
+                width: 80px;
+                height: 80px;
+                background: white;
+                border-radius: 50%;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                animation: bounce 1.5s ease-in-out infinite;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            }
+            
+            .football::before {
+                content: '⚽';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 60px;
+                animation: spin 2s linear infinite;
+            }
+            
+            @keyframes bounce {
+                0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+                50% { transform: translate(-50%, -50%) translateY(-30px); }
+            }
+            
+            @keyframes spin {
+                0% { transform: translate(-50%, -50%) rotate(0deg); }
+                100% { transform: translate(-50%, -50%) rotate(360deg); }
+            }
+            
+            .loading-text {
+                color: white;
+                font-size: 28px;
+                font-weight: 700;
+                margin-bottom: 20px;
+                animation: pulse 2s ease-in-out infinite;
+            }
+            
+            .loading-subtext {
+                color: rgba(255,255,255,0.9);
+                font-size: 16px;
+                margin-bottom: 30px;
+            }
+            
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.6; }
+            }
+            
+            .progress-bar-container {
+                width: 300px;
+                height: 6px;
+                background: rgba(255,255,255,0.3);
+                border-radius: 10px;
+                overflow: hidden;
+                margin-bottom: 15px;
+            }
+            
+            .progress-bar {
+                height: 100%;
+                background: white;
+                border-radius: 10px;
+                animation: progress 3s ease-in-out;
+                box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            }
+            
+            @keyframes progress {
+                0% { width: 0%; }
+                100% { width: 100%; }
+            }
+            
+            .loading-steps {
+                color: rgba(255,255,255,0.8);
+                font-size: 14px;
+                font-family: 'Courier New', monospace;
+            }
+            
+            .step {
+                margin: 5px 0;
+                opacity: 0;
+                animation: fadeIn 0.5s ease-in forwards;
+            }
+            
+            .step:nth-child(1) { animation-delay: 0.3s; }
+            .step:nth-child(2) { animation-delay: 0.8s; }
+            .step:nth-child(3) { animation-delay: 1.3s; }
+            .step:nth-child(4) { animation-delay: 1.8s; }
+            .step:nth-child(5) { animation-delay: 2.3s; }
+            
+            @keyframes fadeIn {
+                to { opacity: 1; }
+            }
+            
+            .checkmark {
+                color: #4caf50;
+                font-weight: bold;
+            }
+        </style>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="loading-container">
+        <div class="football-loader">
+        <div class="football"></div>
+        </div>
+        <div class="loading-text">Fantasy Premier League</div>
+        <div class="loading-subtext">Initializing Graph-RAG System...</div>
+        <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+        </div>
+        <div class="loading-steps">
+        <div class="step"><span class="checkmark">✓</span> Loading Knowledge Graph...</div>
+        <div class="step"><span class="checkmark">✓</span> Initializing AI Models...</div>
+        <div class="step"><span class="checkmark">✓</span> Setting up Embeddings...</div>
+        <div class="step"><span class="checkmark">✓</span> Connecting to Neo4j...</div>
+        <div class="step"><span class="checkmark">✓</span> Ready to assist you!</div>
+        </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Simulate loading time and import heavy modules
+    time.sleep(0.5)  # Small delay to show the animation
+    
+    # Import app modules (this is where the actual loading happens)
+    from app import (
+        graph, classifier, models, model_minilm, model_mpnet,
+        classify_fpl_intents, extract_fpl_entities, get_fpl_cypher_query,
+        format_query_result, retrieve_embedding_search, generate_qa_chain
+    )
+    
+    # Store in session state to avoid reimporting
+    st.session_state.graph = graph
+    st.session_state.classifier = classifier
+    st.session_state.models = models
+    st.session_state.model_minilm = model_minilm
+    st.session_state.model_mpnet = model_mpnet
+    st.session_state.classify_fpl_intents = classify_fpl_intents
+    st.session_state.extract_fpl_entities = extract_fpl_entities
+    st.session_state.get_fpl_cypher_query = get_fpl_cypher_query
+    st.session_state.format_query_result = format_query_result
+    st.session_state.retrieve_embedding_search = retrieve_embedding_search
+    st.session_state.generate_qa_chain = generate_qa_chain
+    
+    st.session_state.app_loaded = True
+    st.rerun()
+
+# Retrieve from session state
+graph = st.session_state.graph
+classifier = st.session_state.classifier
+models = st.session_state.models
+model_minilm = st.session_state.model_minilm
+model_mpnet = st.session_state.model_mpnet
+classify_fpl_intents = st.session_state.classify_fpl_intents
+extract_fpl_entities = st.session_state.extract_fpl_entities
+get_fpl_cypher_query = st.session_state.get_fpl_cypher_query
+format_query_result = st.session_state.format_query_result
+retrieve_embedding_search = st.session_state.retrieve_embedding_search
+generate_qa_chain = st.session_state.generate_qa_chain
 
 # Custom CSS for professional styling
 st.markdown("""
@@ -130,7 +338,7 @@ if 'current_result' not in st.session_state:
     st.session_state.current_result = None
 
 def create_graph_visualization(cypher_query: str, cypher_result: List[Dict]) -> go.Figure:
-    """Create a graph visualization using Plotly"""
+    """Create a graph visualization using Plotly with improved entity extraction"""
     
     G = nx.DiGraph()
     
@@ -139,6 +347,7 @@ def create_graph_visualization(cypher_query: str, cypher_result: List[Dict]) -> 
     edges = []
     node_labels = {}
     node_colors = {}
+    node_types = {}
     
     color_map = {
         'Player': '#FF6B6B',
@@ -146,28 +355,68 @@ def create_graph_visualization(cypher_query: str, cypher_result: List[Dict]) -> 
         'Fixture': '#95E1D3',
         'Gameweek': '#FFE66D',
         'Season': '#A8E6CF',
-        'Position': '#C7CEEA'
+        'Position': '#C7CEEA',
+        'Unknown': '#95A5A6'
     }
     
-    # Extract entities from results
+    # Extract entities from results with improved logic
     for record in cypher_result:
         for key, value in record.items():
-            if isinstance(value, dict) and 'name' in value:
-                # It's a node
-                node_id = value.get('name', str(value))
-                nodes.add(node_id)
-                # Determine node type from the record
-                node_type = key.split('.')[-1] if '.' in key else 'Unknown'
-                node_labels[node_id] = f"{node_id}"
-                node_colors[node_id] = color_map.get(node_type, '#95A5A6')
-            elif isinstance(value, str) and key in ['player', 'team', 'home_team', 'away_team']:
-                nodes.add(value)
-                node_labels[value] = value
-                node_type = 'Player' if key == 'player' else 'Team'
-                node_colors[value] = color_map.get(node_type, '#95A5A6')
+            # Handle Neo4j node objects
+            if isinstance(value, dict):
+                if 'name' in value:
+                    node_id = value['name']
+                    nodes.add(node_id)
+                    node_labels[node_id] = node_id
+                    # Infer type from key name
+                    if 'player' in key.lower():
+                        node_types[node_id] = 'Player'
+                    elif 'team' in key.lower() or key in ['h', 'a', 'home', 'away']:
+                        node_types[node_id] = 'Team'
+                    elif 'fixture' in key.lower():
+                        node_types[node_id] = 'Fixture'
+                    else:
+                        node_types[node_id] = 'Unknown'
+                    node_colors[node_id] = color_map.get(node_types[node_id], '#95A5A6')
+                
+                elif 'player_name' in value:
+                    node_id = value['player_name']
+                    nodes.add(node_id)
+                    node_labels[node_id] = node_id
+                    node_types[node_id] = 'Player'
+                    node_colors[node_id] = color_map['Player']
+            
+            # Handle string values
+            elif isinstance(value, str):
+                if key in ['player', 'player_name']:
+                    nodes.add(value)
+                    node_labels[value] = value
+                    node_types[value] = 'Player'
+                    node_colors[value] = color_map['Player']
+                elif key in ['team', 'team_name', 'home_team', 'away_team']:
+                    nodes.add(value)
+                    node_labels[value] = value
+                    node_types[value] = 'Team'
+                    node_colors[value] = color_map['Team']
     
-    # Create edges based on common FPL relationships
-    if len(nodes) > 1:
+    # If we have specific relationships, create edges
+    for record in cypher_result:
+        # Create edges for player-team relationships
+        if 'player' in record and 'team' in record:
+            player = record['player']
+            team = record['team']
+            if player in nodes and team in nodes:
+                edges.append((player, team))
+        
+        # Create edges for home/away team relationships
+        if 'home_team' in record and 'away_team' in record:
+            home = record['home_team']
+            away = record['away_team']
+            if home in nodes and away in nodes:
+                edges.append((home, away))
+    
+    # If no specific edges, create a simple chain
+    if len(edges) == 0 and len(nodes) > 1:
         node_list = list(nodes)
         for i in range(len(node_list) - 1):
             edges.append((node_list[i], node_list[i + 1]))
@@ -176,13 +425,30 @@ def create_graph_visualization(cypher_query: str, cypher_result: List[Dict]) -> 
     for node in nodes:
         G.add_node(node)
     for edge in edges:
-        G.add_edge(edge[0], edge[1])
+        if edge[0] in nodes and edge[1] in nodes:
+            G.add_edge(edge[0], edge[1])
+    
+    # Handle empty graph case
+    if len(G.nodes()) == 0:
+        # Create a simple placeholder graph
+        fig = go.Figure()
+        fig.add_annotation(
+            text="No graph entities found in results<br>Query may return scalar values only",
+            xref="paper", yref="paper",
+            x=0.5, y=0.5,
+            showarrow=False,
+            font=dict(size=16, color="#7f8c8d")
+        )
+        fig.update_layout(
+            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+            plot_bgcolor='white',
+            height=500
+        )
+        return fig
     
     # Create positions using spring layout
-    if len(G.nodes()) > 0:
-        pos = nx.spring_layout(G, k=2, iterations=50)
-    else:
-        pos = {}
+    pos = nx.spring_layout(G, k=2, iterations=50)
     
     # Create edge traces
     edge_x = []
@@ -206,6 +472,7 @@ def create_graph_visualization(cypher_query: str, cypher_result: List[Dict]) -> 
     node_y = []
     node_text = []
     node_color = []
+    hover_text = []
     
     for node in G.nodes():
         x, y = pos[node]
@@ -213,13 +480,17 @@ def create_graph_visualization(cypher_query: str, cypher_result: List[Dict]) -> 
         node_y.append(y)
         node_text.append(node_labels.get(node, node))
         node_color.append(node_colors.get(node, '#95A5A6'))
+        node_type = node_types.get(node, 'Unknown')
+        hover_text.append(f"{node}<br>Type: {node_type}")
     
     node_trace = go.Scatter(
         x=node_x, y=node_y,
         mode='markers+text',
         hoverinfo='text',
+        hovertext=hover_text,
         text=node_text,
         textposition="top center",
+        textfont=dict(size=10, color='#2c3e50'),
         marker=dict(
             showscale=False,
             color=node_color,
@@ -229,19 +500,24 @@ def create_graph_visualization(cypher_query: str, cypher_result: List[Dict]) -> 
         showlegend=False
     )
     
-    # Create figure
-    fig = go.Figure(data=[edge_trace, node_trace],
-                    layout=go.Layout(
-                        title='Knowledge Graph Visualization',
-                        titlefont_size=16,
-                        showlegend=False,
-                        hovermode='closest',
-                        margin=dict(b=20, l=5, r=5, t=40),
-                        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                        plot_bgcolor='white',
-                        height=500
-                    ))
+    # Create figure with corrected layout
+    fig = go.Figure(
+        data=[edge_trace, node_trace],
+        layout=go.Layout(
+            title=dict(
+                text='Knowledge Graph Visualization',
+                font=dict(size=16, color='#2c3e50')
+            ),
+            showlegend=False,
+            hovermode='closest',
+            margin=dict(b=20, l=5, r=5, t=40),
+            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+            plot_bgcolor='white',
+            paper_bgcolor='white',
+            height=500
+        )
+    )
     
     return fig
 
@@ -285,6 +561,11 @@ def process_query(query: str, model_name: str, retrieval_method: str, embedding_
     
     response = qa_chain.invoke({"input": query})
     
+    # Clean up response from any stray HTML tags
+    cleaned_answer = re.sub(r'</?div[^>]*>', '', response["answer"], flags=re.IGNORECASE)
+    # Also remove any other common HTML tags that might appear
+    cleaned_answer = re.sub(r'<[^>]+>', '', cleaned_answer)
+    
     end_time = time.time()
     response_time = end_time - start_time
     
@@ -297,7 +578,7 @@ def process_query(query: str, model_name: str, retrieval_method: str, embedding_
         'formatted_cypher': formatted_cypher,
         'embedding_context': embedding_context,
         'combined_context': combined_context,
-        'llm_answer': response["answer"],
+        'llm_answer': cleaned_answer,
         'response_time': response_time,
         'model_name': model_name,
         'retrieval_method': retrieval_method,
@@ -353,19 +634,18 @@ with st.sidebar:
     st.markdown("### 💡 Example Queries")
     
     example_queries = [
-        "When does Arsenal play against Liverpool in season 2022-23?",
-        "Who scored the most goals in 2022-23?",
-        "Compare Salah and Haaland's goals in 2022-23",
-        "Top 5 midfielders by points",
-        "How many assists did Kevin De Bruyne get?",
-        "Which team had the most clean sheets?",
-        "Show me fixtures for gameweek 10",
-        "Best defenders in 2021-22"
+        "Show me how Mohamed Salah performed in gameweek 5, including total_points.",
+        "What is Chelsea's total bonus points for the 2022-23 season?",
+        "Compare Erling Haaland and Mohamed Salah for the 2022-23 season by goals.",
+        "Compare Liverpool and Chelsea in gameweek 12 for total points.",
+        "When do Arsenal and Man city play each other?",
+        "Who are the top 5 forwards by total points in the 2022-23 season?"
     ]
     
     for i, example in enumerate(example_queries):
         if st.button(f"📝 {example[:40]}...", key=f"example_{i}", use_container_width=True):
-            st.session_state.example_query = example
+            st.session_state.query_input = example
+            st.rerun()
     
     st.markdown("---")
     
@@ -383,17 +663,12 @@ with col1:
     st.markdown("### 🔎 Ask Your Question")
     
     # Query Input
-    default_query = st.session_state.get('example_query', '')
     query = st.text_area(
         "Enter your FPL query:",
-        value=default_query,
         height=100,
         placeholder="e.g., Who scored the most goals in 2022-23?",
         key="query_input"
     )
-    
-    if 'example_query' in st.session_state:
-        del st.session_state.example_query
     
     col_btn1, col_btn2, col_btn3 = st.columns([1, 1, 2])
     
@@ -486,11 +761,14 @@ if st.session_state.current_result:
     
     with tab1:
         st.markdown("### 🎯 LLM Generated Answer")
-        st.markdown(f"""
-        <div class="answer-box">
-            {result['llm_answer']}
-        </div>
-        """, unsafe_allow_html=True)
+        # Use a container with custom styling
+        answer_container = st.container()
+        with answer_container:
+            st.markdown(f"""
+            <div class="answer-box">
+                <p style="margin: 0; white-space: pre-wrap;">{result['llm_answer']}</p>
+            </div>
+            """, unsafe_allow_html=True)
         
         with st.expander("📋 Context Used for Answer"):
             st.markdown("**Combined Context:**")

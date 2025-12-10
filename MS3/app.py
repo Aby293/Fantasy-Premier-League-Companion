@@ -994,6 +994,7 @@ models = {
         "Llama-3.2-3B": llama_llm,
         "Mistral-7B": mistral_llm
     }
+print("Models initialized.")
 
 # query = "When does Arsenal play against Liverpool in season 2022-23?"
 # embedding_model_name = "MPNet"
