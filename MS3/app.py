@@ -763,6 +763,31 @@ def reset_vector_index(index_name, label, property_name, dimension):
     except Exception as e:
         print(f"   - ❌ Error creating index: {e}")
 
+def reset_relationship_vector_index(graph, index_name, rel_type, property_name, dimension):
+    # 1. Drop existing index
+    try:
+        graph.query(f"DROP INDEX {index_name} IF EXISTS")
+    except Exception as e:
+        print(f"   - Warning dropping index: {e}")
+
+    # 2. Create the new RELATIONSHIP index
+    # Note the syntax change: FOR ()-[r:{rel_type}]-()
+    create_query = f"""
+    CREATE VECTOR INDEX {index_name}
+    FOR ()-[r:{rel_type}]-()
+    ON (r.{property_name})
+    OPTIONS {{indexConfig: {{
+      `vector.dimensions`: {dimension},
+      `vector.similarity_function`: 'cosine'
+    }}}}
+    """
+    
+    try:
+        graph.query(create_query)
+        print(f"   - ✅ Created relationship vector index: {index_name}")
+    except Exception as e:
+        print(f"   - ❌ Error creating index: {e}")
+        
 def generate_player_feature_vector_embeddings(graph: Neo4jGraph, embedding_model, model_name: str):
 
     fetch_query = """
@@ -817,60 +842,109 @@ def generate_team_feature_vector_embeddings(graph: Neo4jGraph, embedding_model, 
 
     print("Team Feature Vector Embeddings generation complete!")
 
+def generate_feature_vector_embeddings(graph, embedding_model, model_name: str, batch_size=500):
+    print(f"Fetching data for model: {model_name}...")
+    
+    fetch_query = """
+    MATCH (p:Player)-[pf:PLAYED_IN]->(f:Fixture)
+    WHERE pf.feature_text IS NOT NULL
+    RETURN p.player_element AS element, 
+           p.player_name AS name, 
+           f.season AS season, 
+           f.fixture_number AS fixture_id, 
+           pf.feature_text AS text
+    """
+    data = graph.query(fetch_query)
+    
+    print(f"Found {len(data)} records. Generating embeddings...")
+
+    # Prepare batch list
+    batch = []
+    total_processed = 0
+
+    # The update query expects a list of objects called $batch_data
+    update_query = f"""
+    UNWIND $batch_data AS row
+    MATCH (p:Player {{player_name: row.name, player_element: row.element}})-[pf:PLAYED_IN]->(f:Fixture {{season: row.season, fixture_number: row.fixture_id}})
+    SET pf.feature_vector_embedding_{model_name} = row.embedding
+    """
+
+    for row in data:
+        # Generate embedding
+        vector = embedding_model.embed_query(row['text'])
+        
+        # Add to batch
+        batch.append({
+            'name': row['name'],
+            'element': row['element'],
+            'season': row['season'],
+            'fixture_id': row['fixture_id'],
+            'embedding': vector
+        })
+
+        # Execute if batch is full
+        if len(batch) >= batch_size:
+            graph.query(update_query, {'batch_data': batch})
+            total_processed += len(batch)
+            print(f"   - Processed {total_processed}/{len(data)}...")
+            batch = [] # Reset batch
+
+    # Process remaining records
+    if batch:
+        graph.query(update_query, {'batch_data': batch})
+        total_processed += len(batch)
+
+    if total_processed > 0:
+        sample_dim = len(batch[0]['embedding']) if batch else len(vector)
+        reset_relationship_vector_index(
+            graph=graph,
+            index_name="pf_feature_index_" + model_name, 
+            rel_type="PLAYED_IN", 
+            property_name="feature_vector_embedding_" + model_name, 
+            dimension=sample_dim
+        )
+
+    print("Feature Vector Embeddings generation complete!")
+
 def generate_all_embeddings(graph: Neo4jGraph):
-    embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-    generate_player_feature_vector_embeddings(graph, embedding_model, "MiniLM")
-    generate_team_feature_vector_embeddings(graph, embedding_model, "MiniLM")
-    embedding_model2 = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
-    generate_player_feature_vector_embeddings(graph, embedding_model2, "MPNet")
-    generate_team_feature_vector_embeddings(graph, embedding_model2, "MPNet")
+    embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2", model_kwargs={"device": "cuda"})
+    # generate_player_feature_vector_embeddings(graph, embedding_model, "MiniLM")
+    # generate_team_feature_vector_embeddings(graph, embedding_model, "MiniLM")
+    generate_feature_vector_embeddings(graph, embedding_model, "MiniLM")
+    embedding_model2 = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2", model_kwargs={"device": "cuda"})
+    # generate_player_feature_vector_embeddings(graph, embedding_model2, "MPNet")
+    # generate_team_feature_vector_embeddings(graph, embedding_model2, "MPNet")
+    generate_feature_vector_embeddings(graph, embedding_model2, "MPNet")
+    embedding_model3 = HuggingFaceEmbeddings(model_name="BAAI/bge-base-en-v1.5", model_kwargs={"device": "cuda"})
+    generate_feature_vector_embeddings(graph, embedding_model3, "BGE")
 
-def retrieve_embedding_search(query: str, embeddings_model, model_name: str):
-    
-    player_vector_store = Neo4jVector.from_existing_index(
-        embedding=embeddings_model,  
-        url=config.get('URI'),
-        username=config.get('USERNAME'),
-        password=config.get('PASSWORD'),
-        index_name="player_feature_index_" + model_name,
-        node_label="Player",
-        embedding_node_property="feature_vector_embedding_" + model_name,
-        text_node_property="fpl_features",
-    )
-    
-    player_results = player_vector_store.similarity_search_with_score(query, k=5)
-    
-    team_vector_store = Neo4jVector.from_existing_index(
-        embedding=embeddings_model,  
-        url=config.get('URI'),
-        username=config.get('USERNAME'),
-        password=config.get('PASSWORD'),
-        index_name="team_feature_index_" + model_name,
-        node_label="Team",
-        embedding_node_property="feature_vector_embedding_" + model_name,
-        text_node_property="team_description",
-    )
-    
-    team_results = team_vector_store.similarity_search_with_score(query, k=5)
-    
-    combined_results = []
-    
-    for doc, score in player_results:
-        combined_results.append((doc, score, "Player"))
-    
-    for doc, score in team_results:
-        combined_results.append((doc, score, "Team"))
-    
-    combined_results.sort(key=lambda x: x[1], reverse=True)
-    
-    top_3_results = combined_results[:3]
+def retrieve_embedding_search(query: str, embeddings_model, model_name: str, graph):
+    query_vector = embeddings_model.embed_query(query)
+    index_name = "pf_feature_index_" + model_name
 
-    formatted_context = "\n---\n".join([
-        f"[{source}] {doc.page_content}" 
-        for doc, score, source in top_3_results
-    ])
+    search_query = """
+    CALL db.index.vector.queryRelationships($index_name, 3, $embedding)
+    YIELD relationship, score
+    RETURN relationship.feature_text AS text, score
+    """
     
-    return formatted_context
+    try:
+        results = graph.query(search_query, {
+            "index_name": index_name, 
+            "embedding": query_vector
+        })
+        
+        text_list = [row['text'] for row in results]
+        if text_list:
+            context_string = "\n\n---\n\n".join(text_list)
+        else:
+            context_string = "No relevant context found."
+            
+        return context_string
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return "Error retrieving context."
 
 def rag_pipline(llm, classifier, embedding_model, embedding_model_name, query):
     # 1. Retrieve from KG via Cypher
