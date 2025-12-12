@@ -374,7 +374,7 @@ if not st.session_state.app_loaded:
     
     # Import app modules (this is where the actual loading happens)
     from app import (
-        graph, classifier, models, model_minilm, model_mpnet,
+        graph, classifier, models, model_minilm, model_mpnet, model_bge,
         classify_fpl_intents, extract_fpl_entities, get_fpl_cypher_query,
         format_query_result, retrieve_embedding_search, generate_qa_chain
     )
@@ -385,6 +385,7 @@ if not st.session_state.app_loaded:
     st.session_state.models = models
     st.session_state.model_minilm = model_minilm
     st.session_state.model_mpnet = model_mpnet
+    st.session_state.model_bge = model_bge
     st.session_state.classify_fpl_intents = classify_fpl_intents
     st.session_state.extract_fpl_entities = extract_fpl_entities
     st.session_state.get_fpl_cypher_query = get_fpl_cypher_query
@@ -401,6 +402,7 @@ classifier = st.session_state.classifier
 models = st.session_state.models
 model_minilm = st.session_state.model_minilm
 model_mpnet = st.session_state.model_mpnet
+model_bge = st.session_state.model_bge
 classify_fpl_intents = st.session_state.classify_fpl_intents
 extract_fpl_entities = st.session_state.extract_fpl_entities
 get_fpl_cypher_query = st.session_state.get_fpl_cypher_query
@@ -809,41 +811,65 @@ def process_query(query: str, model_name: str, retrieval_method: str, embedding_
     
     start_time = time.time()
     
-    # Step 1: Intent Classification
-    intent = classify_fpl_intents(classifier, query)
+    # Initialize variables
+    intent = None
+    entities = None
+    cypher_query = None
+    cypher_result = []
+    graph_figure = None
+    formatted_cypher = ""
     
-    # Step 2: Entity Extraction
-    entities = extract_fpl_entities(query)
-    
-    # Step 3: Generate Cypher Query
-    cypher_query = get_fpl_cypher_query(intent, entities)
-    
-    # Step 4: Execute Cypher Query
-    cypher_result = graph.query(cypher_query)
-    
-    # Step 4.5: Generate graph visualization
-    try:
-        graph_figure = create_graph_visualization(cypher_query, cypher_result)
-    except Exception as e:
-        print(f"Could not generate visualization: {e}")
-        graph_figure = None
-    
-    # Step 5: Format Cypher Result
-    formatted_cypher = format_query_result(intent, cypher_result, entities)
-    
-    # Step 6: Embedding Search (if needed)
-    embedding_context = ""
-    if retrieval_method in ["embeddings", "hybrid"]:
-        embedding_model = model_mpnet if embedding_model_name == "MPNet" else model_minilm
-        embedding_context = retrieve_embedding_search(query, embedding_model, embedding_model_name)
-    
-    # Step 7: Combine contexts
-    if retrieval_method == "baseline":
-        combined_context = f"Cypher Results:\n{formatted_cypher}"
-    elif retrieval_method == "embeddings":
+    # For embeddings-only retrieval, skip Cypher-based processing
+    if retrieval_method == "embeddings":
+        # Step 1: Embedding Search Only
+        if embedding_model_name == "MPNet":
+            embedding_model = model_mpnet
+        elif embedding_model_name == "BGE":
+            embedding_model = model_bge
+        else:
+            embedding_model = model_minilm
+        embedding_context = retrieve_embedding_search(query, embedding_model, embedding_model_name, graph)
         combined_context = f"Embedding Results:\n{embedding_context}"
-    else:  # hybrid
-        combined_context = f"Cypher Results:\n{formatted_cypher}\n\nEmbedding Results:\n{embedding_context}"
+    else:
+        # For baseline and hybrid, do full Cypher processing
+        # Step 1: Intent Classification
+        intent = classify_fpl_intents(classifier, query)
+        
+        # Step 2: Entity Extraction
+        entities = extract_fpl_entities(query)
+        
+        # Step 3: Generate Cypher Query
+        cypher_query = get_fpl_cypher_query(intent, entities)
+        
+        # Step 4: Execute Cypher Query
+        cypher_result = graph.query(cypher_query)
+        
+        # Step 4.5: Generate graph visualization
+        try:
+            graph_figure = create_graph_visualization(cypher_query, cypher_result)
+        except Exception as e:
+            print(f"Could not generate visualization: {e}")
+            graph_figure = None
+        
+        # Step 5: Format Cypher Result
+        formatted_cypher = format_query_result(intent, cypher_result, entities)
+        
+        # Step 6: Embedding Search (if hybrid)
+        embedding_context = ""
+        if retrieval_method == "hybrid":
+            if embedding_model_name == "MPNet":
+                embedding_model = model_mpnet
+            elif embedding_model_name == "BGE":
+                embedding_model = model_bge
+            else:
+                embedding_model = model_minilm
+            embedding_context = retrieve_embedding_search(query, embedding_model, embedding_model_name, graph)
+        
+        # Step 7: Combine contexts
+        if retrieval_method == "baseline":
+            combined_context = f"Cypher Results:\n{formatted_cypher}"
+        else:  # hybrid
+            combined_context = f"Cypher Results:\n{formatted_cypher}\n\nEmbedding Results:\n{embedding_context}"
     
     # Step 8: Generate LLM Response
     selected_llm = models[model_name]
@@ -863,10 +889,10 @@ def process_query(query: str, model_name: str, retrieval_method: str, embedding_
         'query': query,
         'intent': intent,
         'entities': entities,
-        'cypher_query': '\n'.join(line.strip() for line in cypher_query.splitlines()),
+        'cypher_query': '\n'.join(line.strip() for line in cypher_query.splitlines()) if cypher_query else None,
         'cypher_result': cypher_result,
         'formatted_cypher': formatted_cypher,
-        'embedding_context': embedding_context,
+        'embedding_context': embedding_context if retrieval_method in ["embeddings", "hybrid"] else "",
         'combined_context': combined_context,
         'llm_answer': cleaned_answer,
         'response_time': response_time,
@@ -912,9 +938,9 @@ with st.sidebar:
         st.markdown("#### 📊 Embedding Model")
         embedding_model_name = st.selectbox(
             "Select Embedding Model",
-            options=["MPNet", "MiniLM"],
+            options=["MiniLM", "MPNet", "BGE"],
             index=0,
-            help="• MPNet: Higher quality, slower\n• MiniLM: Faster, good quality"
+            help="• MiniLM: Fast, good quality\n• MPNet: Better quality, slowest\n• BGE: Best quality and speed"
         )
     else:
         embedding_model_name = "MPNet"
@@ -926,7 +952,7 @@ with st.sidebar:
     
     example_queries = [
         "Show me how Mohamed Salah performed in gameweek 5, including total_points.",
-        "What is Chelsea's total bonus points for the 2022-23 season?",
+        "How many goals did Harry Kane have in gameweek 36 season 2021-22?",
         "Compare Erling Haaland and Mohamed Salah for the 2022-23 season by goals.",
         "Compare Liverpool and Chelsea in gameweek 12 for total points.",
         "When do Arsenal and Man city play each other?",
@@ -1016,7 +1042,7 @@ if st.session_state.current_result:
         st.markdown(f"""
         <div class="metric-card">
             <h3 style="margin:0; color:white;">🎯</h3>
-            <h2 style="margin:10px 0; color:white;">{result['intent']}</h2>
+            <h2 style="margin:10px 0; color:white;">{result['intent'] if result['intent'] else 'N/A'}</h2>
             <p style="margin:0; color:white;">Intent</p>
         </div>
         """, unsafe_allow_html=True)
@@ -1025,8 +1051,8 @@ if st.session_state.current_result:
         st.markdown(f"""
         <div class="metric-card">
             <h3 style="margin:0; color:white;">📦</h3>
-            <h2 style="margin:10px 0; color:white;">{len(result['cypher_result'])}</h2>
-            <p style="margin:0; color:white;">Results Found</p>
+            <h2 style="margin:10px 0; color:white;">{len(result['cypher_result']) if result['cypher_result'] else 'N/A'}</h2>
+            <p style="margin:0; color:white;">Cypher Results Found</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -1041,14 +1067,22 @@ if st.session_state.current_result:
     
     st.markdown("<br>", unsafe_allow_html=True)
     
-    # Tabs for Different Views
-    tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        "💬 Final Answer",
-        "🔍 Graph Context",
-        "📝 Cypher Query",
-        "📊 Graph Visualization",
-        "🔧 Debug Info"
-    ])
+    # Tabs for Different Views - conditionally show based on retrieval method
+    if result['retrieval_method'] == "embeddings":
+        # For embeddings only, show fewer tabs
+        tab1, tab2 = st.tabs([
+            "💬 Final Answer",
+            "🔧 Debug Info"
+        ])
+    else:
+        # For baseline and hybrid, show all tabs
+        tab1, tab2, tab3, tab4, tab5 = st.tabs([
+            "💬 Final Answer",
+            "🔍 Graph Context",
+            "📝 Cypher Query",
+            "📊 Graph Visualization",
+            "🔧 Debug Info"
+        ])
     
     with tab1:
         st.markdown("### 🎯 LLM Generated Answer")
@@ -1076,27 +1110,29 @@ if st.session_state.current_result:
             )
 
     
-    with tab2:
-        st.markdown("### 🔍 Knowledge Graph Retrieved Context")
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            st.markdown("#### 🎯 Extracted Entities")
-            st.json(result['entities'])
-        
-        with col2:
-            st.markdown("#### 📊 Formatted Results")
+    # Only show these tabs for baseline and hybrid methods
+    if result['retrieval_method'] != "embeddings":
+        with tab2:
+            st.markdown("### 🔍 Knowledge Graph Retrieved Context")
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.markdown("#### 🎯 Extracted Entities")
+                st.json(result['entities'])
+            
+            with col2:
+                st.markdown("#### 📊 Formatted Results")
 
-            formatted_html = result['formatted_cypher'].replace('\n', '<br>')
-            st.markdown(
-                f"""
-                <div class="context-box">
-                    {formatted_html}
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+                formatted_html = result['formatted_cypher'].replace('\n', '<br>')
+                st.markdown(
+                    f"""
+                    <div class="context-box">
+                        {formatted_html}
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
 
         st.markdown("#### 📦 Raw Cypher Results")
         if result['cypher_result']:
@@ -1117,52 +1153,71 @@ if st.session_state.current_result:
                 unsafe_allow_html=True
             )
 
-    
-    with tab3:
-        st.markdown("### 📝 Executed Cypher Query")
-        st.code(result['cypher_query'], language="cypher")
-    
-    with tab4:
-        st.markdown("### 📊 Knowledge Graph Visualization")
         
-        if result.get('graph_figure'):
-            st.plotly_chart(result['graph_figure'], use_container_width=True)
+        with tab3:
+            st.markdown("### 📝 Executed Cypher Query")
+            st.code(result['cypher_query'], language="cypher")
+        
+        with tab4:
+            st.markdown("### 📊 Knowledge Graph Visualization")
             
-            st.markdown("#### 🎨 Legend")
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                st.markdown("🔴 **Player**")
-                st.markdown("🔵 **Team**")
-            with col2:
-                st.markdown("🟢 **Fixture**")
-                st.markdown("🟡 **Gameweek**")
-            with col3:
-                st.markdown("🟣 **Season**")
-                st.markdown("🟠 **Position**")
-        else:
-            st.warning("No graph data available to visualize.")
-    
-    with tab5:
-        st.markdown("### 🔧 Debug Information")
+            if result.get('graph_figure'):
+                st.plotly_chart(result['graph_figure'], use_container_width=True)
+                
+                st.markdown("#### 🎨 Legend")
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.markdown("🔴 **Player**")
+                    st.markdown("🔵 **Team**")
+                with col2:
+                    st.markdown("🟢 **Fixture**")
+                    st.markdown("🟡 **Gameweek**")
+                with col3:
+                    st.markdown("🟣 **Season**")
+                    st.markdown("🟠 **Position**")
+            else:
+                st.warning("No graph data available to visualize.")
         
-        with st.expander("🔍 Full Result Object", expanded=False):
-            st.json({
-                'query': result['query'],
-                'intent': result['intent'],
-                'entities': result['entities'],
-                'model_name': result['model_name'],
-                'retrieval_method': result['retrieval_method'],
-                'embedding_model': result['embedding_model'],
-                'response_time': result['response_time'],
-                'timestamp': result['timestamp']
-            })
-        
-        with st.expander("📊 Query Execution Details"):
-            st.write(f"**Query:** {result['query']}")
-            st.write(f"**Intent Classification:** {result['intent']}")
-            st.write(f"**Entities Extracted:** {len(result['entities'])} entities")
-            st.write(f"**Cypher Results:** {len(result['cypher_result'])} records")
-            st.write(f"**Response Time:** {result['response_time']:.3f} seconds")
+        with tab5:
+            st.markdown("### 🔧 Debug Information")
+            
+            with st.expander("🔍 Full Result Object", expanded=False):
+                st.json({
+                    'query': result['query'],
+                    'intent': result['intent'],
+                    'entities': result['entities'],
+                    'model_name': result['model_name'],
+                    'retrieval_method': result['retrieval_method'],
+                    'embedding_model': result['embedding_model'],
+                    'response_time': result['response_time'],
+                    'timestamp': result['timestamp']
+                })
+            
+            with st.expander("📊 Query Execution Details"):
+                st.write(f"**Query:** {result['query']}")
+                st.write(f"**Intent Classification:** {result['intent']}")
+                st.write(f"**Entities Extracted:** {len(result['entities'])} entities")
+                st.write(f"**Cypher Results:** {len(result['cypher_result'])} records")
+    else:
+        # For embeddings-only mode
+        with tab2:
+            st.markdown("### 🔧 Debug Information")
+            
+            with st.expander("🔍 Full Result Object", expanded=False):
+                st.json({
+                    'query': result['query'],
+                    'model_name': result['model_name'],
+                    'retrieval_method': result['retrieval_method'],
+                    'embedding_model': result['embedding_model'],
+                    'response_time': result['response_time'],
+                    'timestamp': result['timestamp']
+                })
+            
+            with st.expander("📊 Query Execution Details"):
+                st.write(f"**Query:** {result['query']}")
+                st.write(f"**Retrieval Method:** {result['retrieval_method']}")
+                st.write(f"**Embedding Model:** {result['embedding_model']}")
+                st.write(f"**Response Time:** {result['response_time']:.3f} seconds")
 
 # Query History
 if st.session_state.query_history:

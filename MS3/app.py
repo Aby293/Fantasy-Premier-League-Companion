@@ -946,7 +946,7 @@ def retrieve_embedding_search(query: str, embeddings_model, model_name: str, gra
         print(f"Error: {e}")
         return "Error retrieving context."
 
-def rag_pipline(llm, classifier, embedding_model, embedding_model_name, query):
+def rag_pipline(llm, classifier, embedding_model, embedding_model_name, query, graph):
     # 1. Retrieve from KG via Cypher
     intent = classify_fpl_intents(classifier, query)
     entities = extract_fpl_entities(query)
@@ -954,7 +954,7 @@ def rag_pipline(llm, classifier, embedding_model, embedding_model_name, query):
     cypher_result = graph.query(cypher_query)
     formatted_cypher = format_query_result(intent, cypher_result, entities)
 
-    embedding_context = retrieve_embedding_search(query, embedding_model, embedding_model_name)
+    embedding_context = retrieve_embedding_search(query, embedding_model, embedding_model_name, graph)
 
     # 3. Combine Contexts
     combined_context = f"Cypher Results:\n{formatted_cypher}\n\nEmbedding Results:\n{embedding_context}"
@@ -1046,6 +1046,7 @@ add_to_lookup(FPL_KB["stats"], "stat")
 
 model_minilm = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 model_mpnet = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
+model_bge = HuggingFaceEmbeddings(model_name="BAAI/bge-base-en-v1.5")
 
 HF_TOKEN = config.get('HF_TOKEN')
 print("Initializing models...")
