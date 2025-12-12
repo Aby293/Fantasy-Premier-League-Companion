@@ -65,7 +65,7 @@ def build_nodes(tx, season_names=None, gameweek_names=None, fixture_names=None, 
             names=position_names 
         )
 
-def build_relationships(tx, rel_season_gw=None, rel_gw_fixture=None, rel_fixture_home=None, rel_fixture_away=None, rel_player_position=None, rel_player_fixture_stats=None):
+def build_relationships(tx, rel_season_gw=None, rel_gw_fixture=None, rel_fixture_home=None, rel_fixture_away=None, rel_player_position=None, rel_player_team=None, rel_player_fixture_stats=None):
     tx.run("MATCH ()-[r]->() DELETE r")
 
     if rel_season_gw:
@@ -118,6 +118,16 @@ def build_relationships(tx, rel_season_gw=None, rel_gw_fixture=None, rel_fixture
             relations=rel_player_position 
         )
 
+    if rel_player_team:
+        tx.run( """ 
+            UNWIND $relations AS rel 
+            MATCH (p:Player {player_name: rel.name, player_element: rel.element}) 
+            MATCH (t:Team {name: rel.team}) 
+            MERGE (p)-[r:PLAYS_FOR]->(t) 
+            """, 
+            relations=rel_player_team 
+        )
+
     if rel_player_fixture_stats:
         tx.run( """ 
             UNWIND $relations AS rel 
@@ -142,13 +152,20 @@ def build_relationships(tx, rel_season_gw=None, rel_gw_fixture=None, rel_fixture
                 r.creativity = rel.creativity,
                 r.threat = rel.threat,
                 r.ict_index = rel.ict_index,
-                r.form = rel.form
+                r.form = rel.form,
+                r.total_points_sum = rel.total_points_sum,
+                r.goals_scored_sum = rel.goals_scored_sum,
+                r.assists_sum = rel.assists_sum,
+                r.minutes_sum = rel.minutes_sum,
+                r.bonus_sum = rel.bonus_sum,
+                r.clean_sheets_sum = rel.clean_sheets_sum,
+                r.feature_text = rel.feature_text
             """,
             relations=rel_player_fixture_stats
         )
 
 try:
-    df = pd.read_csv('fpl_two_seasons.csv')
+    df = pd.read_csv('../MS3/two_seasons_cleaned.csv')
 except FileNotFoundError:
     print("CSV file not found. Please ensure the file path is correct.")
     exit()
@@ -172,12 +189,14 @@ rel_gw_fixture = df[['season', 'GW', 'fixture']].drop_duplicates().to_dict('reco
 rel_fixture_home = df[['season', 'fixture', 'home_team']].drop_duplicates().to_dict('records')
 rel_fixture_away = df[['season', 'fixture', 'away_team']].drop_duplicates().to_dict('records')
 rel_player_position = df[['name', 'element', 'position']].drop_duplicates().to_dict('records')
+rel_player_team = df[['name', 'element', 'team']].drop_duplicates().to_dict('records')
 
 stat_cols = [
     'minutes', 'goals_scored', 'assists', 'total_points', 'bonus', 
     'clean_sheets', 'goals_conceded', 'own_goals', 'penalties_saved', 
     'penalties_missed', 'yellow_cards', 'red_cards', 'saves', 'bps', 
-    'influence', 'creativity', 'threat', 'ict_index', 'form'
+    'influence', 'creativity', 'threat', 'ict_index', 'form', 'total_points_sum', 'goals_scored_sum', 
+    'assists_sum', 'minutes_sum', 'bonus_sum', 'clean_sheets_sum', 'feature_text'
 ]
 
 rel_player_fixture_stats = []
@@ -223,6 +242,7 @@ with driver.session() as session:
         rel_fixture_home=rel_fixture_home, 
         rel_fixture_away=rel_fixture_away,
         rel_player_position=rel_player_position,
+        rel_player_team=rel_player_team,
         rel_player_fixture_stats=rel_player_fixture_stats
     )
 
