@@ -98,30 +98,124 @@ def load_fpl_kb(graph: Neo4jGraph) -> dict:
 
     return kb
 
-def classify_fpl_intents(classifier, query: str):
+def normalize(text: str) -> str:
+    return re.sub(r"\s+", " ", text.lower().strip())
+
+def classify_fpl_intents(prompt: str) -> str:
 
     INTENTS = {
-        "fixture_details": [
-            "fixture", "fixtures", "when do", "when does", "when is", "play next", 
-            "next match", "kickoff", "schedule", "upcoming match", "future match"
-        ],
+    "fixture_details": [
+        "fixture", "fixtures", "when do", "when does", "when is", "play next", 
+        "next match", "kickoff", "schedule", "upcoming match", "future match"
+    ],
 
-        "best_players_by_metric": [
-            "top", "best", "highest", "leader", "rank", "ranking", 
-            "top scorer", "top assist", "highest points", "most points", "stat leaders", "top players","best forward",
-            "best midfielder", "best defender", "best goalkeeper","top number","best number"
-        ],
-        "player_or_team_performance": [
-            "how did", "performance", "stats", "statistics", "record", "scored", 
-            "assists", "goals", "points", "clean sheets", "how many", 
-            "results","compare", "vs", "versus", "better than", "head to head", "compare stats", "comparison","more than","compare player1 and player2"
-        ]
+    "best_players_by_metric": [
+        "top", "best", "highest", "leader", "rank", "ranking", 
+        "top scorer", "top assist", "highest points", "most points", "stat leaders", "top players","best forward",
+        "best midfielder", "best defender", "best goalkeeper","top number","best number"
+    ],
+    "Worst_players_by_metric": [
+        "worst", "lowest", "bottom", "least", "bottom scorer", "least assists", "lowest points", "fewest points", "stat laggards", "worst players","worst forward",
+        "worst midfielder", "worst defender", "worst goalkeeper","bottom number","worst number"
+    ],
+    "player_or_team_performance": [
+        "how did", "performance", "stats", "statistics", "record", "scored", 
+        "assists", "goals", "points", "clean sheets", "how many", 
+        "results","compare", "vs", "versus", "better than", "head to head", "compare stats", "comparison","more than","compare player1 and player2"
+    ],
+    "player_information": [
+        "who is", "tell me about", "information on", "details about", 
+        "bio", "biography", "what is position of", "which team does", "age of", "nationality of", "height of", "weight of"
+    ]
+}
+    q = normalize(prompt)
+
+    scores = {
+        "fixture_details": 0,
+        "player_or_team_performance": 0,
+        "best_players_by_metric": 0,
+        "Worst_players_by_metric": 0,
+        "player_information": 0
     }
 
-    candidate_labels = list(INTENTS.keys())
-    result = classifier(query, candidate_labels, multi_label=True)
+    # ---------------------------
+    # FIXTURE DETAILS (HIGHEST PRIORITY)
+    # ---------------------------
+    if any(x in q for x in [
+        "when do", "when does", "when is",
+        "next fixture", "play next", "next match",
+        "kickoff", "schedule"
+    ]):
+        scores["fixture_details"] += 6
 
-    return result["labels"][0]  # the top intent
+    # Player plays against team
+    if " play against " in q or " plays against " in q:
+        scores["fixture_details"] += 6
+
+    # Team vs team fixture
+    if (" play each other" in q or " vs " in q or " versus " in q) and "when" in q:
+        scores["fixture_details"] += 6
+
+    # Gameweek reference boosts fixture intent
+    if re.search(r"\b(gameweek|gw)\s*\d+", q):
+        scores["fixture_details"] += 2
+
+    # ---------------------------
+    # PERFORMANCE / COMPARISON
+    # ---------------------------
+    if any(x in q for x in [
+        "show me", "give me", "how did", "performed",
+        "total", "goals", "assists", "points",
+        "bonus", "clean sheets", "stats"
+    ]):
+        scores["player_or_team_performance"] += 3
+
+    if any(x in q for x in [
+        "compare", "vs", "versus", "better than",
+        "head to head", "comparison"
+    ]):
+        scores["player_or_team_performance"] += 5
+
+    # Season reference
+    if re.search(r"\b20\d{2}-\d{2}\b", q):
+        scores["player_or_team_performance"] += 2
+
+    # ---------------------------
+    # BEST PLAYERS
+    # ---------------------------
+    if any(x in q for x in [
+        "top", "best", "highest", "most",
+        "top scorer", "top assist"
+    ]):
+        scores["best_players_by_metric"] += 6
+
+    # ---------------------------
+    # WORST PLAYERS
+    # ---------------------------
+    if any(x in q for x in [
+        "worst", "bottom", "lowest", "least",
+        "fewest"
+    ]):
+        scores["Worst_players_by_metric"] += 6
+
+    # ---------------------------
+    # PLAYER INFORMATION
+    # ---------------------------
+    if any(x in q for x in [
+        "who is", "what team does", "what position does",
+        "which position", "tell me about"
+    ]):
+        scores["player_information"] += 6
+
+    # ---------------------------
+    # FINAL DECISION
+    # ---------------------------
+    best_intent = max(scores, key=scores.get)
+
+    if scores[best_intent] == 0:
+        return "player_or_team_performance"
+
+    return best_intent
 
 def add_to_lookup(terms, category):
     for item in terms:
@@ -139,8 +233,6 @@ def extract_fpl_entities(query: str) -> dict:
     """
     Extract entities from FPL query with improved accuracy and validation
     """
-    
-    nlp = spacy.load("en_core_web_sm")
     doc = nlp(query)
     entities = {
         "stat_type": "total_points",  # Default fallback
@@ -195,7 +287,7 @@ def extract_fpl_entities(query: str) -> dict:
                     if "MID" in norm: norm = "MID"
                     elif "FWD" in norm or "FORWARD" in norm: norm = "FWD"
                     elif "DEF" in norm: norm = "DEF"
-                    elif "GK" in norm or "GKP" in norm or "GOALKEEPER" in norm: norm = "GKP"
+                    elif "GK" in norm or "GKP" in norm or "GOALKEEPER" in norm: norm = "GK"
                     entities["position"] = norm
             # Handle Stats
             elif category == "stat":
@@ -260,6 +352,11 @@ def extract_fpl_entities(query: str) -> dict:
     limit_match = re.search(r"(?:top|best|first)\s*(\d+)", query_lower)
     if limit_match:
         entities["limit"] = int(limit_match.group(1))
+
+    # Extract "bottom N" or "worst N"
+    bottom_limit_match = re.search(r"(?:bottom|worst|last)\s*(\d+)", query_lower)
+    if bottom_limit_match:
+        entities["limit"] = int(bottom_limit_match.group(1))
     
     # Extract current gameweek for recommendations
     if any(word in query_lower for word in ["recommend", "suggest", "current", "now", "right now"]):
@@ -270,7 +367,7 @@ def extract_fpl_entities(query: str) -> dict:
             entities["current_gw"] = 20  # Default mid-season
     
     # Extract minimum value filters (e.g., "more than 10 points")
-    filter_match = re.search(r"(?:more than|over|at least|minimum)\s*(\d+)", query_lower)
+    filter_match = re.search(r"(?:more than|over|above|at least|minimum)\s*(\d+)", query_lower)
     if filter_match:
         entities["filter_value"] = int(filter_match.group(1))
     
@@ -305,7 +402,7 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
         
         else:
             return f"""
-                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek)-[hf:HAS_FIXTURE]->(f:Fixture)
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g)-[hf:HAS_FIXTURE]->(f)
                 MATCH (p:Player {{player_name:'{player1}'}})-[pi:PLAYED_IN]->(f)
                 RETURN p.player_name AS player, SUM(pi.{stat}) AS total_{stat}, '{season}' AS season
             """
@@ -314,20 +411,24 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
     # 2) PERFORMANCE: Single Team Performance summary
     # ----------------------------------------------------------------------
     if intent == "player_or_team_performance" and team1 and not team2:
-        if gw:
-            return f"""
-                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek {{GW_number:{gw}}})-[hf:HAS_FIXTURE]->(f:Fixture)
-                MATCH (f)-[ht:HAS_HOME_TEAM|HAS_AWAY_TEAM]->(t:Team {{name:'{team1}'}})
-                MATCH (p:Player)-[pi:PLAYED_IN]->(f)
-                RETURN t.name AS team, SUM(pi.{stat}) AS total_{stat}, g.GW_number AS gameweek
-            """
-        else:
-            return f"""
-                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(:Gameweek)-[hf:HAS_FIXTURE]->(f:Fixture)
-                MATCH (f)-[ht:HAS_HOME_TEAM|HAS_AWAY_TEAM]->(t:Team {{name:'{team1}'}})
-                MATCH (p:Player)-[pi:PLAYED_IN]->(f)
-                RETURN t.name AS team, SUM(pi.{stat}) AS total_{stat}
-            """
+            if gw:
+                # Single Gameweek performance for a team
+                return f"""
+                    MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek {{GW_number:{gw}}})-[hf:HAS_FIXTURE]->(f)
+                    MATCH (p:Player)-[pf:PLAYS_FOR]->(t:Team{{name:'{team1}'}})
+                    MATCH (p)-[pi:PLAYED_IN]->(f)
+                    RETURN t.name AS team, SUM(pi.{stat}) AS {stat}, g.GW_number AS gameweek
+                """
+            else:
+                # Full season performance for a team
+                return f"""
+                    MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek)-[hf:HAS_FIXTURE]->(f)
+                    MATCH (p:Player)-[pf:PLAYS_FOR]->(t:Team{{name:'{team1}'}})
+                    MATCH (p)-[pi:PLAYED_IN]->(f)
+                    
+                    RETURN t.name AS team, SUM(pi.{stat}) AS {stat}
+                """
+
 
 
     # ----------------------------------------------------------------------
@@ -362,30 +463,47 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
     # ----------------------------------------------------------------------
     # 4) PERFORMANCE: Compare Two Teams
     # ----------------------------------------------------------------------
-    if intent == "player_or_team_performance" and team1 and team2: 
-        if gw: 
-            return f""" MATCH (s:Season {{season_name:'{season}'}}) -[hg:HAS_GW]->(g:Gameweek {{GW_number:{gw}}}) -[hf:HAS_FIXTURE]->(f:Fixture) 
-                        MATCH (f)-[ht:HAS_HOME_TEAM]->(home:Team) 
-                        MATCH (f)-[at:HAS_AWAY_TEAM]->(away:Team) WHERE home.name IN ['{team1}', '{team2}'] OR away.name IN ['{team1}', '{team2}'] 
-                        MATCH (p:Player)-[pi:PLAYEDIN]->(f) RETURN CASE WHEN home.name = '{team1}' OR away.name = '{team1}' 
-                        THEN '{team1}' ELSE '{team2}' END 
-                        AS team, SUM(pi.{stat}) AS total{stat}, g.GW_number AS gameweek """ 
-        else: 
-            return f""" MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek)-[hf:HAS_FIXTURE]->(f:Fixture) 
-                        MATCH (f)-[ht:HAS_HOME_TEAM]->(home:Team) 
-                        MATCH (f)-[at:HAS_AWAY_TEAM]->(away:Team) WHERE home.name IN ['{team1}', '{team2}'] OR away.name IN ['{team1}', '{team2}'] 
-                        MATCH (p:Player)-[pi:PLAYEDIN]->(f) RETURN CASE WHEN home.name = '{team1}' OR away.name = '{team1}' 
-                        THEN '{team1}' ELSE '{team2}' END AS team, SUM(pi.{stat}) AS total{stat} """
+    if intent == "player_or_team_performance" and team1 and team2:
+        if gw:
+            # Single Gameweek comparison
+            return f"""
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek {{GW_number:{gw}}})-[hf:HAS_FIXTURE]->(f)
+                MATCH (p:Player)-[pi:PLAYED_IN]->(f)
+                MATCH (p)-[pf:PLAYS_FOR]->(t:Team)
+                WHERE t.name = '{team1}' OR t.name = '{team2}'
+                RETURN 
+                    CASE 
+                        WHEN t.name = '{team1}' THEN '{team1}' 
+                        ELSE '{team2}' 
+                    END AS team,
+                    SUM(pi.{stat}) AS total_{stat},
+                    g.GW_number AS gameweek
+            """
+        else:
+            # Full season comparison
+            return f"""
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek)-[hf:HAS_FIXTURE]->(f)
+                MATCH (p:Player)-[pi:PLAYED_IN]->(f)
+                MATCH (p)-[pf:PLAYS_FOR]->(t:Team)
+                WHERE t.name = '{team1}' OR t.name = '{team2}'
+                RETURN 
+                    CASE 
+                        WHEN t.name = '{team1}' THEN '{team1}' 
+                        ELSE '{team2}' 
+                    END AS team,
+                    SUM(pi.{stat}) AS total_{stat}
+            """
+
     # ----------------------------------------------------------------------
     # 5) FIXTURE: Next Fixture by Team
     # ----------------------------------------------------------------------
     if intent == "fixture_details" and team1 and gw and not team2:
         return f"""
-            MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek {{GW_number:{gw}}})-[hf:HAS_FIXTURE]->(f:Fixture)-[ht:HAS_HOME_TEAM]->(h:Team),
-            (f)-[at:HAS_AWAY_TEAM]->(a:Team)
+             MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek {{GW_number:{gw}}})-[hf:HAS_FIXTURE]->(f:Fixture)-[hht:HAS_HOME_TEAM]->(h:Team),
+            (f)-[hat:HAS_AWAY_TEAM]->(a:Team)
             WHERE h.name = '{team1}' OR a.name = '{team1}'
             RETURN f.fixture_number AS fixture, f.kickoff_time, h, a
-            ORDER BY f.kickoff_time ASC LIMIT 1
+            ORDER BY f.kickoff_time ASC 
         """
     
     
@@ -398,8 +516,8 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
           MATCH (s:Season {{season_name:'{season}'}})
         -[hg:HAS_GW]->(g:Gameweek {{GW_number:{gw}}})
         -[hf:HAS_FIXTURE]->(f:Fixture)
-        MATCH (f)-[ht:HAS_HOME_TEAM]->(home:Team)
-        MATCH (f)-[at:HAS_AWAY_TEAM]->(away:Team)
+        MATCH (f)-[hht:HAS_HOME_TEAM]->(home:Team)
+        MATCH (f)-[hat:HAS_AWAY_TEAM]->(away:Team)
         WHERE (home.name = '{team1}' AND away.name = '{team2}')
         OR (home.name = '{team2}' AND away.name = '{team1}')
         RETURN 
@@ -408,17 +526,17 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
             home.name AS home_team,
             away.name AS away_team
         ORDER BY f.kickoff_time ASC
-        LIMIT 1
+   
 
         """
     
     if intent == "fixture_details" and team1 and team2 and not gw:
         return f"""
-        MATCH (s:Season {{season_name:'{season}'}})
-        -[hg:HAS_GW]->(g:Gameweek)
+            MATCH (s:Season {{season_name:'{season}'}})
+        -[hg:HAS_GW]->(g)
         -[hf:HAS_FIXTURE]->(f:Fixture)
-        MATCH (f)-[ht:HAS_HOME_TEAM]->(home:Team)
-        MATCH (f)-[at:HAS_AWAY_TEAM]->(away:Team)
+        MATCH (f)-[hht:HAS_HOME_TEAM]->(home:Team)
+        MATCH (f)-[hat:HAS_AWAY_TEAM]->(away:Team)
         WHERE (home.name = '{team1}' AND away.name = '{team2}')
         OR (home.name = '{team2}' AND away.name = '{team1}')
         RETURN 
@@ -428,45 +546,146 @@ def get_fpl_cypher_query(intent: str, entities: dict) -> str:
             home.name AS home_team,
             away.name AS away_team
         ORDER BY f.kickoff_time ASC
-        """
+
+
+            """
 
     # ----------------------------------------------------------------------
     # 7) BEST PLAYERS BY METRIC: Overall
     # ----------------------------------------------------------------------
     if intent == "best_players_by_metric" and not entities.get("position"):
-        return f"""
-            MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek)-[hf:HAS_FIXTURE]->(f:Fixture)
-            MATCH (p:Player)-[pi:PLAYED_IN]->(f)
-            RETURN p.player_name AS player, SUM(pi.{stat}) AS total_{stat}
-            ORDER BY total_{stat} DESC LIMIT {limit}
-        """
+        if entities.get("filter_value")!= None:
+            val = entities["filter_value"]
+            return f"""
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g)-[hf:HAS_FIXTURE]->(f)
+                MATCH (p:Player)-[pi:PLAYED_IN]->(f)
+                WITH p, SUM(pi.{stat}) AS total_stat
+                WHERE total_stat > {val}
+                RETURN p.player_name AS player, total_stat
+                ORDER BY total_stat DESC LIMIT {limit}
+            """
+        else:
+            return f"""
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g)-[hf:HAS_FIXTURE]->(f)
+                MATCH (p:Player)-[pi:PLAYED_IN]->(f)
+                RETURN p.player_name AS player, SUM(pi.{stat}) AS total_{stat}
+                ORDER BY total_{stat} DESC LIMIT {limit}
+            """
 
     # ----------------------------------------------------------------------
     # 8) BEST PLAYERS BY METRIC AND POSITION
     # ----------------------------------------------------------------------
     if intent == "best_players_by_metric" and entities.get("position"):
         position = entities["position"]
-        return f"""
-            MATCH (p:Player)-[pa:PLAYS_AS]->(pos:Position {{name:'{position}'}})
-            MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek)-[hf:HAS_FIXTURE]->(f:Fixture)
-            MATCH (p)-[pi:PLAYED_IN]->(f)
-            RETURN p.player_name AS player, SUM(pi.{stat}) AS total_{stat}, pos.name AS position
-            ORDER BY total_{stat} DESC LIMIT {limit}
-        """
+        if entities.get("filter_value")!= None:
+            val = entities["filter_value"]
+            return f"""
+                MATCH (p:Player)-[pa:PLAYS_AS]->(pos:Position {{name:'{position}'}})
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g)-[hf:HAS_FIXTURE]->(f)
+                MATCH (p)-[pi:PLAYED_IN]->(f)
+                WITH p, pos, SUM(pi.{stat}) AS total_stat
+                WHERE total_stat > {val}
+                RETURN p.player_name AS player, total_stat, pos.name AS position
+                ORDER BY total_stat DESC LIMIT {limit}
+            """
+        else:
+            return f"""
+                MATCH (p:Player)-[pa:PLAYS_AS]->(pos:Position {{name:'{position}'}})
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g)-[hf:HAS_FIXTURE]->(f)
+                MATCH (p)-[pi:PLAYED_IN]->(f)
+                RETURN p.player_name AS player, SUM(pi.{stat}) AS total_{stat}, pos.name AS position
+                ORDER BY total_{stat} DESC LIMIT {limit}
+            """
 
     # ----------------------------------------------------------------------
     # 9) BEST PLAYERS — FILTER WHERE STAT ABOVE VALUE
     # ----------------------------------------------------------------------
-    if intent == "best_players_by_metric" and entities.get("filter_value"):
+    if intent == "best_players_by_metric" and entities.get("filter_value")!= None:
         val = entities["filter_value"]
         return f"""
-            MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g:Gameweek)-[hf:HAS_FIXTURE]->(f:Fixture)
+            MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g)-[hf:HAS_FIXTURE]->(f)
             MATCH (p:Player)-[pi:PLAYED_IN]->(f)
             WITH p, SUM(pi.{stat}) AS total_stat
             WHERE total_stat > {val}
             RETURN p.player_name AS player, total_stat
             ORDER BY total_stat DESC LIMIT {limit}
         """
+
+    #10)when will player play against team
+    if intent == "fixture_details" and player1 and team1:
+        return f"""
+            MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g)-[hf:HAS_FIXTURE]->(f:Fixture)
+            MATCH (p:Player {{player_name:'{player1}'}})-[pi:PLAYED_IN]->(f)
+            MATCH (f)-[hht:HAS_HOME_TEAM]->(h:Team),
+                  (f)-[hat:HAS_AWAY_TEAM]->(a:Team)
+            MATCH (p)-[pf:PLAYS_FOR]->(t:Team)
+            WHERE h.name = '{team1}' OR a.name = '{team1}'
+            RETURN p.player_name AS player, t.name AS team, f.fixture_number AS fixture, f.kickoff_time, g.GW_number AS gameweek, h, a
+            ORDER BY f.kickoff_time ASC
+
+        """
+    
+    #11)Worst players by metric
+    if intent == "Worst_players_by_metric" and not entities.get("position"):
+        if entities.get("filter_value")!= None:
+            val = entities["filter_value"]
+            return f"""
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g)-[hf:HAS_FIXTURE]->(f)
+                MATCH (p:Player)-[pi:PLAYED_IN]->(f)
+                WITH p, SUM(pi.{stat}) AS total_stat
+                WHERE total_stat > {val}
+                RETURN p.player_name AS player, total_stat
+                ORDER BY total_stat ASC LIMIT {limit}
+            """
+        else:
+            return f"""
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g)-[hf:HAS_FIXTURE]->(f)
+                MATCH (p:Player)-[pi:PLAYED_IN]->(f)
+                RETURN p.player_name AS player, SUM(pi.{stat}) AS total_{stat}
+                ORDER BY total_{stat} ASC LIMIT {limit}
+            """
+    if intent == "Worst_players_by_metric" and entities.get("position"):
+        position = entities["position"]
+        if entities.get("filter_value")!= None:
+            val = entities["filter_value"]
+            return f"""
+                MATCH (p:Player)-[pa:PLAYS_AS]->(pos:Position {{name:'{position}'}})
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g)-[hf:HAS_FIXTURE]->(f)
+                MATCH (p)-[pi:PLAYED_IN]->(f)
+                WITH p, pos, SUM(pi.{stat}) AS total_stat
+                WHERE total_stat > {val}
+                RETURN p.player_name AS player, total_stat, pos.name AS position
+                ORDER BY total_stat ASC LIMIT {limit}
+            """
+        else:
+            return f"""
+                MATCH (p:Player)-[pa:PLAYS_AS]->(pos:Position {{name:'{position}'}})
+                MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g)-[hf:HAS_FIXTURE]->(f)
+                MATCH (p)-[pi:PLAYED_IN]->(f)
+                RETURN p.player_name AS player, SUM(pi.{stat}) AS total_{stat}, pos.name AS position
+                ORDER BY total_{stat} ASC LIMIT {limit}
+            """
+    if intent == "Worst_players_by_metric" and entities.get("filter_value")!= None:
+        val = entities["filter_value"]
+        return f"""
+            MATCH (s:Season {{season_name:'{season}'}})-[hg:HAS_GW]->(g)-[hf:HAS_FIXTURE]->(f)
+            MATCH (p:Player)-[pi:PLAYED_IN]->(f)
+            WITH p, SUM(pi.{stat}) AS total_stat
+            WHERE total_stat > {val}
+            RETURN p.player_name AS player, total_stat
+            ORDER BY total_stat ASC LIMIT {limit}
+        """
+    
+    #12)PLAYER INFORMATION
+    if intent == "player_information" and player1:
+        return f"""
+            MATCH (p:Player {{player_name:'{player1}'}})-[pf:PLAYS_FOR]->(t:Team),
+                  (p)-[pa:PLAYS_AS]->(pos:Position)
+            RETURN p.player_name AS player,
+                   t.name AS team,
+                   pos.name AS position
+            """
+                   
 
     # ----------------------------------------------------------------------
     # 10) FALLBACK
@@ -495,33 +714,61 @@ def format_query_result(intent: str, result: list, entities: dict = None) -> str
     # ========================================================================
     # INTENT 1: FIXTURE_DETAILS
     # ========================================================================
+
+    
     if intent == "fixture_details":
         if len(result) == 1:
             rec = result[0]
-            home = rec.get('h', 'Unknown').get('name', rec.get('home_team', 'Unknown'))
-            away = rec.get('a', 'Unknown').get('name', rec.get('away_team', 'Unknown'))
-            kickoff = rec.get('f.kickoff_time', 'TBD')
-            fixture_num = rec.get('fixture', rec.get('fixture_number', ''))
-            
-            return f"{home} will play against {away} at {kickoff if kickoff != 'TBD' else 'TBD'} (Fixture #{fixture_num})"
-    
+            # Check if player info exists
+            player = rec.get('player')
+            if player:
+                home = rec.get('h', {}).get('name', rec.get('home_team', 'Unknown'))
+                away = rec.get('a', {}).get('name', rec.get('away_team', 'Unknown'))
+                kickoff = rec.get('f.kickoff_time', 'TBD')
+                team = rec.get('team', 'Unknown Team')
+                fixture_num = rec.get('fixture', rec.get('fixture_number', ''))
+                if team == home:
+                    opposing = away
+                else:
+                    opposing = home
+                return f"{player} in team {team} will play against {opposing} at {kickoff if kickoff != 'TBD' else 'TBD'} (Fixture #{fixture_num})"
+            else:
+                home = rec.get('h', {}).get('name', rec.get('home_team', 'Unknown'))
+                away = rec.get('a', {}).get('name', rec.get('away_team', 'Unknown'))
+                kickoff = rec.get('f.kickoff_time', 'TBD')
+                fixture_num = rec.get('fixture', '')
+                return f"{home} will play against {away} at {kickoff if kickoff != 'TBD' else 'TBD'} (Fixture #{fixture_num})"
+
         else:
             response = "Upcoming Fixtures:\n\n"
             for i, rec in enumerate(result, 1):
-                home = rec.get('home_team', 'Unknown')
-                away = rec.get('away_team', 'Unknown')
-                kickoff = rec.get('kickoff_time', 'TBD')
+                player = rec.get('player')
+                team = rec.get('team', 'Unknown Team')
+                home = rec.get('h', {}).get('name', rec.get('home_team', 'Unknown'))
+                away = rec.get('a', {}).get('name', rec.get('away_team', 'Unknown'))
+                kickoff = rec.get('f.kickoff_time', rec.get('kickoff_time', 'TBD'))
                 gameweek = rec.get('gameweek', 'gw')
-                response += f"{i}. {home} will play against {away} in Gameweek {gameweek}"
+                fixture_num = rec.get('fixture', rec.get('fixture_number', ''))
+                if player and team:
+                    if team == home:
+                        opposing = away
+                    else:
+                        opposing = home
+                    response += f"{i}. {player} in team {team} will play against {opposing} in Gameweek {gameweek}"
+
+                else:
+                    response += f"{i}. {home} will play against {away} in Gameweek {gameweek}"
+
                 if kickoff and kickoff != 'TBD':
-                    response += f" at {kickoff} (Fixture #{rec.get('fixture', '')})"
+                    response += f" at {kickoff} (Fixture #{fixture_num})"
                 response += "\n"
             return response.strip()
+
     
     # ========================================================================
     # INTENT 2: BEST_PLAYERS_BY_METRIC
     # ========================================================================
-    elif intent == "best_players_by_metric":
+    elif intent == "best_players_by_metric" or intent == "Worst_players_by_metric":
         stat_type = entities.get("stat_type", "total_points")
         position = entities.get("position")
         limit = entities.get("limit", len(result))
@@ -733,13 +980,21 @@ def format_query_result(intent: str, result: list, entities: dict = None) -> str
                     response += f"{i}. {name}\n"
             
             return response.strip()
+        
+    #intent 4: PLAYER_INFORMATION
+    if intent == "player_information":
+        rec = result[0]
+        player = rec.get('player', entities.get('player1', 'Unknown Player'))
+        team = rec.get('team', 'Unknown Team')
+        position = rec.get('position', 'Unknown Position')
+        
+        return f"{player} plays for {team} as a {position}."
     
     # ========================================================================
     # FALLBACK for unknown intents
     # ========================================================================
     else:
         return "Query executed. Results retrieved."
-
 
 def reset_vector_index(index_name, label, property_name, dimension):
     try:
@@ -946,9 +1201,9 @@ def retrieve_embedding_search(query: str, embeddings_model, model_name: str, gra
         print(f"Error: {e}")
         return "Error retrieving context."
 
-def rag_pipline(llm, classifier, embedding_model, embedding_model_name, query, graph):
+def rag_pipline(llm, embedding_model, embedding_model_name, query, graph):
     # 1. Retrieve from KG via Cypher
-    intent = classify_fpl_intents(classifier, query)
+    intent = classify_fpl_intents(query)
     entities = extract_fpl_entities(query)
     cypher_query = get_fpl_cypher_query(intent, entities)
     cypher_result = graph.query(cypher_query)
@@ -1035,9 +1290,6 @@ print(graph.query("MATCH (s:Season) RETURN s"))
 
 FPL_KB = load_fpl_kb(graph)
 
-classifier = pipeline("zero-shot-classification",
-                      model="facebook/bart-large-mnli")
-
 ENTITY_LOOKUP = {}
 add_to_lookup(FPL_KB["players"], "player")
 add_to_lookup(FPL_KB["teams"], "team")
@@ -1073,7 +1325,6 @@ print("Models initialized.")
 # embedding_model_name = "MPNet"
 # rag_chain = rag_pipline(
 #     llm=gemma_llm,
-#     classifier=classifier,
 #     embedding_model=model_mpnet,
 #     embedding_model_name=embedding_model_name,
 #     query=query

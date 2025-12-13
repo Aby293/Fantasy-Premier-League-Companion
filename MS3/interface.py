@@ -374,14 +374,13 @@ if not st.session_state.app_loaded:
     
     # Import app modules (this is where the actual loading happens)
     from app import (
-        graph, classifier, models, model_minilm, model_mpnet, model_bge,
+        graph, models, model_minilm, model_mpnet, model_bge,
         classify_fpl_intents, extract_fpl_entities, get_fpl_cypher_query,
         format_query_result, retrieve_embedding_search, generate_qa_chain
     )
     
     # Store in session state to avoid reimporting
     st.session_state.graph = graph
-    st.session_state.classifier = classifier
     st.session_state.models = models
     st.session_state.model_minilm = model_minilm
     st.session_state.model_mpnet = model_mpnet
@@ -398,7 +397,6 @@ if not st.session_state.app_loaded:
 
 # Retrieve from session state
 graph = st.session_state.graph
-classifier = st.session_state.classifier
 models = st.session_state.models
 model_minilm = st.session_state.model_minilm
 model_mpnet = st.session_state.model_mpnet
@@ -833,7 +831,7 @@ def process_query(query: str, model_name: str, retrieval_method: str, embedding_
     else:
         # For baseline and hybrid, do full Cypher processing
         # Step 1: Intent Classification
-        intent = classify_fpl_intents(classifier, query)
+        intent = classify_fpl_intents(query)
         
         # Step 2: Entity Extraction
         entities = extract_fpl_entities(query)
@@ -951,12 +949,17 @@ with st.sidebar:
     st.markdown("### 💡 Example Queries")
     
     example_queries = [
-        "Show me how Mohamed Salah performed in gameweek 5, including total_points.",
         "How many goals did Harry Kane have in gameweek 36 season 2021-22?",
-        "Compare Erling Haaland and Mohamed Salah for the 2022-23 season by goals.",
+        "What is Liverpool's total bonus points for the 2022-23 season?",
+        "Compare Mohamed Salah and Erling Haaland in gameweek 8 season 2021-22 for total points.",
         "Compare Liverpool and Chelsea in gameweek 12 for total points.",
         "When do Arsenal and Man city play each other?",
-        "Who are the top 5 forwards by total points in the 2022-23 season?"
+        "When does Harry Kane play against Liverpool?",
+        "Who scored the most goals in the 2021-22 season?",
+        "Who are the top 5 forwards by total points in the 2022-23 season?",
+        "What position does Mohamed Salah play?",
+        "Who are the bottom 3 midfielders by assists above 0?.",
+
     ]
     
     for i, example in enumerate(example_queries):
