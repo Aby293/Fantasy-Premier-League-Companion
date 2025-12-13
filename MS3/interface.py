@@ -1245,7 +1245,7 @@ if st.session_state.query_history:
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: #7f8c8d; padding: 20px;'>
-    <p>Built with ❤️ using Streamlit, Neo4j, and LangChain</p>
+    <p>Built with ❤️ by Habiba,Zeina,Aby,Ehab</p>
     <p style='font-size: 12px;'>Fantasy Premier League Graph-RAG System | Version 1.0</p>
 </div>
 """, unsafe_allow_html=True)
