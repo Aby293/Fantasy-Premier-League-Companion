@@ -233,6 +233,7 @@ def extract_fpl_entities(query: str) -> dict:
     """
     Extract entities from FPL query with improved accuracy and validation
     """
+    nlp = spacy.load("en_core_web_sm")
     doc = nlp(query)
     entities = {
         "stat_type": "total_points",  # Default fallback
