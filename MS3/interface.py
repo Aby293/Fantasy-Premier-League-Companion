@@ -7,6 +7,8 @@ from typing import Dict, List, Tuple
 import json
 import re
 from neo4j.graph import Node, Relationship, Path
+from concurrent.futures import ThreadPoolExecutor, TimeoutError
+
 
 class GraphVisualizer:
     def __init__(self):
@@ -843,8 +845,19 @@ def process_query(query: str, model_name: str, retrieval_method: str, embedding_
         cypher_result = graph.query(cypher_query)
         
         # Step 4.5: Generate graph visualization
+        graph_figure = None
+
         try:
-            graph_figure = create_graph_visualization(cypher_query, cypher_result)
+            with ThreadPoolExecutor(max_workers=1) as executor:
+                future = executor.submit(
+                    create_graph_visualization,
+                    cypher_query,
+                    cypher_result
+                )
+                graph_figure = future.result(timeout=10)  # seconds
+        except TimeoutError:
+            print("Graph visualization timed out after 10 seconds")
+            graph_figure = None
         except Exception as e:
             print(f"Could not generate visualization: {e}")
             graph_figure = None
