@@ -878,7 +878,11 @@ def process_query(query: str, model_name: str, retrieval_method: str, embedding_
     end_time = time.time()
     response_time = end_time - start_time
     
-    graph_figure = create_graph_visualization(cypher_query, cypher_result)
+    if intent != "best_players_by_metric" and intent != "Worst_players_by_metric":
+        graph_figure = create_graph_visualization(cypher_query, cypher_result)
+    else:
+        graph_figure = None
+
     return {
         'query': query,
         'intent': intent,
