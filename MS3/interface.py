@@ -843,25 +843,7 @@ def process_query(query: str, model_name: str, retrieval_method: str, embedding_
         
         # Step 4: Execute Cypher Query
         cypher_result = graph.query(cypher_query)
-        
-        # Step 4.5: Generate graph visualization
-        graph_figure = None
-
-        try:
-            with ThreadPoolExecutor(max_workers=1) as executor:
-                future = executor.submit(
-                    create_graph_visualization,
-                    cypher_query,
-                    cypher_result
-                )
-                graph_figure = future.result(timeout=10)  # seconds
-        except TimeoutError:
-            print("Graph visualization timed out after 10 seconds")
-            graph_figure = None
-        except Exception as e:
-            print(f"Could not generate visualization: {e}")
-            graph_figure = None
-        
+                
         # Step 5: Format Cypher Result
         formatted_cypher = format_query_result(intent, cypher_result, entities)
         
@@ -896,6 +878,7 @@ def process_query(query: str, model_name: str, retrieval_method: str, embedding_
     end_time = time.time()
     response_time = end_time - start_time
     
+    graph_figure = create_graph_visualization(cypher_query, cypher_result)
     return {
         'query': query,
         'intent': intent,
@@ -964,7 +947,7 @@ with st.sidebar:
     example_queries = [
         "How many goals did Harry Kane have in gameweek 36 season 2021-22?",
         "What is Liverpool's total bonus points for the 2022-23 season?",
-        "Compare Mohamed Salah and Erling Haaland in gameweek 8 season 2021-22 for total points.",
+        "Compare Mohamed Salah and Erling Haaland in gameweek 13 season 2022-23 for total points.",
         "Compare Liverpool and Chelsea in gameweek 12 for total points.",
         "When do Arsenal and Man city play each other?",
         "When does Harry Kane play against Liverpool?",
@@ -1258,7 +1241,7 @@ if st.session_state.query_history:
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: #7f8c8d; padding: 20px;'>
-    <p>Built with ❤️ by Habiba,Zeina,Aby,Ehab</p>
+    <p>Built with ❤️ by Aby,Zeina,Habiba,Ehab</p>
     <p style='font-size: 12px;'>Fantasy Premier League Graph-RAG System | Version 1.0</p>
 </div>
 """, unsafe_allow_html=True)
